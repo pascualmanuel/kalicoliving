@@ -1,0 +1,22 @@
+{
+  "nav": {
+    "home": "Inicio",
+    "landlords": "Propietarios",
+    "blog": "Blog",
+    "community": "Comunidad"
+  },
+  "pages": {
+    "home": {
+      "title": "Inicio"
+    },
+    "landlords": {
+      "title": "Propietarios"
+    },
+    "blog": {
+      "title": "Blog"
+    },
+    "community": {
+      "title": "Comunidad"
+    }
+  }
+}

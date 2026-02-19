@@ -1,0 +1,22 @@
+{
+  "nav": {
+    "home": "Home",
+    "landlords": "Landlords",
+    "blog": "Blog",
+    "community": "Community"
+  },
+  "pages": {
+    "home": {
+      "title": "Home"
+    },
+    "landlords": {
+      "title": "Landlords"
+    },
+    "blog": {
+      "title": "Blog"
+    },
+    "community": {
+      "title": "Community"
+    }
+  }
+}
