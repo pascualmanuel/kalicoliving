@@ -3,11 +3,12 @@
     "home": "Home",
     "landlords": "Landlords",
     "blog": "Blog",
-    "community": "Community"
+    "community": "Community",
+    "applyNow": "Apply Now"
   },
   "pages": {
     "home": {
-      "title": "Home"
+      "title": "Live together, grow forever"
     },
     "landlords": {
       "title": "Landlords"

@@ -3,11 +3,12 @@
     "home": "Inicio",
     "landlords": "Propietarios",
     "blog": "Blog",
-    "community": "Comunidad"
+    "community": "Comunidad",
+    "applyNow": "Aplicar Ahora"
   },
   "pages": {
     "home": {
-      "title": "Inicio"
+      "title": "Vive juntos, crece para siempre"
     },
     "landlords": {
       "title": "Propietarios"
