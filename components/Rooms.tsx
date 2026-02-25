@@ -123,9 +123,9 @@ export default function RoomsSection() {
   }, [currentImageIndex, rooms.length]);
 
   return (
-    <div className="flex flex-row w-full rounded-[20px] overflow-hidden  border border-[#0000001A]">
+    <div className="flex lg:flex-row flex-col-reverse w-full rounded-[20px] overflow-hidden  border border-[#0000001A]">
       {/* Left Section - Image (55%) */}
-      <div className="relative w-[55%] h-[700px]">
+      <div className="relative lg:w-[55%] h-[700px]">
         <Image
           src={currentRoom.image}
           alt="Room"
@@ -203,9 +203,9 @@ export default function RoomsSection() {
       </div>
 
       {/* Right Section - Info (45%) */}
-      <div className="w-[45%] bg-white p-12 flex flex-col justify-center">
-        <p className="text-red recoleta text-[18px] mb-4 trcking-[-1%]">Transparent pricing</p>
-        <h2 className="text-black title text-[64px] leading-[100%] mb-4">
+      <div className="lg:w-[45%] bg-white sm:p-12 p-6 flex flex-col justify-center">
+        <p className="text-red recoleta sm:text-[18px] text-[16px] mb-4 trcking-[-1%]">Transparent pricing</p>
+        <h2 className="text-black title md:text-[64px] text-[45px] leading-[100%] mb-4">
           One price.
           <br />
           <span className="recoleta">Everything included.</span>

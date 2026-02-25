@@ -15,6 +15,7 @@ import homeCard4 from '../../public/assets/images/home/home-card-4.webp';
 import brownDividerSvg from '../../public/assets/icons/brown-divider.svg';
 import ticIcon from '../../public/assets/icons/tic-icon.svg';
 import redDviderSvg from '../../public/assets/icons/red-divider.svg';
+import redDviderSvg2 from '../../public/assets/icons/red-divider-2.svg';
 import logoSvg from '../../public/assets/logos/logo.svg';
 import Link from 'next/link';
 import RoomsSection from '@/components/Rooms';
@@ -24,6 +25,62 @@ export default function HomePage() {
   const cardsRef = useRef(null);
   const videoSectionRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(cardsRef, { once: true, margin: '-280px' });
+  const titleRef = useRef<HTMLHeadingElement>(null);
+  const [titleLines, setTitleLines] = useState<string[]>([]);
+
+  // Dividir el título en líneas basándose en el layout real
+  useEffect(() => {
+    const splitTextIntoLines = () => {
+      if (titleRef.current && titleRef.current.offsetWidth > 0) {
+        const text = t('title');
+        const words = text.split(' ');
+        const lines: string[] = [];
+        let currentLine = '';
+
+        // Crear un elemento temporal para medir el ancho
+        const tempEl = document.createElement('span');
+        tempEl.style.visibility = 'hidden';
+        tempEl.style.position = 'absolute';
+        tempEl.style.whiteSpace = 'nowrap';
+        const computedStyle = window.getComputedStyle(titleRef.current);
+        tempEl.style.fontSize = computedStyle.fontSize;
+        tempEl.style.fontFamily = computedStyle.fontFamily;
+        tempEl.style.fontWeight = computedStyle.fontWeight;
+        tempEl.style.letterSpacing = computedStyle.letterSpacing;
+        document.body.appendChild(tempEl);
+
+        const maxWidth = titleRef.current.offsetWidth;
+
+        words.forEach((word, index) => {
+          const testLine = currentLine ? `${currentLine} ${word}` : word;
+          tempEl.textContent = testLine;
+
+          if (tempEl.offsetWidth > maxWidth && currentLine) {
+            lines.push(currentLine);
+            currentLine = word;
+          } else {
+            currentLine = testLine;
+          }
+
+          if (index === words.length - 1) {
+            lines.push(currentLine);
+          }
+        });
+
+        document.body.removeChild(tempEl);
+        setTitleLines(lines);
+      }
+    };
+
+    // Ejecutar después de que el DOM esté listo y el elemento tenga dimensiones
+    const timer = setTimeout(splitTextIntoLines, 100);
+    window.addEventListener('resize', splitTextIntoLines);
+
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener('resize', splitTextIntoLines);
+    };
+  }, [t]);
 
   const { scrollYProgress } = useScroll({
     target: videoSectionRef,
@@ -52,21 +109,79 @@ export default function HomePage() {
     })
   };
 
+  // Variantes para la animación tipo cortina (sin cambiar opacidad)
+  const curtainContainer = {
+    hidden: { opacity: 1 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.25,
+      }
+    }
+  };
+
+  const curtainLine = {
+    hidden: {
+      y: '100%',
+    },
+    visible: {
+      y: 0,
+      transition: {
+        duration: 1,
+        ease: [0.25, 1, 0.5, 1] as any, // power1.out equivalente
+      }
+    }
+  };
+
   return (
     <main>
-      <div className="relative h-screen min-h-[700px] max-h-[870px] overflow-hidden flex items-center justify-center">
+      <div className="relative h-screen min-h-[670px] md:min-h-[930px]  overflow-hidden flex flex-col items-center justify-center">
 
         <Image
           src={homeImage}
           alt="Home background"
           fill
           priority
-          className="object-cover scale-[1.3] origin-top-left object-[-30px_center]"
+          className="object-cover  object-[37%]  md:scale-[1.222] md:origin-top-left md:object-[-65px_-140px]"
         />
 
-        <h1 className="relative z-10 text-[100px] text-white title text-center max-w-[585px]">
-          {t('title')}
-        </h1>
+
+        <div className='relative z-10 mt-[-50px] overflow-hidden h-[36px]'>
+          <motion.div
+            className='h-[36px] bg-[#FFF2E21A] backdrop-blur-[3.5px]
+            border border-[#FFF2E266] flex items-center justify-center w-[230px] rounded-full overflow-hidden'
+            variants={curtainLine}
+            initial="hidden"
+            animate="visible"
+          >
+            <h1 className="text-[18px] text-white text-center tracking-[-3%]">
+              Coliving spaces in Madrid
+            </h1>
+          </motion.div>
+        </div>
+
+        <motion.h1
+          ref={titleRef}
+          className="relative z-10 text-[50px]  md:text-[100px] text-white leading-[111%]  md:leading-[111px] tracking-[-4%] font-bold text-center md:max-w-[585px] max-w-[340px] overflow-hidden"
+        >
+          {titleLines.length > 0 ? (
+            <motion.div
+              variants={curtainContainer}
+              initial="hidden"
+              animate="visible"
+            >
+              {titleLines.map((line, i) => (
+                <span key={i} className="block overflow-hidden">
+                  <motion.span className="block" variants={curtainLine}>
+                    {line || '\u00A0'}
+                  </motion.span>
+                </span>
+              ))}
+            </motion.div>
+          ) : (
+            <span className="block opacity-0">{t('title')}</span>
+          )}
+        </motion.h1>
 
         <Image
           src={dividerSvg}
@@ -79,14 +194,14 @@ export default function HomePage() {
       </div>
 
 
-      <div className="flex flex-col items-center justify-center ">
-        <h2 className="text-[64px] text-black title text-center max-w-[675px]">More than a place to live. <br />
+      <div className="flex flex-col items-center justify-center mt-[80px] lg:mt-0">
+        <h2 className="md:text-[64px] text-[40px] text-black title text-center max-w-[675px]">More than a place to live. <br />
           <span className="recoleta text-red ">A place to belong.</span></h2>
-        <p className="text-black text-center max-w-[430px] my-6 text-[20px]">Kali is a coliving experience where design meets community, creating experiences that stay with you.</p>
+        <p className="text-black text-center max-w-[280px] md:max-w-[430px] my-6 text-[20px]">Kali is a coliving experience where design meets community, creating experiences that stay with you.</p>
         <PopupButton />
       </div>
 
-      <div ref={cardsRef} className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 px-4 md:px-20 py-12  mx-auto'>
+      <div ref={cardsRef} className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 px-5 md:px-20 py-12  mx-auto'>
         {/* Card 1 */}
         <motion.div
           className='flex flex-col items-center justify-center'
@@ -95,7 +210,7 @@ export default function HomePage() {
           animate={isInView ? "visible" : "hidden"}
           custom={0}
         >
-          <div className='w-full max-w-[310px] aspect-square rounded-xl overflow-hidden'>
+          <div className='w-full max-h-[260px] md:max-w-[310px] aspect-square rounded-xl overflow-hidden'>
             <Image
               src={homeCard1}
               alt="Real community"
@@ -116,7 +231,7 @@ export default function HomePage() {
           animate={isInView ? "visible" : "hidden"}
           custom={1}
         >
-          <div className='w-full max-w-[310px] aspect-square rounded-xl overflow-hidden'>
+          <div className='w-full max-h-[260px] md:max-w-[310px] aspect-square rounded-xl overflow-hidden'>
             <Image
               src={homeCard2}
               alt="Card 2"
@@ -125,8 +240,10 @@ export default function HomePage() {
               className='w-full h-full object-cover'
             />
           </div>
-          <h3 className="text-black title text-center text-[24px] mt-4">Thoughtfully designed spaces</h3>
-          <p className="text-black text-center my-2 text-[16px]">Homes that are functional, warm, and ready so you can focus on living.</p>
+          <div>
+            <h3 className="text-black title text-center text-[24px] mt-4">Thoughtfully designed spaces</h3>
+            <p className="text-black text-center my-2 text-[16px]">Homes that are functional, warm, and ready so you can focus on living.</p>
+          </div>
         </motion.div>
 
         {/* Card 3 */}
@@ -137,7 +254,7 @@ export default function HomePage() {
           animate={isInView ? "visible" : "hidden"}
           custom={2}
         >
-          <div className='w-full max-w-[310px] aspect-square rounded-xl overflow-hidden'>
+          <div className='w-full max-h-[260px] md:max-w-[310px] aspect-square rounded-xl overflow-hidden'>
             <Image
               src={homeCard3}
               alt="Card 3"
@@ -158,7 +275,7 @@ export default function HomePage() {
           animate={isInView ? "visible" : "hidden"}
           custom={3}
         >
-          <div className='w-full max-w-[310px] aspect-square rounded-xl overflow-hidden'>
+          <div className='w-full max-h-[260px] md:max-w-[310px] aspect-square rounded-xl overflow-hidden'>
             <Image
               src={homeCard4}
               alt="Card 4"
@@ -173,7 +290,7 @@ export default function HomePage() {
       </div>
       <div ref={videoSectionRef} className='relative h-[200vh]'>
         {/* Video Fixed Container */}
-        <div className='sticky top-0 w-full h-screen px-20'>
+        <div className='sticky top-0 w-full h-[650px] lg:h-screen md:px-20 px-5 '>
           <div className='rounded-[20px] overflow-hidden h-full'>
             <video
               src="/assets/videos/home-video.mp4"
@@ -191,15 +308,15 @@ export default function HomePage() {
                 y: textY,
               }}
             >
-              <div className='flex flex-row justify-between w-full px-[140px] pointer-events-auto'>
-                <div className='w-1/2'>
-                  <h2 className="text-[64px] text-white title max-w-[675px]">Feel at home
+              <div className='flex flex-col lg:flex-row justify-between w-full px-10 md:px-[140px] pointer-events-auto'>
+                <div className='lg:w-1/2'>
+                  <h2 className="md:text-[64px] text-[40px] text-white title max-w-[675px]">Feel at home
                     <br /> <span className="recoleta text-white">from day one</span></h2>
                 </div>
-                <div className='w-1/2 max-w-[412px]'>
-                  <p className="text-white my-2 text-[20px] leading-[130%]">Kali is built to turn everyday living into experiences that stay with you. Because where you live, and who you live with, shapes who you become.</p>
+                <div className='lg:w-1/2 max-w-[412px]'>
+                  <p className="text-white lg:my-2 my-5 text-[20px] leading-[130%]">Kali is built to turn everyday living into experiences that stay with you. Because where you live, and who you live with, shapes who you become.</p>
                   <a href="#" className="">
-                    <div className='w-[350px] bg-white rounded-[12px] semi-bold text-center font-semibold text-lg px-4 py-2 text-black my-4'>
+                    <div className='lg:w-[350px] bg-white rounded-[12px] semi-bold text-center font-semibold text-lg px-4 py-2 text-black my-4'>
                       Meet the community
                     </div>
                   </a>
@@ -210,13 +327,17 @@ export default function HomePage() {
         </div>
       </div>
 
-      <Image src={brownDividerSvg} alt="divider" width={1512} height={193} className="w-full mt-[200px] mb-[-250px] mx-auto" />
+      <div className='w-full md:px-20 sm:px-8 px-4  py-[130px]'>
+        <RoomsSection />
+      </div>
 
-      <div className='w-full px-20 bg-brown  '>
-        <h2 className="text-[64px] text-white title text-center ">How it works</h2>
+      <Image src={brownDividerSvg} alt="divider" width={1512} height={193} className="w-full mt-[200px]  mx-auto" />
+
+      <div className='w-full md:px-20 px-4 bg-brown  md:mt-[-11%]'>
+        <h2 className="md:text-[64px] text-[45px] text-white title text-center ">How it works</h2>
         <p className="text-white text-center my-2 text-[20px] leading-[130%]">Find your next home in a few steps.</p>
         <div className='w-full'>
-          <div className='flex  flex-row justify-between gap-7 mt-12 pb-[200px]'>
+          <div className='flex flex-col lg:flex-row items-center lg:items-start justify-between gap-7 mt-12 pb-[200px]'>
             {/* Card 1 */}
             <div className='flex flex-col items-start p-6 gap-[21px] w-[315px] h-[206px] rounded-[20px]' style={{ background: 'rgba(255, 242, 226, 0.1)' }}>
               <h3 className="text-white title text-[18px] ">01</h3>
@@ -247,68 +368,71 @@ export default function HomePage() {
           </div>
         </div>
       </div>
-      <div className='w-full px-20 py-[130px]'>
-      <RoomsSection />
-      </div>
-      <div className='w-full px-20 pt-[200px]'>
-        <h2 className="text-[64px] text-black title text-center ">Kali is for you if...</h2>
+
+      <div className='w-full md:px-20 px-4 pt-[200px]'>
+        <h2 className="md:text-[64px] text-[45px] text-black title text-center ">Kali is for you if...</h2>
         <div className='w-full flex items-center justify-center'>
           <div className='flex flex-col justify-between gap-4 mt-12'>
-            <div className='w-[699px] h-[56px] rounded-[12px] flex items-center justify-start gap-4 p-4' style={{ background: 'rgba(153, 106, 83, 0.1)' }}>
+            <div className='w-full lg:w-[699px] h-[56px] rounded-[12px] flex items-center justify-start gap-4 p-4' style={{ background: 'rgba(153, 106, 83, 0.1)' }}>
               <Image src={ticIcon} alt="tick icon" width={24} height={24} />
               <p className="text-black text-[16px] leading-[130%]">You want to meet new people and feel like a local from day one.</p>
             </div>
-            <div className='w-[699px] h-[56px] rounded-[12px] flex items-center justify-start gap-4 p-4' style={{ background: 'rgba(153, 106, 83, 0.1)' }}>
+            <div className='w-full lg:w-[699px] h-[56px] rounded-[12px] flex items-center justify-start gap-4 p-4' style={{ background: 'rgba(153, 106, 83, 0.1)' }}>
               <Image src={ticIcon} alt="tick icon" width={24} height={24} />
               <p className="text-black text-[16px] leading-[130%]">You like stepping out of your comfort zone and saying yes to new plans</p>
             </div>
-            <div className='w-[699px] h-[56px] rounded-[12px] flex items-center justify-start gap-4 p-4' style={{ background: 'rgba(153, 106, 83, 0.1)' }}>
+            <div className='w-full lg:w-[699px] h-[56px] rounded-[12px] flex items-center justify-start gap-4 p-4' style={{ background: 'rgba(153, 106, 83, 0.1)' }}>
               <Image src={ticIcon} alt="tick icon" width={24} height={24} />
               <p className="text-black text-[16px] leading-[130%]">You want a home where someone’s always up for coffee, afterwork drinks, or dinner.</p>
             </div>
-            <div className='w-[699px] h-[56px] rounded-[12px] flex items-center justify-start gap-4 p-4' style={{ background: 'rgba(153, 106, 83, 0.1)' }}>
+            <div className='w-full lg:w-[699px] h-[56px] rounded-[12px] flex items-center justify-start gap-4 p-4' style={{ background: 'rgba(153, 106, 83, 0.1)' }}>
               <Image src={ticIcon} alt="tick icon" width={24} height={24} />
               <p className="text-black text-[16px] leading-[130%]">You want to move in without the stress — furniture, Wi-Fi, everything sorted.</p>
             </div>
-            <div className='w-[699px] h-[56px] rounded-[12px] flex items-center justify-start gap-4 p-4' style={{ background: 'rgba(153, 106, 83, 0.1)' }}>
+            <div className='w-full lg:w-[699px] h-[56px] rounded-[12px] flex items-center justify-start gap-4 p-4' style={{ background: 'rgba(153, 106, 83, 0.1)' }}>
               <Image src={ticIcon} alt="tick icon" width={24} height={24} />
               <p className="text-black text-[16px] leading-[130%]">You want more than a room — you want community and real connections.</p>
             </div>
-            <div className='w-[699px] h-[56px] rounded-[12px] flex items-center justify-start gap-4 p-4' style={{ background: 'rgba(153, 106, 83, 0.1)' }}>
+            <div className='w-full lg:w-[699px] h-[56px] rounded-[12px] flex items-center justify-start gap-4 p-4' style={{ background: 'rgba(153, 106, 83, 0.1)' }}>
               <Image src={ticIcon} alt="tick icon" width={24} height={24} />
               <p className="text-black text-[16px] leading-[130%]">You want to grow around people who inspire you and push you further.</p>
             </div>
           </div>
         </div>
       </div>
-      <Image src={redDviderSvg} alt="divider" width={1512} height={193} className="w-full mt-[200px] mb-[-250px] mx-auto" />
 
-      <div className='w-full px-20  bg-red flex flex-col items-center justify-center pb-10 '>
-        <h2 className="text-[64px] text-white title text-center ">Ready to live <br /> together?</h2>
+      <Image src={redDviderSvg2} alt="divider" width={1512} height={193} className="w-full mt-[200px]  mx-auto" />
+      <div className='w-full lg:px-20 px-5 bg-red flex flex-col items-center justify-center pb-10 md:mt-[-11%]'>
+        <h2 className="lg:text-[64px] text-[45px] text-white title text-center ">Ready to live <br /> together?</h2>
         <a href="#" className="mt-8 mb-24">
           <div className='w-[350px] bg-white rounded-[12px] semi-bold text-center font-semibold text-lg px-4 py-2 text-black  my-2 '>
             Apply now
           </div>
         </a>
         <footer className='w-full py-[52px] px-[44px] rounded-[20px] bg-[#651514]'>
-          <div className='flex flex-row justify-between border-b border-[#fff2e21c] pb-10 items-center'>
+          {/* Top Section - Logo and Links */}
+          <div className='flex flex-col md:flex-row justify-between border-b border-[#fff2e21c] pb-10 md:items-center gap-6 md:gap-0'>
             <div>
               <Image src={logoSvg} alt="logo" width={156} height={100} />
             </div>
-            <div className='flex flex-row justify-between gap-10'>
+            <div className='flex flex-col md:flex-row gap-4 md:gap-10'>
               <Link href="/blog" className='text-white text-[16px] leading-[130%]'>Blog</Link>
               <Link href="/community" className='text-white text-[16px] leading-[130%]'>Community</Link>
               <Link href="/landlords" className='text-white text-[16px] leading-[130%]'>Landlords</Link>
               <Link href="/apply" className='text-white text-[16px] leading-[130%]'>Apply</Link>
             </div>
           </div>
-          <div className='flex flex-row justify-between mt-10'>
-            <div className='flex flex-row justify-between gap-4'>
+
+          {/* Bottom Section */}
+          <div className='flex flex-col md:flex-row justify-between mt-10 gap-4 md:gap-0'>
+            <div className='flex flex-col md:flex-row gap-2 md:gap-4'>
               <Link href="/privacy-policy" className='text-[#A95251] text-[14px] leading-[130%]'>Privacy Policy</Link>
+              {/* <span className='hidden md:inline text-[#A95251] text-[14px]'>|</span> */}
               <Link href="/terms-of-service" className='text-[#A95251] text-[14px] leading-[130%]'>Terms & conditions</Link>
             </div>
-            <div className='flex flex-row justify-between gap-4'>
+            <div className='flex flex-col md:flex-row gap-2 md:gap-4'>
               <Link href="https://www.labba.studio" className='text-[#A95251] text-[14px] leading-[130%]'>Made by Labba Studio</Link>
+              {/* <span className='hidden md:inline text-[#A95251] text-[14px]'>|</span> */}
               <p className='text-[#A95251] text-[14px] leading-[130%]'>© {new Date().getFullYear()} Kali Coliving. All rights reserved.</p>
             </div>
           </div>
