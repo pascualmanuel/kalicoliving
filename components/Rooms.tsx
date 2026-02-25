@@ -125,7 +125,7 @@ export default function RoomsSection() {
   return (
     <div className="flex lg:flex-row flex-col-reverse w-full rounded-[20px] overflow-hidden  border border-[#0000001A]">
       {/* Left Section - Image (55%) */}
-      <div className="relative lg:w-[55%] h-[700px]">
+      <div className="relative lg:w-[55%] md:h-[700px] h-[520px]">
         <Image
           src={currentRoom.image}
           alt="Room"

@@ -24,7 +24,22 @@ export default function HomePage() {
   const t = useTranslations('pages.home');
   const cardsRef = useRef(null);
   const videoSectionRef = useRef<HTMLDivElement>(null);
-  const isInView = useInView(cardsRef, { once: true, margin: '-280px' });
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  const isInView = useInView(cardsRef, {
+    once: true,
+    margin: isMobile ? '-100px' : '-280px',
+    amount: isMobile ? 0.1 : 0.2
+  });
   const titleRef = useRef<HTMLHeadingElement>(null);
   const [titleLines, setTitleLines] = useState<string[]>([]);
 
@@ -88,8 +103,8 @@ export default function HomePage() {
   });
 
   // Controlar la opacidad del texto basado en el scroll
-  const textOpacity = useTransform(scrollYProgress, [0.2, 0.5], [0, 1]);
-  const textY = useTransform(scrollYProgress, [0.2, 0.5], [50, 0]);
+  const textOpacity = useTransform(scrollYProgress, [0.1, 0.25], [0, 1]);
+  const textY = useTransform(scrollYProgress, [0.1, 0.25], [50, 0]);
 
   const cardVariants = {
     hidden: {
@@ -242,7 +257,7 @@ export default function HomePage() {
           </div>
           <div>
             <h3 className="text-black title text-center text-[24px] mt-4">Thoughtfully designed spaces</h3>
-            <p className="text-black text-center my-2 text-[16px]">Homes that are functional, warm, and ready so you can focus on living.</p>
+            <p className="text-black text-center my-2 text-[16px] tracking-[-4%]">Homes that are functional, warm, and ready so you can focus on living.</p>
           </div>
         </motion.div>
 
@@ -288,9 +303,9 @@ export default function HomePage() {
           <p className="text-black text-center my-2 text-[16px]">Every connection adds something new to your journey.</p>
         </motion.div>
       </div>
-      <div ref={videoSectionRef} className='relative h-[200vh]'>
+      <div ref={videoSectionRef} className='relative h-[150vh]'>
         {/* Video Fixed Container */}
-        <div className='sticky top-0 w-full h-[650px] lg:h-screen md:px-20 px-5 '>
+        <div className='sticky top-[100px] md:top-0 w-full h-[650px] lg:h-screen md:px-20 px-5 '>
           <div className='rounded-[20px] overflow-hidden h-full'>
             <video
               src="/assets/videos/home-video.mp4"
@@ -302,7 +317,7 @@ export default function HomePage() {
             />
             {/* Text Overlay - Aparece con scroll */}
             <motion.div
-              className='absolute top-[-150px] left-0 w-full h-full flex items-center justify-center pointer-events-none'
+              className='absolute bottom-[0px] md:top-[-150px] left-0 w-full h-full flex items-end md:items-center justify-center pointer-events-none'
               style={{
                 opacity: textOpacity,
                 y: textY,
