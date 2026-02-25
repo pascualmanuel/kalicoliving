@@ -61,7 +61,6 @@
 .recoleta{
   font-family: 'Recoleta', serif;
   font-weight: 400;
-
 }
 
 .title{
@@ -70,8 +69,8 @@ line-height: 100%;
 letter-spacing: -4%;
 }
 
-@media (max-width: 768px) {
-  .title {
-    font-size: 50px;
-  }
+
+
+.blab{
+  border: 1px solid  #FFF2E266;
 }
