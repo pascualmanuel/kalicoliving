@@ -1,5 +1,9 @@
+'use client';
+
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
+import { motion, useInView, useScroll, useTransform } from 'framer-motion';
+import { useRef, useState, useEffect } from 'react';
 import homeImage from '../../public/assets/images/home/hero-image-kali.webp';
 import dividerSvg from '../../public/assets/icons/divider.svg';
 import PopupButton from '@/components/PopupButton';
@@ -13,8 +17,40 @@ import ticIcon from '../../public/assets/icons/tic-icon.svg';
 import redDviderSvg from '../../public/assets/icons/red-divider.svg';
 import logoSvg from '../../public/assets/logos/logo.svg';
 import Link from 'next/link';
+import RoomsSection from '@/components/Rooms';
+
 export default function HomePage() {
   const t = useTranslations('pages.home');
+  const cardsRef = useRef(null);
+  const videoSectionRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(cardsRef, { once: true, margin: '-280px' });
+
+  const { scrollYProgress } = useScroll({
+    target: videoSectionRef,
+    offset: ["start start", "end start"]
+  });
+
+  // Controlar la opacidad del texto basado en el scroll
+  const textOpacity = useTransform(scrollYProgress, [0.2, 0.5], [0, 1]);
+  const textY = useTransform(scrollYProgress, [0.2, 0.5], [50, 0]);
+
+  const cardVariants = {
+    hidden: {
+      opacity: 0,
+      y: 60,
+      scale: 0.9
+    },
+    visible: (i: number) => ({
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: {
+        duration: 1.2,
+        delay: i * 0.15,
+        ease: [0.25, 0.46, 0.45, 0.94] as any, // easeOutQuad - suave y premium
+      }
+    })
+  };
 
   return (
     <main>
@@ -50,10 +86,16 @@ export default function HomePage() {
         <PopupButton />
       </div>
 
-      <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 px-4 py-12 mx-auto'>
+      <div ref={cardsRef} className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 px-4 md:px-20 py-12  mx-auto'>
         {/* Card 1 */}
-        <div className='flex flex-col items-center justify-center'>
-          <div className='w-[310px] h-[310px] rounded-xl overflow-hidden'>
+        <motion.div
+          className='flex flex-col items-center justify-center'
+          variants={cardVariants}
+          initial="hidden"
+          animate={isInView ? "visible" : "hidden"}
+          custom={0}
+        >
+          <div className='w-full max-w-[310px] aspect-square rounded-xl overflow-hidden'>
             <Image
               src={homeCard1}
               alt="Real community"
@@ -64,11 +106,17 @@ export default function HomePage() {
           </div>
           <h3 className="text-black title text-center text-[24px] mt-4">Real community</h3>
           <p className="text-black text-center my-2 text-[16px]">Live with like-minded people who choose to step out of their comfort zone.</p>
-        </div>
+        </motion.div>
 
         {/* Card 2 */}
-        <div className='flex flex-col items-center justify-center'>
-          <div className='w-[310px] h-[310px] rounded-xl overflow-hidden'>
+        <motion.div
+          className='flex flex-col items-center justify-center'
+          variants={cardVariants}
+          initial="hidden"
+          animate={isInView ? "visible" : "hidden"}
+          custom={1}
+        >
+          <div className='w-full max-w-[310px] aspect-square rounded-xl overflow-hidden'>
             <Image
               src={homeCard2}
               alt="Card 2"
@@ -79,11 +127,17 @@ export default function HomePage() {
           </div>
           <h3 className="text-black title text-center text-[24px] mt-4">Thoughtfully designed spaces</h3>
           <p className="text-black text-center my-2 text-[16px]">Homes that are functional, warm, and ready so you can focus on living.</p>
-        </div>
+        </motion.div>
 
         {/* Card 3 */}
-        <div className='flex flex-col items-center justify-center'>
-          <div className='w-[310px] h-[310px] rounded-xl overflow-hidden'>
+        <motion.div
+          className='flex flex-col items-center justify-center'
+          variants={cardVariants}
+          initial="hidden"
+          animate={isInView ? "visible" : "hidden"}
+          custom={2}
+        >
+          <div className='w-full max-w-[310px] aspect-square rounded-xl overflow-hidden'>
             <Image
               src={homeCard3}
               alt="Card 3"
@@ -94,11 +148,17 @@ export default function HomePage() {
           </div>
           <h3 className="text-black title text-center text-[24px] mt-4">Shared moments</h3>
           <p className="text-black text-center my-2 text-[16px]">Dinners, conversations, working together, unexpected laughs.</p>
-        </div>
+        </motion.div>
 
         {/* Card 4 */}
-        <div className='flex flex-col items-center justify-center'>
-          <div className='w-[310px] h-[310px] rounded-xl overflow-hidden'>
+        <motion.div
+          className='flex flex-col items-center justify-center'
+          variants={cardVariants}
+          initial="hidden"
+          animate={isInView ? "visible" : "hidden"}
+          custom={3}
+        >
+          <div className='w-full max-w-[310px] aspect-square rounded-xl overflow-hidden'>
             <Image
               src={homeCard4}
               alt="Card 4"
@@ -109,26 +169,43 @@ export default function HomePage() {
           </div>
           <h3 className="text-black title text-center text-[24px] mt-4">Growth</h3>
           <p className="text-black text-center my-2 text-[16px]">Every connection adds something new to your journey.</p>
-        </div>
+        </motion.div>
       </div>
-      <div className='w-full h-full px-20 relative'>
-        <div className='rounded-[20px] overflow-hidden'>
-          <video src="/assets/videos/home-video.mp4" autoPlay muted loop playsInline className='w-full h-full object-cover' />
-          <div className='absolute top-0 left-0 w-full h-full flex items-center justify-center'>
-            <div className='flex flex-row justify-between w-full px-[140px]'>
-              <div className='w-1/2'>
-                <h2 className="text-[64px] text-white title  max-w-[675px]">Feel at home
-                  <br /> <span className="recoleta text-white ">from day one</span></h2>
+      <div ref={videoSectionRef} className='relative h-[200vh]'>
+        {/* Video Fixed Container */}
+        <div className='sticky top-0 w-full h-screen px-20'>
+          <div className='rounded-[20px] overflow-hidden h-full'>
+            <video
+              src="/assets/videos/home-video.mp4"
+              autoPlay
+              muted
+              loop
+              playsInline
+              className='w-full h-full object-cover'
+            />
+            {/* Text Overlay - Aparece con scroll */}
+            <motion.div
+              className='absolute top-[-150px] left-0 w-full h-full flex items-center justify-center pointer-events-none'
+              style={{
+                opacity: textOpacity,
+                y: textY,
+              }}
+            >
+              <div className='flex flex-row justify-between w-full px-[140px] pointer-events-auto'>
+                <div className='w-1/2'>
+                  <h2 className="text-[64px] text-white title max-w-[675px]">Feel at home
+                    <br /> <span className="recoleta text-white">from day one</span></h2>
+                </div>
+                <div className='w-1/2 max-w-[412px]'>
+                  <p className="text-white my-2 text-[20px] leading-[130%]">Kali is built to turn everyday living into experiences that stay with you. Because where you live, and who you live with, shapes who you become.</p>
+                  <a href="#" className="">
+                    <div className='w-[350px] bg-white rounded-[12px] semi-bold text-center font-semibold text-lg px-4 py-2 text-black my-4'>
+                      Meet the community
+                    </div>
+                  </a>
+                </div>
               </div>
-              <div className='w-1/2 max-w-[412px]'>
-                <p className="text-white my-2 text-[20px] leading-[130%]">Kali is built to turn everyday living into experiences that stay with you. Because where you live, and who you live with, shapes who you become.</p>
-                <a href="#" className="">
-                  <div className='w-[350px] bg-white rounded-[12px] semi-bold text-center font-semibold text-lg px-4 py-2 text-black  my-2 '>
-                    Meet the community
-                  </div>
-                </a>
-              </div>
-            </div>
+            </motion.div>
           </div>
         </div>
       </div>
@@ -169,6 +246,9 @@ export default function HomePage() {
             </div>
           </div>
         </div>
+      </div>
+      <div className='w-full px-20 py-[130px]'>
+      <RoomsSection />
       </div>
       <div className='w-full px-20 pt-[200px]'>
         <h2 className="text-[64px] text-black title text-center ">Kali is for you if...</h2>

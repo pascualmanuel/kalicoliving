@@ -101,7 +101,7 @@ export default function Navigation() {
           </div>
 
           {/* Center Links */}
-          <div className="flex items-center gap-8">
+          <div className="flex items-center gap-8 ml-[130px]">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
