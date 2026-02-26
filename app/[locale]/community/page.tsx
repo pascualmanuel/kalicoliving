@@ -4,12 +4,12 @@ import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useRef, useState, useEffect } from 'react';
-import People from '../../../public/assets/images/community/person-1.jpg';
-import People2 from '../../../public/assets/images/community/person-2.jpg';
-import People3 from '../../../public/assets/images/community/person-3.jpg';
-import People4 from '../../../public/assets/images/community/person-4.jpg';
-import People5 from '../../../public/assets/images/community/person-5.jpg';
-import People6 from '../../../public/assets/images/community/person-6.jpg';
+import People from '../../../public/assets/images/community/person1.jpg';
+import People2 from '../../../public/assets/images/community/person2.jpg';
+import People3 from '../../../public/assets/images/community/person3.jpg';
+import People4 from '../../../public/assets/images/community/person4.jpg';
+import People5 from '../../../public/assets/images/community/person5.jpg';
+import People6 from '../../../public/assets/images/community/person6.jpg';
 import IsoLogo from '../../../public/assets/logos/iso-logo.svg';
 import dividerNotFilledSvg from '../../../public/assets/icons/divider-not-filled.svg';
 // import dividerSvg from '../../../public/assets/icons/divider.svg';
@@ -18,6 +18,7 @@ import GalleryImage2 from '../../../public/assets/images/community/gallery-2.png
 import GalleryImage3 from '../../../public/assets/images/community/gallery-3.png';
 import GalleryImage4 from '../../../public/assets/images/community/gallery-4.png';
 import GalleryImage5 from '../../../public/assets/images/community/gallery-5.png';
+import CommunityCarousel from '../../../components/CommunityCarousel';
 
 export default function CommunityPage() {
   const t = useTranslations('pages.community');
@@ -39,7 +40,7 @@ export default function CommunityPage() {
       // Cuando el top de la sección está en el 30% superior del viewport
       // significa que ya hemos scrolleado más del 60-70% dentro de la sección
       // Ajusta este valor: más bajo (ej: 0.2) = se activa más tarde, más alto (ej: 0.4) = se activa más temprano
-      const triggerPoint = windowHeight * 0.1; // 30% del viewport desde arriba
+      const triggerPoint = windowHeight * 0.5; // 30% del viewport desde arriba
 
       // Se activa cuando el top de la sección está por encima del trigger point
       // y la sección aún está visible (no ha salido completamente por arriba)
@@ -65,15 +66,15 @@ export default function CommunityPage() {
   // Posiciones finales para las imágenes cuando se esparcen (en píxeles desde el centro)
   const galleryPositions = [
     // Imagen 1 - Top left
-    { x: -600, y: -150, rotate: -8 },
+    { x: '-180%', y: -150, rotate: -8 }, //ok
     // Imagen 2 - Top center-right
-    { x: 250, y: -180, rotate: 5 },
+    { x: '80%', y: -180, rotate: 5 }, //ok
     // Imagen 3 - Bottom left
-    { x: -550, y: 180, rotate: -5 },
+    { x: -200, y: -500, rotate: -5 }, //ok
     // Imagen 4 - Bottom right
-    { x: 600, y: 120, rotate: 8 },
+    { x: '-150%', y: 320, rotate: -27 }, //ok
     // Imagen 5 - Top right
-    { x: 450, y: -100, rotate: -3 },
+    { x: '76%', y: 320, rotate: -3 }, //ok
   ];
 
   // Rotaciones base para los 14 isologos (-15° a 15°), luego se rotan 180° adicionales
@@ -336,14 +337,14 @@ export default function CommunityPage() {
           className="absolute bottom-0 left-0 w-full pointer-events-none rotate-180"
         />
       </div>
-      <div ref={galleryRef} className='w-full border-t border-red h-[100vh] relative '>
+      <div ref={galleryRef} className='w-full h-[100vh] relative '>
         <motion.div
           initial={{ x: '-50%', y: '-50%', rotate: 0, opacity: 1 }}
           animate={isInView ? {
             x: galleryPositions[0].x,
             y: galleryPositions[0].y,
             rotate: galleryPositions[0].rotate,
-            opacity: 0.9,
+            opacity: 1,
           } : {
             x: '-50%',
             y: '-50%',
@@ -351,7 +352,7 @@ export default function CommunityPage() {
             opacity: 1,
           }}
           transition={{ duration: 1.2, ease: "easeOut", delay: 0.1 }}
-          className="absolute top-[50%] left-[50%] w-[478px] h-[338px] rounded-lg "
+          className="absolute top-[15%] left-[50%] w-[478px] h-[338px] rounded-lg "
           style={{ transformOrigin: 'center center' }}
         >
           <Image
@@ -368,7 +369,7 @@ export default function CommunityPage() {
             x: galleryPositions[1].x,
             y: galleryPositions[1].y,
             rotate: galleryPositions[1].rotate,
-            opacity: 0.9,
+            opacity: 1,
           } : {
             x: '-50%',
             y: '-50%',
@@ -376,7 +377,7 @@ export default function CommunityPage() {
             opacity: 1,
           }}
           transition={{ duration: 1.2, ease: "easeOut", delay: 0.2 }}
-          className="absolute top-[50%] left-[50%] w-[478px] h-[338px] rounded-lg "
+          className="absolute top-[15%] left-[50%] w-[478px] h-[338px] rounded-lg "
           style={{ transformOrigin: 'center center' }}
         >
           <Image
@@ -393,7 +394,7 @@ export default function CommunityPage() {
             x: galleryPositions[2].x,
             y: galleryPositions[2].y,
             rotate: galleryPositions[2].rotate,
-            opacity: 0.9,
+            opacity: 1,
           } : {
             x: '-50%',
             y: '-50%',
@@ -401,7 +402,7 @@ export default function CommunityPage() {
             opacity: 1,
           }}
           transition={{ duration: 1.2, ease: "easeOut", delay: 0.3 }}
-          className="absolute top-[50%] left-[50%] w-[478px] h-[338px] rounded-lg "
+          className="absolute top-[15%] left-[50%] w-[478px] h-[338px] rounded-lg "
           style={{ transformOrigin: 'center center' }}
         >
           <Image
@@ -418,7 +419,7 @@ export default function CommunityPage() {
             x: galleryPositions[3].x,
             y: galleryPositions[3].y,
             rotate: galleryPositions[3].rotate,
-            opacity: 0.9,
+            opacity: 1,
           } : {
             x: '-50%',
             y: '-50%',
@@ -426,7 +427,7 @@ export default function CommunityPage() {
             opacity: 1,
           }}
           transition={{ duration: 1.2, ease: "easeOut", delay: 0.4 }}
-          className="absolute top-[50%] left-[50%] w-[478px] h-[338px] rounded-lg "
+          className="absolute top-[15%] left-[50%] w-[478px] h-[338px] rounded-lg "
           style={{ transformOrigin: 'center center' }}
         >
           <Image
@@ -443,7 +444,7 @@ export default function CommunityPage() {
             x: galleryPositions[4].x,
             y: galleryPositions[4].y,
             rotate: galleryPositions[4].rotate,
-            opacity: 0.9,
+            opacity: 1,
           } : {
             x: '-50%',
             y: '-50%',
@@ -451,7 +452,7 @@ export default function CommunityPage() {
             opacity: 1,
           }}
           transition={{ duration: 1.2, ease: "easeOut", delay: 0.5 }}
-          className="absolute top-[50%] left-[50%] w-[478px] h-[338px] rounded-lg "
+          className="absolute top-[15%] left-[50%] w-[478px] h-[338px] rounded-lg "
           style={{ transformOrigin: 'center center' }}
         >
           <Image
@@ -462,9 +463,25 @@ export default function CommunityPage() {
             className="w-full h-full object-cover rounded-[24px] "
           />
         </motion.div>
-      </div>
-      <div className='border-t border-red h-[100vh]'>
+        <div className='flex flex-col items-center justify-center'>
+          <h3 className='text-black title text-center text-[45px] max-w-[480px] mx-auto'>
+            We focus on community, not random roommates.
+          </h3>
+          <p className='text-black text-center text-[32px] max-w-[430px] mx-auto mt-2'>
+            Because who you live with matters.
+          </p>
+          <a href="#" className="">
+            <div className='w-[350px] h-[60px] bg-red rounded-[12px]  text-center font-semibold text-[18px] text-white  mt-9 flex justify-center items-center'>
+              Meet the community
+            </div>
+          </a>
 
+        </div>
+
+      </div>
+      <div className=' h-[100vh]'>
+      <h4 className='text-black text-left text-[50px] title pl-20'>Voices of the <br/> <span className='recoleta text-black'> community</span></h4>
+      <CommunityCarousel />
       </div>
     </main>
   );
