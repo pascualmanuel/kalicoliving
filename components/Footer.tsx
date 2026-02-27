@@ -6,7 +6,8 @@ import logoSvg from '../public/assets/logos/logo.svg';
 export default function Footer() {
   return (
     <>
-      <Image src={redDviderSvg2} alt="divider" width={1512} height={193} className="w-full mt-[200px]  mx-auto" />
+
+      <Image src={redDviderSvg2} alt="divider" width={1512} height={193} className="w-full   mx-auto" />
       <div className='w-full lg:px-20 px-5 bg-red flex flex-col items-center justify-center pb-10 md:mt-[-11%]'>
         <h2 className="lg:text-[64px] text-[45px] text-white title text-center ">Ready to live <br /> together?</h2>
         <a href="#" className="mt-8 mb-24">
@@ -43,6 +44,7 @@ export default function Footer() {
           </div>
         </footer>
       </div>
+
     </>
   );
 }

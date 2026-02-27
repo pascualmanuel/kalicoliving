@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import Person1 from '../public/assets/images/community/person1.jpg';
@@ -21,6 +21,9 @@ interface PersonData {
 
 const CommunityCarousel = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [cardsPerView, setCardsPerView] = useState(3);
+  const [maxTranslate, setMaxTranslate] = useState(0);
+  const viewportRef = useRef<HTMLDivElement>(null);
   const carouselRef = useRef<HTMLDivElement>(null);
 
   const people: PersonData[] = [
@@ -64,7 +67,30 @@ const CommunityCarousel = () => {
 
   const cardWidth = 335; // Ancho de cada card
   const gap = 24; // Gap entre cards
-  const cardsPerView = 3; // Número de cards visibles
+
+  // Calcula cuántas cards entran realmente en el viewport del carrusel
+  useEffect(() => {
+    const updateCardsPerView = () => {
+      if (!viewportRef.current) return;
+
+      const containerWidth = viewportRef.current.offsetWidth;
+      const visibleCards = Math.max(
+        1,
+        Math.floor(containerWidth / (cardWidth + gap))
+      );
+
+      setCardsPerView(visibleCards);
+
+      const totalWidth = people.length * (cardWidth + gap);
+      const maxTranslateValue = Math.max(0, totalWidth - containerWidth);
+      setMaxTranslate(maxTranslateValue);
+    };
+
+    updateCardsPerView();
+    window.addEventListener('resize', updateCardsPerView);
+
+    return () => window.removeEventListener('resize', updateCardsPerView);
+  }, []);
 
   const nextSlide = () => {
     const maxIndex = Math.max(0, people.length - cardsPerView);
@@ -101,7 +127,7 @@ const CommunityCarousel = () => {
             onClick={nextSlide}
             className='rounded-full  transition-all disabled:opacity-50 disabled:cursor-not-allowed'
             aria-label="Next"
-            disabled={currentIndex >= people.length - cardsPerView - 1}
+            disabled={currentIndex >= people.length - cardsPerView }
 
 
           >
@@ -117,10 +143,13 @@ const CommunityCarousel = () => {
       </div>
 
       {/* Carousel Container */}
-      <div className='overflow-hidden w-full pl-20'>
+      <div ref={viewportRef} className='overflow-hidden w-full pl-5 md:pl-20'>
         <motion.div
           ref={carouselRef}
-          className='flex gap-6'
+          className='flex gap-6 cursor-grab active:cursor-grabbing'
+          drag="x"
+          dragConstraints={{ left: -maxTranslate, right: 0 }}
+          dragElastic={0.1}
           animate={{ x: translateX }}
           transition={{ duration: 0.5, ease: "easeInOut" }}
         >

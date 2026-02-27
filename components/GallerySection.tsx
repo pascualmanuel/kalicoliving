@@ -68,10 +68,10 @@ const GallerySection = () => {
     }, [currentImageIndex, galleryImages.length]);
 
     return (
-        <div className='w-full h-[100vh] flex flex-col items-center justify-center'>
+        <div className='w-full flex flex-col items-center justify-center'>
             <h2 className='text-black title text-center text-[45px] mb-10'>Gallery</h2>
             <div className='flex flex-col items-center justify-center'>
-                <div className="relative max-w-[525px] max-h-[718px] w-[525px] h-[718px] rounded-[20px] overflow-hidden border border-[#0000001A]">
+                <div className="relative max-w-[525px] max-h-[718px] sm:w-[525px] sm:h-[718px] w-[300px] h-[400px] rounded-[20px] overflow-hidden border border-[#0000001A]">
                     <Image
                         src={galleryImages[currentImageIndex]}
                         alt="Gallery"
