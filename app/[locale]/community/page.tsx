@@ -64,30 +64,40 @@ export default function CommunityPage() {
   }, []);
 
 
-  // Posiciones finales para las imágenes cuando se esparcen (en píxeles desde el centro)
-  const galleryPositions = [
-    // Imagen 1 - Top left
-    { x: '-180%', y: -200, rotate: -8 }, //ok
-    // Imagen 2 - Top center-right
-    { x: '80%', y: -230, rotate: 5 }, //ok
-    // Imagen 3 - Bottom left
-    { x: -200, y: -570, rotate: -5 }, //ok
-    // Imagen 4 - Bottom right
-    { x: '-150%', y: 280, rotate: -27 }, //ok
-    // Imagen 5 - Top right
-    { x: '76%', y: 280, rotate: -3 }, //ok
-  ];
-
   const [isMobile, setIsMobile] = useState(false);
+  const [isBelowLg, setIsBelowLg] = useState(false);
 
   useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
+    const checkBreakpoints = () => {
+      const w = window.innerWidth;
+      setIsMobile(w < 768);
+      setIsBelowLg(w < 1024);
     };
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
+    checkBreakpoints();
+    window.addEventListener('resize', checkBreakpoints);
+    return () => window.removeEventListener('resize', checkBreakpoints);
   }, []);
+
+  // Posiciones finales para las imágenes cuando se esparcen (en píxeles desde el centro)
+  // Desktop (>= lg): distribución actual
+  const galleryPositionsDesktop = [
+    { x: '-180%', y: -200, rotate: -8 }, // Imagen 1 - Top left
+    { x: '80%', y: -230, rotate: 5 }, // Imagen 2 - Top center-right
+    { x: -200, y: -570, rotate: -5 }, // Imagen 3 - Bottom left
+    { x: '-150%', y: 280, rotate: -27 }, // Imagen 4 - Bottom right
+    { x: '76%', y: 280, rotate: -3 }, // Imagen 5 - Top right
+  ];
+
+  // Compact (< lg): misma idea pero con menos spread y menos offsets para no salirse del viewport
+  const galleryPositionsCompact = [
+    { x: '-135%', y: -110, rotate: -6 },
+    { x: '55%', y: -140, rotate: 6 },
+    { x: -120, y: -360, rotate: -4 },
+    { x: '-120%', y: 210, rotate: -18 },
+    { x: '55%', y: 210, rotate: -2 },
+  ];
+
+  const galleryPositions = isBelowLg ? galleryPositionsCompact : galleryPositionsDesktop;
 
   // Rotaciones base para los isologos (-15° a 15°), luego se rotan 180° adicionales
   // Desktop: 14 isologos
@@ -268,7 +278,8 @@ export default function CommunityPage() {
           className="absolute bottom-0 left-0 w-full pointer-events-none rotate-180"
         />
       </div>
-      <div ref={galleryRef} className='w-full  h-[200vh] md:h-[100vh] relative '>
+      <div ref={galleryRef} className='w-full h-[200vh] md:h-[100vh] relative '>
+        {/* Galería responsive: cards más pequeños <lg, layout desktop intacto */}
         <motion.div
           initial={{ x: '-50%', y: '-50%', rotate: 0, opacity: 1 }}
           animate={isInView ? {
@@ -283,7 +294,7 @@ export default function CommunityPage() {
             opacity: 1,
           }}
           transition={{ duration: 1.2, ease: "easeOut", delay: 0.1 }}
-          className="absolute top-[15%] left-[50%] w-[478px] h-[338px] rounded-lg "
+          className="absolute top-[22%] md:top-[18%] lg:top-[15%] left-1/2 w-[300px] h-[212px] sm:w-[360px] sm:h-[254px] md:w-[420px] md:h-[297px] lg:w-[478px] lg:h-[338px] rounded-lg"
           style={{ transformOrigin: 'center center' }}
         >
           <Image
@@ -291,7 +302,7 @@ export default function CommunityPage() {
             alt="Gallery Image 1"
             width={478}
             height={338}
-            className="w-full h-full object-cover rounded-[24px] rotate-[-15deg]"
+            className="w-full h-full object-cover rounded-[24px] rotate-[-10deg] lg:rotate-[-15deg]"
           />
         </motion.div>
         <motion.div
@@ -308,7 +319,7 @@ export default function CommunityPage() {
             opacity: 1,
           }}
           transition={{ duration: 1.2, ease: "easeOut", delay: 0.2 }}
-          className="absolute top-[15%] left-[50%] w-[478px] h-[338px] rounded-lg "
+          className="absolute top-[22%] md:top-[18%] lg:top-[15%] left-1/2 w-[300px] h-[212px] sm:w-[360px] sm:h-[254px] md:w-[420px] md:h-[297px] lg:w-[478px] lg:h-[338px] rounded-lg"
           style={{ transformOrigin: 'center center' }}
         >
           <Image
@@ -316,7 +327,7 @@ export default function CommunityPage() {
             alt="Gallery Image 2"
             width={478}
             height={338}
-            className="w-full h-full object-cover rounded-[24px]  rotate-[-15deg]"
+            className="w-full h-full object-cover rounded-[24px] rotate-[-10deg] lg:rotate-[-15deg]"
           />
         </motion.div>
         <motion.div
@@ -333,7 +344,7 @@ export default function CommunityPage() {
             opacity: 1,
           }}
           transition={{ duration: 1.2, ease: "easeOut", delay: 0.3 }}
-          className="absolute top-[15%] left-[50%] w-[478px] h-[338px] rounded-lg "
+          className="absolute top-[22%] md:top-[18%] lg:top-[15%] left-1/2 w-[300px] h-[212px] sm:w-[360px] sm:h-[254px] md:w-[420px] md:h-[297px] lg:w-[478px] lg:h-[338px] rounded-lg"
           style={{ transformOrigin: 'center center' }}
         >
           <Image
@@ -358,7 +369,7 @@ export default function CommunityPage() {
             opacity: 1,
           }}
           transition={{ duration: 1.2, ease: "easeOut", delay: 0.4 }}
-          className="absolute top-[15%] left-[50%] w-[478px] h-[338px] rounded-lg "
+          className="absolute top-[22%] md:top-[18%] lg:top-[15%] left-1/2 w-[300px] h-[212px] sm:w-[360px] sm:h-[254px] md:w-[420px] md:h-[297px] lg:w-[478px] lg:h-[338px] rounded-lg"
           style={{ transformOrigin: 'center center' }}
         >
           <Image
@@ -383,7 +394,7 @@ export default function CommunityPage() {
             opacity: 1,
           }}
           transition={{ duration: 1.2, ease: "easeOut", delay: 0.5 }}
-          className="absolute top-[15%] left-[50%] w-[478px] h-[338px] rounded-lg "
+          className="absolute top-[22%] md:top-[18%] lg:top-[15%] left-1/2 w-[300px] h-[212px] sm:w-[360px] sm:h-[254px] md:w-[420px] md:h-[297px] lg:w-[478px] lg:h-[338px] rounded-lg"
           style={{ transformOrigin: 'center center' }}
         >
           <Image
@@ -394,14 +405,14 @@ export default function CommunityPage() {
             className="w-full h-full object-cover rounded-[24px] "
           />
         </motion.div>
-        <div className='flex flex-col items-center justify-center'>
+        <div className='flex flex-col items-center justify-center pt-[52vh] lg:pt-0 '>
           <h3 className='text-black title text-center text-[45px] max-w-[480px] mx-auto'>
             We focus on community, not random roommates.
           </h3>
-          <p className='text-black text-center text-[32px] max-w-[430px] mx-auto mt-2'>
+          <p className='hidden sm:block text-black text-center text-[32px] max-w-[430px] mx-auto mt-2'>
             Because who you live with matters.
           </p>
-          <a href="#" className="">
+          <a href="#" className="hidden sm:block">
             <div className='w-[350px] h-[60px] bg-red rounded-[12px]  text-center font-semibold text-[18px] text-white  mt-9 flex justify-center items-center'>
               Meet the community
             </div>
@@ -410,11 +421,11 @@ export default function CommunityPage() {
         </div>
 
       </div>
-      <div className='mb-[130px]'>
-      <h4 className='text-black text-left text-[50px] title pl-20'>Voices of the <br/> <span className='recoleta text-black'> community</span></h4>
+      <div className='mb-[130px] mt-[-65vh]  md:mt-0'>
+      <h4 className='text-black text-left text-[50px] title pl-5 md:pl-20'>Voices of the <br/> <span className='recoleta text-black'> community</span></h4>
       <CommunityCarousel />
       </div>
-      <div className='mb-[-310px]'>
+      <div className='mb-[-60px] md:mb-[-80px] lg:mb-[-100px]'>
       <GallerySection />
       </div>
     </main>
