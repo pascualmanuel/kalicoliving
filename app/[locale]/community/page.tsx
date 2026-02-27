@@ -19,7 +19,8 @@ import GalleryImage3 from '../../../public/assets/images/community/gallery-3.png
 import GalleryImage4 from '../../../public/assets/images/community/gallery-4.png';
 import GalleryImage5 from '../../../public/assets/images/community/gallery-5.png';
 import CommunityCarousel from '../../../components/CommunityCarousel';
-
+import GallerySection from '../../../components/GallerySection';
+import Footer from '../../../components/Footer';
 export default function CommunityPage() {
   const t = useTranslations('pages.community');
   const galleryRef = useRef<HTMLDivElement>(null);
@@ -66,15 +67,15 @@ export default function CommunityPage() {
   // Posiciones finales para las imágenes cuando se esparcen (en píxeles desde el centro)
   const galleryPositions = [
     // Imagen 1 - Top left
-    { x: '-180%', y: -150, rotate: -8 }, //ok
+    { x: '-180%', y: -200, rotate: -8 }, //ok
     // Imagen 2 - Top center-right
-    { x: '80%', y: -180, rotate: 5 }, //ok
+    { x: '80%', y: -230, rotate: 5 }, //ok
     // Imagen 3 - Bottom left
-    { x: -200, y: -500, rotate: -5 }, //ok
+    { x: -200, y: -570, rotate: -5 }, //ok
     // Imagen 4 - Bottom right
-    { x: '-150%', y: 320, rotate: -27 }, //ok
+    { x: '-150%', y: 280, rotate: -27 }, //ok
     // Imagen 5 - Top right
-    { x: '76%', y: 320, rotate: -3 }, //ok
+    { x: '76%', y: 280, rotate: -3 }, //ok
   ];
 
   // Rotaciones base para los 14 isologos (-15° a 15°), luego se rotan 180° adicionales
@@ -97,6 +98,7 @@ export default function CommunityPage() {
 
 
   return (
+    <>
     <main>
       <div className="relative h-[calc(100vh+200px)] min-h-[670px] bg-red md:min-h-[900px] overflow-hidden flex flex-col items-center justify-center">
         {/* Isologos rotados 180° + rotación adicional, distribuidos por fuera */}
@@ -479,10 +481,15 @@ export default function CommunityPage() {
         </div>
 
       </div>
-      <div className=' h-[100vh]'>
+      <div className='mb-[130px]'>
       <h4 className='text-black text-left text-[50px] title pl-20'>Voices of the <br/> <span className='recoleta text-black'> community</span></h4>
       <CommunityCarousel />
       </div>
+      <div className='mb-[-310px]'>
+      <GallerySection />
+      </div>
     </main>
+    <Footer />
+    </>
   );
 }
