@@ -355,14 +355,14 @@ export default function HomePage() {
             <div className='flex flex-col items-start p-6 gap-[21px] w-[315px] h-[206px] rounded-[20px]' style={{ background: 'rgba(255, 242, 226, 0.1)' }}>
               <h3 className="text-white title text-[18px] ">01</h3>
               <h4 className="text-white title text-[24px] font-semibold">Apply</h4>
-              <p className="text-white text-[18px] ">Tell us about you and what you're looking for.</p>
+              <p className="text-white text-[18px] ">Tell us about you and what you&apos;re looking for.</p>
             </div>
 
             {/* Card 2 */}
             <div className='flex flex-col items-start p-6 gap-[21px] w-[315px] h-[206px] rounded-[20px]' style={{ background: 'rgba(255, 242, 226, 0.1)' }}>
               <h3 className="text-white text-[18px] ">02</h3>
               <h4 className="text-white title text-[24px] font-semibold">Connect</h4>
-              <p className="text-white text-[18px] ">We'll contact you and have a conversation to get to know each other.</p>
+              <p className="text-white text-[18px] ">We&apos;ll contact you and have a conversation to get to know each other.</p>
             </div>
 
             {/* Card 3 */}

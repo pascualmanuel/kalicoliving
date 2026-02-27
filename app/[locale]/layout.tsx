@@ -1,9 +1,9 @@
+import React from 'react';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { routing } from '@/i18n/routing';
 import Navigation from '@/components/Navigation';
-import '../globals.css';
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -11,12 +11,12 @@ export function generateStaticParams() {
 
 export default async function LocaleLayout({
   children,
-  params
+  params,
 }: {
   children: React.ReactNode;
-  params: Promise<{ locale: string }>;
+  params: { locale: string };
 }) {
-  const { locale } = await params;
+  const { locale } = params;
 
   // Ensure that the incoming `locale` is valid
   if (!routing.locales.includes(locale as any)) {
@@ -28,13 +28,9 @@ export default async function LocaleLayout({
   const messages = await getMessages();
 
   return (
-    <html lang={locale}>
-      <body className='overflow-x-hidden'>
-        <NextIntlClientProvider messages={messages}>
-          <Navigation />
-          {children}
-        </NextIntlClientProvider>
-      </body>
-    </html>
+    <NextIntlClientProvider messages={messages}>
+      <Navigation />
+      {children}
+    </NextIntlClientProvider>
   );
 }

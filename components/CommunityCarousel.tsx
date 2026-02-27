@@ -90,7 +90,7 @@ const CommunityCarousel = () => {
     window.addEventListener('resize', updateCardsPerView);
 
     return () => window.removeEventListener('resize', updateCardsPerView);
-  }, []);
+  }, [people.length]);
 
   const nextSlide = () => {
     const maxIndex = Math.max(0, people.length - cardsPerView);
