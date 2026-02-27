@@ -78,33 +78,65 @@ export default function CommunityPage() {
     { x: '76%', y: 280, rotate: -3 }, //ok
   ];
 
-  // Rotaciones base para los 14 isologos (-15° a 15°), luego se rotan 180° adicionales
-  const isoRotations = [
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  // Rotaciones base para los isologos (-15° a 15°), luego se rotan 180° adicionales
+  // Desktop: 14 isologos
+  const isoRotationsDesktop = [
     -15, -12, -9, -6, -3, 0, 3, 6, 9, 12, 15, -10, 8, -5
   ];
+  // Mobile: menos isologos (6)
+  const isoRotationsMobile = [
+    -12, -6, 0, 6, 12, -8
+  ];
+  
+  const isoRotations = isMobile ? isoRotationsMobile : isoRotationsDesktop;
 
   // Posiciones y tamaños para las personas alrededor del hero (3 izquierda, 3 derecha)
-  // Flotando de forma orgánica, cerca del centro
-  const peoplePositions = [
+  // Flotando de forma orgánica, cerca del centro - DESKTOP
+  const peoplePositionsDesktop = [
     // Izquierda - 3 personas
-    { top: '-30px', left: '-139px', size: 97, offsetY: '-10px', duration: 4, delay: 0 },
-    { top: '52px', left: '-282px', size: 82, offsetY: '15px', duration: 5, delay: 0.5 },
-    { top: '50%', left: '-139px', size: 65, offsetY: '-8px', duration: 4.5, delay: 1 },
+    { top: '-30px', left: '-139px', right: undefined, size: 97, offsetY: '-10px', duration: 4, delay: 0 },
+    { top: '52px', left: '-282px', right: undefined, size: 82, offsetY: '15px', duration: 5, delay: 0.5 },
+    { top: '50%', left: '-139px', right: undefined, size: 65, offsetY: '-8px', duration: 4.5, delay: 1 },
     // Derecha - 3 personas
-    { top: '-30px', right: '-139px', size: 80, offsetY: '-10px', duration: 4.8, delay: 0.3 },
-    { top: '52px', right: '-282px', size: 95, offsetY: '15px', duration: 5.2, delay: 0.8 },
-    { top: '40%', right: '-139px', size: 65, offsetY: '-8px', duration: 4.3, delay: 1.2 },
+    { top: '-30px', left: undefined, right: '-139px', size: 80, offsetY: '-10px', duration: 4.8, delay: 0.3 },
+    { top: '52px', left: undefined, right: '-282px', size: 95, offsetY: '15px', duration: 5.2, delay: 0.8 },
+    { top: '40%', left: undefined, right: '-139px', size: 65, offsetY: '-8px', duration: 4.3, delay: 1.2 },
   ];
+
+  // Posiciones para MOBILE - arriba del hero, orden desordenado
+  // Todos + 140px
+  const peoplePositionsMobile = [
+    { top: '220px', left: '-20px', right: undefined, size: 60, offsetY: '-10px', duration: 4, delay: 0 }, //
+    { top: '170px', left: '35%', right: undefined, size: 55, offsetY: '15px', duration: 5, delay: 0.5 }, //
+    { top: '140px', left: undefined, right: '15%', size: 65, offsetY: '-8px', duration: 4.5, delay: 1 }, //
+    { top: '280px', left: '25%', right: undefined, size: 50, offsetY: '-10px', duration: 4.8, delay: 0.3 }, //
+    { top: '230px', left: undefined, right: '35%', size: 58, offsetY: '15px', duration: 5.2, delay: 0.8 }, //
+    { top: '250px', left: undefined, right: '-20px', size: 52, offsetY: '-8px', duration: 4.3, delay: 1.2 },//
+  ];
+
+  const peoplePositions = isMobile ? peoplePositionsMobile : peoplePositionsDesktop;
 
 
   return (
     <>
     <main>
-      <div className="relative h-[calc(100vh+200px)] min-h-[670px] bg-red md:min-h-[900px] overflow-hidden flex flex-col items-center justify-center">
+      <div className="relative h-[740px] sm:h-[calc(100vh+200px)] min-h-[670px] bg-red md:min-h-[900px] overflow-hidden flex flex-col items-center justify-center">
         {/* Isologos rotados 180° + rotación adicional, distribuidos por fuera */}
         {isoRotations.map((baseRotation, index) => {
           // Posiciones alejadas del centro, por fuera de las personas y el hero
-          const positions = [
+          // Desktop: 14 posiciones
+          const positionsDesktop = [
             { top: '5%', left: '15%' },
             { top: '12%', left: '25%' },
             { top: '20%', left: '12%' },
@@ -120,6 +152,16 @@ export default function CommunityPage() {
             { top: '50%', left: '2%' },
             { top: '50%', right: '2%' },
           ];
+          // Mobile: 6 posiciones
+          const positionsMobile = [
+            { top: '10%', left: '10%' },
+            { top: '20%', left: '5%' },
+            { top: '70%', left: '15%' },
+            { top: '10%', right: '10%' },
+            { top: '20%', right: '5%' },
+            { top: '70%', right: '15%' },
+          ];
+          const positions = isMobile ? positionsMobile : positionsDesktop;
           const position = positions[index] || { top: '50%', left: '50%' };
           // Rotación de 180° + rotación base
           const totalRotation = 180 + baseRotation;
@@ -127,7 +169,7 @@ export default function CommunityPage() {
           return (
             <motion.div
               key={`iso-${index}`}
-              className="absolute pointer-events-none"
+              className="absolute pointer-events-none z-0"
               style={{
                 ...position,
                 rotate: `${totalRotation}deg`,
@@ -148,7 +190,7 @@ export default function CommunityPage() {
                 alt=""
                 width={80}
                 height={80}
-                className="w-[50px] h-[50px] md:w-50px md:h-50px rotate-180"
+                className={`rotate-180 ${isMobile ? 'w-[25px] h-[25px]' : 'w-[50px] h-[50px] md:w-50px md:h-50px'}`}
               />
             </motion.div>
           );
@@ -158,175 +200,62 @@ export default function CommunityPage() {
 
 
         {/* Contenido principal */}
-        <div className="relative z-10 flex flex-col items-center justify-center">
-          <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
-            <motion.div
-              className="absolute rounded-full overflow-hidden"
-              style={{
-                top: peoplePositions[0].top,
-                left: peoplePositions[0].left,
-                width: `${peoplePositions[0].size}px`,
-                height: `${peoplePositions[0].size}px`,
-              }}
-              animate={{
-                y: [0, -12, 0],
-                x: [0, 4, 0],
-              }}
-              transition={{
-                duration: peoplePositions[0].duration,
-                repeat: Infinity,
-                ease: "easeInOut",
-                delay: peoplePositions[0].delay,
-              }}
-            >
-              <Image
-                src={People}
-                alt=""
-                width={peoplePositions[0].size}
-                height={peoplePositions[0].size}
-                className="rounded-full object-cover w-full h-full"
-              />
-            </motion.div>
-            <motion.div
-              className="absolute rounded-full overflow-hidden"
-              style={{
-                top: peoplePositions[1].top,
-                left: peoplePositions[1].left,
-                width: `${peoplePositions[1].size}px`,
-                height: `${peoplePositions[1].size}px`,
-              }}
-              animate={{
-                y: [0, -15, 0],
-                x: [0, -3, 0],
-              }}
-              transition={{
-                duration: peoplePositions[1].duration,
-                repeat: Infinity,
-                ease: "easeInOut",
-                delay: peoplePositions[1].delay,
-              }}
-            >
-              <Image
-                src={People2}
-                alt=""
-                width={peoplePositions[1].size}
-                height={peoplePositions[1].size}
-                className="rounded-full object-cover w-full h-full"
-              />
-            </motion.div>
-            <motion.div
-              className="absolute rounded-full overflow-hidden"
-              style={{
-                top: peoplePositions[2].top,
-                left: peoplePositions[2].left,
-                width: `${peoplePositions[2].size}px`,
-                height: `${peoplePositions[2].size}px`,
-              }}
-              animate={{
-                y: [0, -10, 0],
-                x: [0, 5, 0],
-              }}
-              transition={{
-                duration: peoplePositions[2].duration,
-                repeat: Infinity,
-                ease: "easeInOut",
-                delay: peoplePositions[2].delay,
-              }}
-            >
-              <Image
-                src={People3}
-                alt=""
-                width={peoplePositions[2].size}
-                height={peoplePositions[2].size}
-                className="rounded-full object-cover w-full h-full"
-              />
-            </motion.div>
-            <motion.div
-              className="absolute rounded-full overflow-hidden"
-              style={{
-                top: peoplePositions[3].top,
-                right: peoplePositions[3].right,
-                width: `${peoplePositions[3].size}px`,
-                height: `${peoplePositions[3].size}px`,
-              }}
-              animate={{
-                y: [0, -13, 0],
-                x: [0, -4, 0],
-              }}
-              transition={{
-                duration: peoplePositions[3].duration,
-                repeat: Infinity,
-                ease: "easeInOut",
-                delay: peoplePositions[3].delay,
-              }}
-            >
-              <Image
-                src={People4}
-                alt=""
-                width={peoplePositions[3].size}
-                height={peoplePositions[3].size}
-                className="rounded-full object-cover w-full h-full"
-              />
-            </motion.div>
-            <motion.div
-              className="absolute rounded-full overflow-hidden"
-              style={{
-                top: peoplePositions[4].top,
-                right: peoplePositions[4].right,
-                width: `${peoplePositions[4].size}px`,
-                height: `${peoplePositions[4].size}px`,
-              }}
-              animate={{
-                y: [0, -14, 0],
-                x: [0, 3, 0],
-              }}
-              transition={{
-                duration: peoplePositions[4].duration,
-                repeat: Infinity,
-                ease: "easeInOut",
-                delay: peoplePositions[4].delay,
-              }}
-            >
-              <Image
-                src={People5}
-                alt=""
-                width={peoplePositions[4].size}
-                height={peoplePositions[4].size}
-                className="rounded-full object-cover w-full h-full"
-              />
-            </motion.div>
-            <motion.div
-              className="absolute rounded-full overflow-hidden"
-              style={{
-                top: peoplePositions[5].top,
-                right: peoplePositions[5].right,
-                width: `${peoplePositions[5].size}px`,
-                height: `${peoplePositions[5].size}px`,
-              }}
-              animate={{
-                y: [0, -11, 0],
-                x: [0, -5, 0],
-              }}
-              transition={{
-                duration: peoplePositions[5].duration,
-                repeat: Infinity,
-                ease: "easeInOut",
-                delay: peoplePositions[5].delay,
-              }}
-            >
-              <Image
-                src={People6}
-                alt=""
-                width={peoplePositions[5].size}
-                height={peoplePositions[5].size}
-                className="rounded-full object-cover w-full h-full"
-              />
-            </motion.div>
+        <div className="relative z-20 flex flex-col items-center justify-end sm:justify-center h-full sm:h-auto w-screen md:w-auto ">
+          <div className="absolute top-0 left-0 w-full h-full pointer-events-none z-[1]">
+            {peoplePositions.map((position, index) => {
+              const peopleImages = [People, People2, People3, People4, People5, People6];
+              const animations = [
+                { y: [0, -12, 0], x: [0, 4, 0] },
+                { y: [0, -15, 0], x: [0, -3, 0] },
+                { y: [0, -10, 0], x: [0, 5, 0] },
+                { y: [0, -13, 0], x: [0, -4, 0] },
+                { y: [0, -14, 0], x: [0, 3, 0] },
+                { y: [0, -11, 0], x: [0, -5, 0] },
+              ];
+
+              // Estilo para cada persona
+              const style: React.CSSProperties = {
+                top: position.top,
+                width: `${position.size}px`,
+                height: `${position.size}px`,
+              };
+
+              // Aplicar left o right según la posición
+              if (position.left !== undefined) {
+                style.left = position.left;
+              }
+              if (position.right !== undefined) {
+                style.right = position.right;
+              }
+
+              return (
+                <motion.div
+                  key={index}
+                  className="absolute rounded-full overflow-hidden"
+                  style={style}
+                  animate={animations[index]}
+                  transition={{
+                    duration: position.duration,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                    delay: position.delay,
+                  }}
+                >
+                  <Image
+                    src={peopleImages[index]}
+                    alt=""
+                    width={position.size}
+                    height={position.size}
+                    className="rounded-full object-cover w-full h-full"
+                  />
+                </motion.div>
+              );
+            })}
           </div>
           <h3 className='text-white text-center text-[16] md:text-[18] tracking-[-3%] pb-8'>Kali community</h3>
-          <h1 className='text-white font-bold text-center text-[50px]  sm:text-[100px] max-w-[270px] sm:max-w-[525px] title  !leading-[90%] sm:!leading-[80px]'>People that leave <span className='recoleta'> a mark</span></h1>
-          <a href="#" className="mb-[130px] mt-6">
-            <div className='w-[128px] bg-white rounded-[12px] semi-bold text-center font-semibold text-lg px-4 py-3 text-black my-2'>
+          <h1 className='text-white font-bold text-center text-[50px]  sm:text-[100px] max-w-[270px] sm:max-w-[525px] title  !leading-[90%] sm:!leading-[80px] mb-10 md:mb-0'>People that leave <span className='recoleta'> a mark</span></h1>
+          <a href="#" className="mb-[130px] mt-6 w-full sm:w-auto px-4 sm:px-5">
+            <div className='  sm:w-[128px] bg-white rounded-[12px] semi-bold text-center font-semibold text-lg px-4 py-3 text-black my-2'>
               Join Kali
             </div>
           </a>
@@ -339,7 +268,7 @@ export default function CommunityPage() {
           className="absolute bottom-0 left-0 w-full pointer-events-none rotate-180"
         />
       </div>
-      <div ref={galleryRef} className='w-full h-[100vh] relative '>
+      <div ref={galleryRef} className='w-full  h-[200vh] md:h-[100vh] relative '>
         <motion.div
           initial={{ x: '-50%', y: '-50%', rotate: 0, opacity: 1 }}
           animate={isInView ? {
