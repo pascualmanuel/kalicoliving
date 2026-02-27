@@ -29,7 +29,7 @@ export default async function LocaleLayout({
 
   return (
     <html lang={locale}>
-      <body>
+      <body className='overflow-x-hidden'>
         <NextIntlClientProvider messages={messages}>
           <Navigation />
           {children}

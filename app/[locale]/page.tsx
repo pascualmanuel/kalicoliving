@@ -382,7 +382,7 @@ export default function HomePage() {
         </div>
       </div>
 
-      <div className='w-full md:px-20 px-4 pt-[200px]'>
+      <div className='w-full md:px-20 px-4 py-[200px]'>
         <h2 className="md:text-[64px] text-[45px] text-black title text-center ">Kali is for you if...</h2>
         <div className='w-full flex items-center justify-center'>
           <div className='flex flex-col justify-between gap-4 mt-12'>
