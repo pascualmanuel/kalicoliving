@@ -74,3 +74,53 @@ letter-spacing: -4%;
 .blab{
   border: 1px solid  #FFF2E266;
 }
+
+.carousel-box-desk {
+
+  background-color: #F4E8D9;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+
+  padding: 16px;
+  box-sizing: border-box;
+  transition: margin 0.3s ease;
+  /* margin: 0 0 8px 0; */
+  display: flex;
+  justify-content: space-around;
+}
+
+.carousel-box {
+  width: 336px !important;
+  height: 144px !important;
+  background-color: #F4E8D9;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 16px;
+  box-sizing: border-box;
+  transition: margin 0.3s ease;
+  margin: 0 0 8px 0;
+}
+
+.swiper-pagination {
+  bottom: 0 !important;
+  scale: 0.7;
+}
+
+.swiper-initialized {
+  height: 178px !important;
+}
+
+.swiper-pagination-bullet-active {
+  background-color: black !important;
+}
+
+.swiper-slide-active {
+  margin-left: 16px !important;
+}
+
+.swiper-slide-prev {
+  margin-right: 20px !important;
+}
