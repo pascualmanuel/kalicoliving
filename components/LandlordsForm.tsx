@@ -12,8 +12,8 @@ const LandlordsForm = () => {
 
   return (
     <div className="w-full max-w-[900px] mx-auto shadow-[0px_4px_94px_0px_#0000001A] p-10 rounded-[20px] bg-white">
-      <p className="text-black text-[20px]  text-center">Hablemos</p>
-      <h1 className="text-black text-[50px] title text-center">
+      <p className="text-black text-[20px]  text-center mb-2">Hablemos</p>
+      <h1 className="text-black md:text-[50px] text-[35px] title text-center">
         Alquila tu piso sin preocupaciones
       </h1>
       <form
