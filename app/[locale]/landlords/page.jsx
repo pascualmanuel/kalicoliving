@@ -119,43 +119,43 @@ export default function LandlordsPage() {
           <h2 className="md:text-[64px] text-[45px] text-white title text-center ">Cómo funciona</h2>
           <p className="text-white text-center my-2 text-[20px] leading-[130%]">Un proceso claro, simple y sin complicaciones.</p>
           <div className='w-full'>
-            <div className='flex flex-col lg:flex-row items-center lg:items-start justify-between gap-7 mt-12 pb-[200px]'>
+            <div className='flex flex-col flex-wrap xl:flex-nowrap sm:flex-row items-center lg:items-start justify-between gap-7 mt-12 pb-[200px]'>
               {/* Card 1 */}
-              <div className='flex flex-col items-start p-6 gap-[21px] w-[315px] h-[206px] rounded-[20px]' style={{ background: 'rgba(255, 242, 226, 0.1)' }}>
+              <div className='flex flex-col items-start p-6 gap-[21px] sm:w-[46%] xl:w-[315px] h-[270px] xl:h-[226px] rounded-[20px]' style={{ background: 'rgba(255, 242, 226, 0.1)' }}>
                 <h3 className="text-white title text-[18px] ">01</h3>
                 <h4 className="text-white title text-[24px] font-semibold">Contacto</h4>
                 <p className="text-white text-[18px] ">Cuéntanos sobre tu propiedad para entender si cumple con nuestros requisitos.</p>
               </div>
 
               {/* Card 2 */}
-              <div className='flex flex-col items-start p-6 gap-[21px] w-[315px] h-[206px] rounded-[20px]' style={{ background: 'rgba(255, 242, 226, 0.1)' }}>
+              <div className='flex flex-col items-start p-6 gap-[21px] sm:w-[46%] xl:w-[315px] h-[270px] xl:h-[226px] rounded-[20px]' style={{ background: 'rgba(255, 242, 226, 0.1)' }}>
                 <h3 className="text-white text-[18px] ">02</h3>
                 <h4 className="text-white title text-[24px] font-semibold">Evaluación</h4>
                 <p className="text-white text-[18px] ">Analizamos su potencial: ubicación, distribución y estado general.</p>
               </div>
 
               {/* Card 3 */}
-              <div className='flex flex-col items-start p-6 gap-[21px] w-[315px] h-[206px] rounded-[20px]' style={{ background: 'rgba(255, 242, 226, 0.1)' }}>
+              <div className='flex flex-col items-start p-6 gap-[21px] sm:w-[46%] xl:w-[315px] h-[270px] xl:h-[226px] rounded-[20px]' style={{ background: 'rgba(255, 242, 226, 0.1)' }}>
                 <h3 className="text-white text-[18px] ">03</h3>
                 <h4 className="text-white title text-[24px] font-semibold">Propuesta</h4>
                 <p className="text-white text-[18px] ">Te presentamos una propuesta: cuánto puedes ganar y qué incluye nuestra gestión.</p>
               </div>
 
               {/* Card 4 */}
-              <div className='flex flex-col items-start p-6 gap-[21px] w-[315px] h-[206px] rounded-[20px]' style={{ background: 'rgba(255, 242, 226, 0.1)' }}>
+              <div className='flex flex-col items-start p-6 gap-[21px] sm:w-[46%] xl:w-[315px] h-[270px] xl:h-[226px] rounded-[20px]' style={{ background: 'rgba(255, 242, 226, 0.1)' }}>
                 <h3 className="text-white text-[18px] ">04</h3>
-                <h4 className="text-white title text-[32px] font-semibold">Gestión</h4>
-                <p className="text-white text-[16px] leading-[130%]">Tu cobras cada mes. Nosotros gestionamos la propiedad y nos encargamos del resto.</p>
+                <h4 className="text-white title text-[24px] font-semibold">Gestión</h4>
+                <p className="text-white text-[18px] leading-[130%]">Tu cobras cada mes. Nosotros gestionamos la propiedad y nos encargamos del resto.</p>
               </div>
             </div>
           </div>
         </div>
-        <div className='mb-[260px]'>
+        <div className='md:mb-[260px] mb-[100px]'>
           <LandlordsReviews />
 
         </div>
 
-        <div className='mb-[-10%] z-10 relative'>
+        <div className='mb-[-10%] z-10 relative  md:px-10 px-5'>
           <LandlordsForm />
         </div>
 

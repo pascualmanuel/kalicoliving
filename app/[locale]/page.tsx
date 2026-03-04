@@ -369,7 +369,7 @@ export default function HomePage() {
         </div>
       </div>
 
-      <div className="w-full md:px-20 sm:px-8 px-4  py-[130px]">
+      <div className="w-full md:px-20 sm:px-8 px-4  md:pt-[130px] pt-[60px]">
         <RoomsSection />
       </div>
 
@@ -378,7 +378,7 @@ export default function HomePage() {
         alt="divider"
         width={1512}
         height={193}
-        className="w-full mt-[200px]  mx-auto"
+        className="w-full md:mt-[200px] mt-[100px]  mx-auto"
       />
 
       <div className="w-full md:px-20 px-4 bg-brown  md:mt-[-11%]">
@@ -389,10 +389,10 @@ export default function HomePage() {
           Find your next home in a few steps.
         </p>
         <div className="w-full">
-          <div className="flex flex-col lg:flex-row items-center lg:items-start justify-between gap-7 mt-12 pb-[200px]">
+          <div className="flex flex-col flex-wrap xl:flex-nowrap sm:flex-row items-center lg:items-start justify-between gap-7 mt-12 pb-[200px]">
             {/* Card 1 */}
             <div
-              className="flex flex-col items-start p-6 gap-[21px] w-[315px] h-[206px] rounded-[20px]"
+              className="flex flex-col items-start p-6  xl:gap-[21px] sm:w-[46%] xl:w-[315px] h-[180px] sm:h-[200px] lg:h-[180px] xl:h-[226px] rounded-[20px] w-full"
               style={{ background: "rgba(255, 242, 226, 0.1)" }}
             >
               <h3 className="text-white title text-[18px] ">01</h3>
@@ -406,7 +406,7 @@ export default function HomePage() {
 
             {/* Card 2 */}
             <div
-              className="flex flex-col items-start p-6 gap-[21px] w-[315px] h-[206px] rounded-[20px]"
+              className="flex flex-col items-start p-6  xl:gap-[21px] sm:w-[46%] xl:w-[315px] h-[180px] sm:h-[200px] lg:h-[180px] xl:h-[226px] rounded-[20px] w-full"
               style={{ background: "rgba(255, 242, 226, 0.1)" }}
             >
               <h3 className="text-white text-[18px] ">02</h3>
@@ -421,7 +421,7 @@ export default function HomePage() {
 
             {/* Card 3 */}
             <div
-              className="flex flex-col items-start p-6 gap-[21px] w-[315px] h-[206px] rounded-[20px]"
+              className="flex flex-col items-start p-6  xl:gap-[21px] sm:w-[46%] xl:w-[315px] h-[180px] sm:h-[200px] lg:h-[180px] xl:h-[226px] rounded-[20px] w-full"
               style={{ background: "rgba(255, 242, 226, 0.1)" }}
             >
               <h3 className="text-white text-[18px] ">03</h3>
@@ -435,12 +435,12 @@ export default function HomePage() {
             </div>
 
             {/* Card 4 */}
-            <div className="flex flex-col items-start p-6 gap-[21px] w-[315px] h-[206px] rounded-[20px] bg-white">
+            <div className="flex flex-col items-start p-6  xl:gap-[21px] sm:w-[46%] xl:w-[315px] h-[180px] sm:h-[200px] lg:h-[180px] xl:h-[226px] rounded-[20px] w-full bg-white">
               <h3 className="text-black text-[18px] ">04</h3>
-              <h4 className="text-black title text-[32px] font-semibold">
+              <h4 className="text-black title text-[24px] font-semibold">
                 Move in
               </h4>
-              <p className="text-black text-[16px] leading-[130%]">
+              <p className="text-black text-[18px] leading-[130%]">
                 Arrive with everything ready. Start living the experience.
               </p>
             </div>
@@ -448,7 +448,7 @@ export default function HomePage() {
         </div>
       </div>
 
-      <div className="w-full md:px-20 px-4 py-[200px]">
+      <div className="w-full md:px-20 px-4 md:py-[200px] py-[120px]">
         <h2 className="md:text-[64px] text-[45px] text-black title text-center ">
           Kali is for you if...
         </h2>
