@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import React from "react";
 import { useState, useEffect, useRef } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -51,7 +51,7 @@ function Carousel() {
   const [cardWidth4Col, setCardWidth4Col] = useState(325); // Ancho para cards de 4 columnas
   const [cardHeight, setCardHeight] = useState(218);
   const [isMediumLayout, setIsMediumLayout] = useState(false); // Entre 1000px y 1280px
-  const [isSmallLayout, setIsSmallLayout] = useState(false); // Entre 768px y 1000px
+  const [isSmallLayout, setIsSmallLayout] = useState(false); // Entre 640px y 1000px
   const containerRef = useRef<HTMLDivElement>(null);
   const gap = 30; // Gap entre cards
   const padding = 60; // Padding horizontal del contenedor (30px cada lado)
@@ -59,23 +59,24 @@ function Carousel() {
   const baseHeight = 218; // Altura base de referencia
 
   // Function to calculate card width based on number of columns
-  const calculateCardWidth = (containerWidth: number, columns: number) => {
+  const calculateCardWidth = (containerWidth, columns) => {
     const totalGaps = gap * (columns - 1);
     const totalPadding = padding * 2;
-    const calculatedWidth = (containerWidth - totalPadding - totalGaps) / columns;
+    const calculatedWidth =
+      (containerWidth - totalPadding - totalGaps) / columns;
     return Math.max(200, calculatedWidth); // Mínimo 200px para evitar cards muy pequeñas
   };
 
   // Function to update the state based on window width
   const updateMedia = () => {
     const width = window.innerWidth;
-    setIsDesktop(width >= 768);
+    setIsDesktop(width >= 640);
 
-    if (width >= 768 && containerRef.current) {
+    if (width >= 640 && containerRef.current) {
       const containerWidth = containerRef.current.offsetWidth;
 
-      // Detectar el rango pequeño (768px - 1000px)
-      const isSmall = width >= 768 && width < 1000;
+      // Detectar el rango pequeño (640px - 1000px)
+      const isSmall = width >= 640 && width < 1000;
       setIsSmallLayout(isSmall);
 
       // Detectar si estamos en el rango medio (1000px - 1280px)
@@ -124,7 +125,7 @@ function Carousel() {
           setCardHeight(baseHeight);
         }
       }
-    } else if (width >= 768) {
+    } else if (width >= 640) {
       // Fallback si aún no hay ref
       setCardWidth3Col(325);
       setCardWidth2Col(325);
@@ -136,7 +137,7 @@ function Carousel() {
 
   useEffect(() => {
     // Inicializar en el cliente
-    if (typeof window !== 'undefined') {
+    if (typeof window !== "undefined") {
       updateMedia();
       window.addEventListener("resize", updateMedia);
 
@@ -148,7 +149,7 @@ function Carousel() {
 
   // ResizeObserver para detectar cambios en el contenedor cuando esté disponible
   useEffect(() => {
-    if (typeof window !== 'undefined' && containerRef.current && isDesktop) {
+    if (typeof window !== "undefined" && containerRef.current && isDesktop) {
       const resizeObserver = new ResizeObserver(() => {
         updateMedia();
       });
@@ -175,8 +176,8 @@ function Carousel() {
           slidesPerView="auto" // Allows the display of partial boxes
           centeredSlides={false} // Aligns the first box to the left
           pagination={{ clickable: true }}
-        // autoplay={true}
-        // loop={true}
+          // autoplay={true}
+          // loop={true}
         >
           {data.map((item, index) => (
             <SwiperSlide key={index} className="carousel-box ">
@@ -197,9 +198,9 @@ function Carousel() {
           >
             {data.map((item, index) => {
               // Determinar el ancho según el layout y el índice
-              let cardWidth: number;
+              let cardWidth;
               if (isSmallLayout) {
-                // Entre 768px y 1000px: 2-2-2-2 (todas las cards en 2 columnas)
+                // Entre 640px y 1000px: 2-2-2-2 (todas las cards en 2 columnas)
                 cardWidth = cardWidth2ColFull;
               } else if (isMediumLayout) {
                 // Entre 1000px y 1280px: 3-3-2
@@ -225,13 +226,17 @@ function Carousel() {
                     flexBasis: `${cardWidth}px`,
                     flexGrow: 0,
                     flexShrink: 0,
-                    minHeight: `${cardHeight}px`
+                    minHeight: `${cardHeight}px`,
                   }}
                 >
                   <Image src={CheckIcon} alt="Check" className="mt-2" />
                   <div className=" flex flex-col items-center justify-between gap-4">
-                    <h3 className="text-[22px] font-semibold text-center leading-[90%]">{item.title}</h3>
-                    <p className="text-[16px] text-center text-[#504E4B] pb-5">{item.text}</p>
+                    <h3 className="text-[22px] font-semibold text-center leading-[90%]">
+                      {item.title}
+                    </h3>
+                    <p className="text-[16px] text-center text-[#504E4B] pb-5">
+                      {item.text}
+                    </p>
                   </div>
                 </div>
               );
