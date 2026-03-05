@@ -27,11 +27,15 @@ const BRING_OPTIONS = [
 ];
 const ABOUT_MAX_LENGTH = 200;
 
+const dateInputClassName =
+  "w-[100vw] md:w-full h-12 px-4 rounded-lg border border-[#D3D3D3] bg-transparent text-base font-normal text-black placeholder:text-gray-500 outline-none focus:border-black transition-colors";
+
 const inputClassName =
   "w-full h-12 px-4 rounded-lg border border-[#D3D3D3] bg-transparent text-base font-normal text-black placeholder:text-gray-500 outline-none focus:border-black transition-colors";
 const textareaClassName =
   "w-full min-h-[120px] px-4 py-3 rounded-lg border border-[#D3D3D3] bg-transparent text-base font-normal text-black placeholder:text-gray-500 outline-none focus:border-black transition-colors resize-y";
-const labelClassName = "block text-black text-xl font-semibold mb-2";
+const labelClassName =
+  "block text-black md:text-[20px] text-[17px]  font-semibold md:mb-2 mb-1";
 
 export default function ApplyToKaliPopup({
   isOpen,
@@ -57,16 +61,15 @@ export default function ApplyToKaliPopup({
       onClick={(e) => e.target === e.currentTarget && onClose()}
     >
       <div
-        className="w-full max-w-[670px] rounded-[20px] bg-[#FFF2E2] shadow-xl overflow-hidden"
+        className="w-full max-w-[670px] rounded-[20px] bg-[#FFF2E2] shadow-xl overflow-hidden "
         onClick={(e) => e.stopPropagation()}
       >
         {!isSubmitted && (
-          <div className="relative pt-8 pb-4 px-6 md:px-10">
+          <div className="relative pt-8 pb-4 px-5 md:px-10">
             <button
               type="button"
               onClick={onClose}
-              className="absolute w-8 h-8 flex items-center justify-center rounded-full hover:bg-black/5 text-black"
-              style={{ top: "50px", right: "50px" }}
+              className="absolute w-8 h-8 flex items-center justify-center rounded-full hover:bg-black/5 text-black md:top-[50px] top-[20px] md:right-[50px] right-[20px]"
               aria-label="Cerrar"
             >
               <Image
@@ -124,7 +127,7 @@ export default function ApplyToKaliPopup({
         )}
 
         {/* Step content / Success - cuando enviado solo esto queda visible */}
-        <div className="px-6 md:px-10 pb-8">
+        <div className="px-5 md:px-10 pb-8 min-w-0 overflow-hidden">
           {isSubmitted ? (
             <div className="flex flex-col gap-7 items-center text-center py-12">
               <Image
@@ -145,13 +148,13 @@ export default function ApplyToKaliPopup({
           ) : (
             step === 1 && (
               <form
-                className="form-no-autofill-bg flex flex-col gap-6"
+                className="form-no-autofill-bg flex flex-col gap-6 min-w-0"
                 onSubmit={(e) => {
                   e.preventDefault();
                   setStep(2);
                 }}
               >
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 ">
                   <div>
                     <label htmlFor="apply-name" className={labelClassName}>
                       Your Name
@@ -162,7 +165,6 @@ export default function ApplyToKaliPopup({
                       type="text"
                       placeholder="Luke Gordon"
                       className={inputClassName}
-                      style={{ fontSize: "16px" }}
                     />
                   </div>
                   <div>
@@ -175,16 +177,15 @@ export default function ApplyToKaliPopup({
                       type="email"
                       placeholder="tu@email.com"
                       className={inputClassName}
-                      style={{ fontSize: "16px" }}
                     />
                   </div>
                 </div>
 
-                <div>
+                <div className="min-w-0">
                   <label htmlFor="apply-date" className={labelClassName}>
                     When are you looking to move?
                   </label>
-                  <div className="relative">
+                  <div className="relative min-w-0">
                     <span className="absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none flex items-center">
                       <Image
                         src="/assets/icons/date-icon.svg"
@@ -198,8 +199,7 @@ export default function ApplyToKaliPopup({
                       name="moveDate"
                       type="date"
                       placeholder="Pick a date"
-                      className={`${inputClassName} pl-12`}
-                      style={{ fontSize: "16px" }}
+                      className={`${dateInputClassName} pl-12 min-w-0 max-w-full`}
                     />
                   </div>
                 </div>
@@ -257,7 +257,6 @@ export default function ApplyToKaliPopup({
                   maxLength={ABOUT_MAX_LENGTH}
                   placeholder="Who are you? What brings you here? What are you looking for in a living situation?"
                   className={textareaClassName}
-                  style={{ fontSize: "16px" }}
                   value={aboutYourself}
                   onChange={(e) => setAboutYourself(e.target.value)}
                 />
@@ -353,7 +352,6 @@ export default function ApplyToKaliPopup({
                   name="anythingElse"
                   placeholder="Optional: Any other thoughts, questions, or things you want us to know."
                   className={textareaClassName}
-                  style={{ fontSize: "16px" }}
                   value={anythingElse}
                   onChange={(e) => setAnythingElse(e.target.value)}
                 />
