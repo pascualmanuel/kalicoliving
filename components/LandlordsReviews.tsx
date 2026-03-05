@@ -110,7 +110,8 @@ const LandlordsReviews = () => {
       <div ref={viewportRef} className="overflow-hidden w-full pl-5 md:pl-20">
         <div className="flex items-center justify-between sm:pb-[50px] sm:pt-[120px] pb-[30px] pt-[60px] mb-6 pr-4">
           <h2 className="text-[35px] sm:text-[40px] md:text-[56px] font-bold max-w-[350px] md:max-w-[550px] leading-[90%]">
-            Qué dicen nuestros propietarios{" "}
+            {/* Qué dicen nuestros propietarios{" "} */}
+            Straight from our landlords
           </h2>
           <div className="sm:flex gap-2 mt-10 hidden ">
             <button
