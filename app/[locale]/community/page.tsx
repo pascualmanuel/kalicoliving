@@ -1,28 +1,29 @@
-'use client';
+"use client";
 
-import { useTranslations } from 'next-intl';
-import Image from 'next/image';
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { useRef, useState, useEffect } from 'react';
-import People from '../../../public/assets/images/community/person1.jpg';
-import People2 from '../../../public/assets/images/community/person2.jpg';
-import People3 from '../../../public/assets/images/community/person3.jpg';
-import People4 from '../../../public/assets/images/community/person4.jpg';
-import People5 from '../../../public/assets/images/community/person5.jpg';
-import People6 from '../../../public/assets/images/community/person6.jpg';
-import IsoLogo from '../../../public/assets/logos/iso-logo.svg';
-import dividerNotFilledSvg from '../../../public/assets/icons/divider-not-filled.svg';
+import { useTranslations } from "next-intl";
+import Image from "next/image";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { useRef, useState, useEffect } from "react";
+import People from "../../../public/assets/images/community/person1.jpg";
+import People2 from "../../../public/assets/images/community/person2.jpg";
+import People3 from "../../../public/assets/images/community/person3.jpg";
+import People4 from "../../../public/assets/images/community/person4.jpg";
+import People5 from "../../../public/assets/images/community/person5.jpg";
+import People6 from "../../../public/assets/images/community/person6.jpg";
+import IsoLogo from "../../../public/assets/logos/iso-logo.svg";
+import dividerNotFilledSvg from "../../../public/assets/icons/divider-not-filled.svg";
 // import dividerSvg from '../../../public/assets/icons/divider.svg';
-import GalleryImage1 from '../../../public/assets/images/community/gallery-1.png';
-import GalleryImage2 from '../../../public/assets/images/community/gallery-2.png';
-import GalleryImage3 from '../../../public/assets/images/community/gallery-3.png';
-import GalleryImage4 from '../../../public/assets/images/community/gallery-4.png';
-import GalleryImage5 from '../../../public/assets/images/community/gallery-5.png';
-import CommunityCarousel from '../../../components/CommunityCarousel';
-import GallerySection from '../../../components/GallerySection';
-import Footer from '../../../components/Footer';
+import GalleryImage1 from "../../../public/assets/images/community/gallery-1.png";
+import GalleryImage2 from "../../../public/assets/images/community/gallery-2.png";
+import GalleryImage3 from "../../../public/assets/images/community/gallery-3.png";
+import GalleryImage4 from "../../../public/assets/images/community/gallery-4.png";
+import GalleryImage5 from "../../../public/assets/images/community/gallery-5.png";
+import CommunityCarousel from "../../../components/CommunityCarousel";
+import GallerySection from "../../../components/GallerySection";
+import Footer from "../../../components/Footer";
+import ApplyToKaliPopup from "../../../components/ApplyToKaliPopup";
 export default function CommunityPage() {
-  const t = useTranslations('pages.community');
+  const t = useTranslations("pages.community");
   const galleryRef = useRef<HTMLDivElement>(null);
   const [isInView, setIsInView] = useState(false);
 
@@ -45,7 +46,8 @@ export default function CommunityPage() {
 
       // Se activa cuando el top de la sección está por encima del trigger point
       // y la sección aún está visible (no ha salido completamente por arriba)
-      const shouldActivate = sectionTop < triggerPoint && sectionTop > -sectionHeight * 0.5;
+      const shouldActivate =
+        sectionTop < triggerPoint && sectionTop > -sectionHeight * 0.5;
 
       setIsInView(shouldActivate);
     };
@@ -54,18 +56,18 @@ export default function CommunityPage() {
     handleScroll();
 
     // Escuchar eventos de scroll
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    window.addEventListener('resize', handleScroll, { passive: true });
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("resize", handleScroll, { passive: true });
 
     return () => {
-      window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('resize', handleScroll);
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleScroll);
     };
   }, []);
 
-
   const [isMobile, setIsMobile] = useState(false);
   const [isBelowLg, setIsBelowLg] = useState(false);
+  const [isApplyPopupOpen, setIsApplyPopupOpen] = useState(false);
 
   useEffect(() => {
     const checkBreakpoints = () => {
@@ -74,362 +76,503 @@ export default function CommunityPage() {
       setIsBelowLg(w < 1024);
     };
     checkBreakpoints();
-    window.addEventListener('resize', checkBreakpoints);
-    return () => window.removeEventListener('resize', checkBreakpoints);
+    window.addEventListener("resize", checkBreakpoints);
+    return () => window.removeEventListener("resize", checkBreakpoints);
   }, []);
 
   // Posiciones finales para las imágenes cuando se esparcen (en píxeles desde el centro)
   // Desktop (>= lg): distribución actual
   const galleryPositionsDesktop = [
-    { x: '-180%', y: -200, rotate: -8 }, // Imagen 1 - Top left
-    { x: '80%', y: -230, rotate: 5 }, // Imagen 2 - Top center-right
+    { x: "-180%", y: -200, rotate: -8 }, // Imagen 1 - Top left
+    { x: "80%", y: -230, rotate: 5 }, // Imagen 2 - Top center-right
     { x: -200, y: -570, rotate: -5 }, // Imagen 3 - Bottom left
-    { x: '-150%', y: 280, rotate: -27 }, // Imagen 4 - Bottom right
-    { x: '76%', y: 280, rotate: -3 }, // Imagen 5 - Top right
+    { x: "-150%", y: 280, rotate: -27 }, // Imagen 4 - Bottom right
+    { x: "76%", y: 280, rotate: -3 }, // Imagen 5 - Top right
   ];
 
   // Compact (< lg): misma idea pero con menos spread y menos offsets para no salirse del viewport
   const galleryPositionsCompact = [
-    { x: '-135%', y: -110, rotate: -6 },
-    { x: '55%', y: -140, rotate: 6 },
+    { x: "-135%", y: -110, rotate: -6 },
+    { x: "55%", y: -140, rotate: 6 },
     { x: -120, y: -360, rotate: -4 },
-    { x: '-120%', y: 210, rotate: -18 },
-    { x: '55%', y: 210, rotate: -2 },
+    { x: "-120%", y: 210, rotate: -18 },
+    { x: "55%", y: 210, rotate: -2 },
   ];
 
-  const galleryPositions = isBelowLg ? galleryPositionsCompact : galleryPositionsDesktop;
+  const galleryPositions = isBelowLg
+    ? galleryPositionsCompact
+    : galleryPositionsDesktop;
 
   // Rotaciones base para los isologos (-15° a 15°), luego se rotan 180° adicionales
   // Desktop: 14 isologos
   const isoRotationsDesktop = [
-    -15, -12, -9, -6, -3, 0, 3, 6, 9, 12, 15, -10, 8, -5
+    -15, -12, -9, -6, -3, 0, 3, 6, 9, 12, 15, -10, 8, -5,
   ];
   // Mobile: menos isologos (6)
-  const isoRotationsMobile = [
-    -12, -6, 0, 6, 12, -8
-  ];
-  
+  const isoRotationsMobile = [-12, -6, 0, 6, 12, -8];
+
   const isoRotations = isMobile ? isoRotationsMobile : isoRotationsDesktop;
 
   // Posiciones y tamaños para las personas alrededor del hero (3 izquierda, 3 derecha)
   // Flotando de forma orgánica, cerca del centro - DESKTOP
   const peoplePositionsDesktop = [
     // Izquierda - 3 personas
-    { top: '-30px', left: '-139px', right: undefined, size: 97, offsetY: '-10px', duration: 4, delay: 0 },
-    { top: '52px', left: '-282px', right: undefined, size: 82, offsetY: '15px', duration: 5, delay: 0.5 },
-    { top: '50%', left: '-139px', right: undefined, size: 65, offsetY: '-8px', duration: 4.5, delay: 1 },
+    {
+      top: "-30px",
+      left: "-139px",
+      right: undefined,
+      size: 97,
+      offsetY: "-10px",
+      duration: 4,
+      delay: 0,
+    },
+    {
+      top: "52px",
+      left: "-282px",
+      right: undefined,
+      size: 82,
+      offsetY: "15px",
+      duration: 5,
+      delay: 0.5,
+    },
+    {
+      top: "50%",
+      left: "-139px",
+      right: undefined,
+      size: 65,
+      offsetY: "-8px",
+      duration: 4.5,
+      delay: 1,
+    },
     // Derecha - 3 personas
-    { top: '-30px', left: undefined, right: '-139px', size: 80, offsetY: '-10px', duration: 4.8, delay: 0.3 },
-    { top: '52px', left: undefined, right: '-282px', size: 95, offsetY: '15px', duration: 5.2, delay: 0.8 },
-    { top: '40%', left: undefined, right: '-139px', size: 65, offsetY: '-8px', duration: 4.3, delay: 1.2 },
+    {
+      top: "-30px",
+      left: undefined,
+      right: "-139px",
+      size: 80,
+      offsetY: "-10px",
+      duration: 4.8,
+      delay: 0.3,
+    },
+    {
+      top: "52px",
+      left: undefined,
+      right: "-282px",
+      size: 95,
+      offsetY: "15px",
+      duration: 5.2,
+      delay: 0.8,
+    },
+    {
+      top: "40%",
+      left: undefined,
+      right: "-139px",
+      size: 65,
+      offsetY: "-8px",
+      duration: 4.3,
+      delay: 1.2,
+    },
   ];
 
   // Posiciones para MOBILE - arriba del hero, orden desordenado
   // Todos + 140px
   const peoplePositionsMobile = [
-    { top: '220px', left: '-20px', right: undefined, size: 60, offsetY: '-10px', duration: 4, delay: 0 }, //
-    { top: '170px', left: '35%', right: undefined, size: 55, offsetY: '15px', duration: 5, delay: 0.5 }, //
-    { top: '140px', left: undefined, right: '15%', size: 65, offsetY: '-8px', duration: 4.5, delay: 1 }, //
-    { top: '280px', left: '25%', right: undefined, size: 50, offsetY: '-10px', duration: 4.8, delay: 0.3 }, //
-    { top: '230px', left: undefined, right: '35%', size: 58, offsetY: '15px', duration: 5.2, delay: 0.8 }, //
-    { top: '250px', left: undefined, right: '-20px', size: 52, offsetY: '-8px', duration: 4.3, delay: 1.2 },//
+    {
+      top: "220px",
+      left: "-20px",
+      right: undefined,
+      size: 60,
+      offsetY: "-10px",
+      duration: 4,
+      delay: 0,
+    }, //
+    {
+      top: "170px",
+      left: "35%",
+      right: undefined,
+      size: 55,
+      offsetY: "15px",
+      duration: 5,
+      delay: 0.5,
+    }, //
+    {
+      top: "140px",
+      left: undefined,
+      right: "15%",
+      size: 65,
+      offsetY: "-8px",
+      duration: 4.5,
+      delay: 1,
+    }, //
+    {
+      top: "280px",
+      left: "25%",
+      right: undefined,
+      size: 50,
+      offsetY: "-10px",
+      duration: 4.8,
+      delay: 0.3,
+    }, //
+    {
+      top: "230px",
+      left: undefined,
+      right: "35%",
+      size: 58,
+      offsetY: "15px",
+      duration: 5.2,
+      delay: 0.8,
+    }, //
+    {
+      top: "250px",
+      left: undefined,
+      right: "-20px",
+      size: 52,
+      offsetY: "-8px",
+      duration: 4.3,
+      delay: 1.2,
+    }, //
   ];
 
-  const peoplePositions = isMobile ? peoplePositionsMobile : peoplePositionsDesktop;
-
+  const peoplePositions = isMobile
+    ? peoplePositionsMobile
+    : peoplePositionsDesktop;
 
   return (
     <>
-    <main>
-      <div className="relative h-[740px] sm:h-[calc(100vh+200px)] min-h-[670px] bg-red md:min-h-[900px] overflow-hidden flex flex-col items-center justify-center">
-        {/* Isologos rotados 180° + rotación adicional, distribuidos por fuera */}
-        {isoRotations.map((baseRotation, index) => {
-          // Posiciones alejadas del centro, por fuera de las personas y el hero
-          // Desktop: 14 posiciones
-          const positionsDesktop = [
-            { top: '5%', left: '15%' },
-            { top: '12%', left: '25%' },
-            { top: '20%', left: '12%' },
-            { top: '75%', left: '18%' },
-            { top: '82%', left: '28%' },
-            { top: '60%', left: '15%' },
-            { top: '5%', right: '15%' },
-            { top: '12%', right: '25%' },
-            { top: '20%', right: '12%' },
-            { top: '10%', right: '40%' },
-            { top: '60%', right: '28%' },
-            { top: '60%', right: '15%' },
-            { top: '50%', left: '2%' },
-            { top: '50%', right: '2%' },
-          ];
-          // Mobile: 6 posiciones
-          const positionsMobile = [
-            { top: '10%', left: '10%' },
-            { top: '20%', left: '5%' },
-            { top: '70%', left: '15%' },
-            { top: '10%', right: '10%' },
-            { top: '20%', right: '5%' },
-            { top: '70%', right: '15%' },
-          ];
-          const positions = isMobile ? positionsMobile : positionsDesktop;
-          const position = positions[index] || { top: '50%', left: '50%' };
-          // Rotación de 180° + rotación base
-          const totalRotation = 180 + baseRotation;
+      <main>
+        <div className="relative h-[740px] sm:h-[calc(100vh+200px)] min-h-[670px] bg-red md:min-h-[900px] overflow-hidden flex flex-col items-center justify-center">
+          {/* Isologos rotados 180° + rotación adicional, distribuidos por fuera */}
+          {isoRotations.map((baseRotation, index) => {
+            // Posiciones alejadas del centro, por fuera de las personas y el hero
+            // Desktop: 14 posiciones
+            const positionsDesktop = [
+              { top: "5%", left: "15%" },
+              { top: "12%", left: "25%" },
+              { top: "20%", left: "12%" },
+              { top: "75%", left: "18%" },
+              { top: "82%", left: "28%" },
+              { top: "60%", left: "15%" },
+              { top: "5%", right: "15%" },
+              { top: "12%", right: "25%" },
+              { top: "20%", right: "12%" },
+              { top: "10%", right: "40%" },
+              { top: "60%", right: "28%" },
+              { top: "60%", right: "15%" },
+              { top: "50%", left: "2%" },
+              { top: "50%", right: "2%" },
+            ];
+            // Mobile: 6 posiciones
+            const positionsMobile = [
+              { top: "10%", left: "10%" },
+              { top: "20%", left: "5%" },
+              { top: "70%", left: "15%" },
+              { top: "10%", right: "10%" },
+              { top: "20%", right: "5%" },
+              { top: "70%", right: "15%" },
+            ];
+            const positions = isMobile ? positionsMobile : positionsDesktop;
+            const position = positions[index] || { top: "50%", left: "50%" };
+            // Rotación de 180° + rotación base
+            const totalRotation = 180 + baseRotation;
 
-          return (
-            <motion.div
-              key={`iso-${index}`}
-              className="absolute pointer-events-none z-0"
-              style={{
-                ...position,
-                rotate: `${totalRotation}deg`,
-              }}
-              animate={{
-                y: [0, -8, 0],
-                x: [0, 3, 0],
-              }}
-              transition={{
-                duration: 3 + (index * 0.3), // Diferentes velocidades
-                repeat: Infinity,
-                ease: "easeInOut",
-                delay: index * 0.2, // Stagger effect
-              }}
+            return (
+              <motion.div
+                key={`iso-${index}`}
+                className="absolute pointer-events-none z-0"
+                style={{
+                  ...position,
+                  rotate: `${totalRotation}deg`,
+                }}
+                animate={{
+                  y: [0, -8, 0],
+                  x: [0, 3, 0],
+                }}
+                transition={{
+                  duration: 3 + index * 0.3, // Diferentes velocidades
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                  delay: index * 0.2, // Stagger effect
+                }}
+              >
+                <Image
+                  src={IsoLogo}
+                  alt=""
+                  width={80}
+                  height={80}
+                  className={`rotate-180 ${isMobile ? "w-[25px] h-[25px]" : "w-[50px] h-[50px] md:w-50px md:h-50px"}`}
+                />
+              </motion.div>
+            );
+          })}
+
+          {/* Imágenes de personas en círculos alrededor del hero (3 izquierda, 3 derecha) */}
+
+          {/* Contenido principal */}
+          <div className="relative z-20 flex flex-col items-center justify-end sm:justify-center h-full sm:h-auto w-screen md:w-auto ">
+            <div className="absolute top-0 left-0 w-full h-full pointer-events-none z-[1]">
+              {peoplePositions.map((position, index) => {
+                const peopleImages = [
+                  People,
+                  People2,
+                  People3,
+                  People4,
+                  People5,
+                  People6,
+                ];
+                const animations = [
+                  { y: [0, -12, 0], x: [0, 4, 0] },
+                  { y: [0, -15, 0], x: [0, -3, 0] },
+                  { y: [0, -10, 0], x: [0, 5, 0] },
+                  { y: [0, -13, 0], x: [0, -4, 0] },
+                  { y: [0, -14, 0], x: [0, 3, 0] },
+                  { y: [0, -11, 0], x: [0, -5, 0] },
+                ];
+
+                // Estilo para cada persona
+                const style: React.CSSProperties = {
+                  top: position.top,
+                  width: `${position.size}px`,
+                  height: `${position.size}px`,
+                };
+
+                // Aplicar left o right según la posición
+                if (position.left !== undefined) {
+                  style.left = position.left;
+                }
+                if (position.right !== undefined) {
+                  style.right = position.right;
+                }
+
+                return (
+                  <motion.div
+                    key={index}
+                    className="absolute rounded-full overflow-hidden"
+                    style={style}
+                    animate={animations[index]}
+                    transition={{
+                      duration: position.duration,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                      delay: position.delay,
+                    }}
+                  >
+                    <Image
+                      src={peopleImages[index]}
+                      alt=""
+                      width={position.size}
+                      height={position.size}
+                      className="rounded-full object-cover w-full h-full"
+                    />
+                  </motion.div>
+                );
+              })}
+            </div>
+            <h3 className="text-white text-center text-[16] md:text-[18] tracking-[-3%] pb-8">
+              Kali community
+            </h3>
+            <h1 className="text-white font-bold text-center text-[50px]  sm:text-[100px] max-w-[270px] sm:max-w-[525px] title  !leading-[90%] sm:!leading-[80px] mb-10 md:mb-0">
+              People that leave <span className="recoleta"> a mark</span>
+            </h1>
+            <a
+              href="#"
+              className="mb-[130px] mt-6 w-full sm:w-auto px-4 sm:px-5"
             >
-              <Image
-                src={IsoLogo}
-                alt=""
-                width={80}
-                height={80}
-                className={`rotate-180 ${isMobile ? 'w-[25px] h-[25px]' : 'w-[50px] h-[50px] md:w-50px md:h-50px'}`}
-              />
-            </motion.div>
-          );
-        })}
-
-        {/* Imágenes de personas en círculos alrededor del hero (3 izquierda, 3 derecha) */}
-
-
-        {/* Contenido principal */}
-        <div className="relative z-20 flex flex-col items-center justify-end sm:justify-center h-full sm:h-auto w-screen md:w-auto ">
-          <div className="absolute top-0 left-0 w-full h-full pointer-events-none z-[1]">
-            {peoplePositions.map((position, index) => {
-              const peopleImages = [People, People2, People3, People4, People5, People6];
-              const animations = [
-                { y: [0, -12, 0], x: [0, 4, 0] },
-                { y: [0, -15, 0], x: [0, -3, 0] },
-                { y: [0, -10, 0], x: [0, 5, 0] },
-                { y: [0, -13, 0], x: [0, -4, 0] },
-                { y: [0, -14, 0], x: [0, 3, 0] },
-                { y: [0, -11, 0], x: [0, -5, 0] },
-              ];
-
-              // Estilo para cada persona
-              const style: React.CSSProperties = {
-                top: position.top,
-                width: `${position.size}px`,
-                height: `${position.size}px`,
-              };
-
-              // Aplicar left o right según la posición
-              if (position.left !== undefined) {
-                style.left = position.left;
-              }
-              if (position.right !== undefined) {
-                style.right = position.right;
-              }
-
-              return (
-                <motion.div
-                  key={index}
-                  className="absolute rounded-full overflow-hidden"
-                  style={style}
-                  animate={animations[index]}
-                  transition={{
-                    duration: position.duration,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                    delay: position.delay,
-                  }}
-                >
-                  <Image
-                    src={peopleImages[index]}
-                    alt=""
-                    width={position.size}
-                    height={position.size}
-                    className="rounded-full object-cover w-full h-full"
-                  />
-                </motion.div>
-              );
-            })}
+              <div className="  sm:w-[128px] bg-white rounded-[12px] semi-bold text-center font-semibold text-lg px-4 py-3 text-black my-2">
+                Join Kali
+              </div>
+            </a>
           </div>
-          <h3 className='text-white text-center text-[16] md:text-[18] tracking-[-3%] pb-8'>Kali community</h3>
-          <h1 className='text-white font-bold text-center text-[50px]  sm:text-[100px] max-w-[270px] sm:max-w-[525px] title  !leading-[90%] sm:!leading-[80px] mb-10 md:mb-0'>People that leave <span className='recoleta'> a mark</span></h1>
-          <a href="#" className="mb-[130px] mt-6 w-full sm:w-auto px-4 sm:px-5">
-            <div className='  sm:w-[128px] bg-white rounded-[12px] semi-bold text-center font-semibold text-lg px-4 py-3 text-black my-2'>
-              Join Kali
-            </div>
-          </a>
+          <Image
+            src={dividerNotFilledSvg}
+            alt="divider"
+            width={1512}
+            height={193}
+            className="absolute bottom-0 left-0 w-full pointer-events-none rotate-180"
+          />
         </div>
-        <Image
-          src={dividerNotFilledSvg}
-          alt="divider"
-          width={1512}
-          height={193}
-          className="absolute bottom-0 left-0 w-full pointer-events-none rotate-180"
-        />
-      </div>
-      <div ref={galleryRef} className='w-full h-[200vh] md:h-[100vh] relative '>
-        {/* Galería responsive: cards más pequeños <lg, layout desktop intacto */}
-        <motion.div
-          initial={{ x: '-50%', y: '-50%', rotate: 0, opacity: 1 }}
-          animate={isInView ? {
-            x: galleryPositions[0].x,
-            y: galleryPositions[0].y,
-            rotate: galleryPositions[0].rotate,
-            opacity: 1,
-          } : {
-            x: '-50%',
-            y: '-50%',
-            rotate: 0,
-            opacity: 1,
-          }}
-          transition={{ duration: 1.2, ease: "easeOut", delay: 0.1 }}
-          className="absolute top-[22%] md:top-[18%] lg:top-[15%] left-1/2 w-[300px] h-[212px] sm:w-[360px] sm:h-[254px] md:w-[420px] md:h-[297px] lg:w-[478px] lg:h-[338px] rounded-lg"
-          style={{ transformOrigin: 'center center' }}
+        <div
+          ref={galleryRef}
+          className="w-full h-[200vh] md:h-[100vh] relative z-[999]"
         >
-          <Image
-            src={GalleryImage1}
-            alt="Gallery Image 1"
-            width={478}
-            height={338}
-            className="w-full h-full object-cover rounded-[24px] rotate-[-10deg] lg:rotate-[-15deg]"
-          />
-        </motion.div>
-        <motion.div
-          initial={{ x: '-50%', y: '-50%', rotate: 0, opacity: 1 }}
-          animate={isInView ? {
-            x: galleryPositions[1].x,
-            y: galleryPositions[1].y,
-            rotate: galleryPositions[1].rotate,
-            opacity: 1,
-          } : {
-            x: '-50%',
-            y: '-50%',
-            rotate: 0,
-            opacity: 1,
-          }}
-          transition={{ duration: 1.2, ease: "easeOut", delay: 0.2 }}
-          className="absolute top-[22%] md:top-[18%] lg:top-[15%] left-1/2 w-[300px] h-[212px] sm:w-[360px] sm:h-[254px] md:w-[420px] md:h-[297px] lg:w-[478px] lg:h-[338px] rounded-lg"
-          style={{ transformOrigin: 'center center' }}
-        >
-          <Image
-            src={GalleryImage2}
-            alt="Gallery Image 2"
-            width={478}
-            height={338}
-            className="w-full h-full object-cover rounded-[24px] rotate-[-10deg] lg:rotate-[-15deg]"
-          />
-        </motion.div>
-        <motion.div
-          initial={{ x: '-50%', y: '-50%', rotate: 0, opacity: 1 }}
-          animate={isInView ? {
-            x: galleryPositions[2].x,
-            y: galleryPositions[2].y,
-            rotate: galleryPositions[2].rotate,
-            opacity: 1,
-          } : {
-            x: '-50%',
-            y: '-50%',
-            rotate: 0,
-            opacity: 1,
-          }}
-          transition={{ duration: 1.2, ease: "easeOut", delay: 0.3 }}
-          className="absolute top-[22%] md:top-[18%] lg:top-[15%] left-1/2 w-[300px] h-[212px] sm:w-[360px] sm:h-[254px] md:w-[420px] md:h-[297px] lg:w-[478px] lg:h-[338px] rounded-lg"
-          style={{ transformOrigin: 'center center' }}
-        >
-          <Image
-            src={GalleryImage3}
-            alt="Gallery Image 3"
-            width={478}
-            height={338}
-            className="w-full h-full object-cover rounded-[24px] "
-          />
-        </motion.div>
-        <motion.div
-          initial={{ x: '-50%', y: '-50%', rotate: 0, opacity: 1 }}
-          animate={isInView ? {
-            x: galleryPositions[3].x,
-            y: galleryPositions[3].y,
-            rotate: galleryPositions[3].rotate,
-            opacity: 1,
-          } : {
-            x: '-50%',
-            y: '-50%',
-            rotate: 0,
-            opacity: 1,
-          }}
-          transition={{ duration: 1.2, ease: "easeOut", delay: 0.4 }}
-          className="absolute top-[22%] md:top-[18%] lg:top-[15%] left-1/2 w-[300px] h-[212px] sm:w-[360px] sm:h-[254px] md:w-[420px] md:h-[297px] lg:w-[478px] lg:h-[338px] rounded-lg"
-          style={{ transformOrigin: 'center center' }}
-        >
-          <Image
-            src={GalleryImage4}
-            alt="Gallery Image 4"
-            width={478}
-            height={338}
-            className="w-full h-full object-cover rounded-[24px] "
-          />
-        </motion.div>
-        <motion.div
-          initial={{ x: '-50%', y: '-50%', rotate: 0, opacity: 1 }}
-          animate={isInView ? {
-            x: galleryPositions[4].x,
-            y: galleryPositions[4].y,
-            rotate: galleryPositions[4].rotate,
-            opacity: 1,
-          } : {
-            x: '-50%',
-            y: '-50%',
-            rotate: 0,
-            opacity: 1,
-          }}
-          transition={{ duration: 1.2, ease: "easeOut", delay: 0.5 }}
-          className="absolute top-[22%] md:top-[18%] lg:top-[15%] left-1/2 w-[300px] h-[212px] sm:w-[360px] sm:h-[254px] md:w-[420px] md:h-[297px] lg:w-[478px] lg:h-[338px] rounded-lg"
-          style={{ transformOrigin: 'center center' }}
-        >
-          <Image
-            src={GalleryImage5}
-            alt="Gallery Image 5"
-            width={478}
-            height={338}
-            className="w-full h-full object-cover rounded-[24px] "
-          />
-        </motion.div>
-        <div className='flex flex-col items-center justify-center pt-[52vh] lg:pt-0 '>
-          <h3 className='text-black title text-center text-[45px] max-w-[480px] mx-auto'>
-            We focus on community, not random roommates.
-          </h3>
-          <p className='hidden sm:block text-black text-center text-[32px] max-w-[430px] mx-auto mt-2'>
-            Because who you live with matters.
-          </p>
-          <a href="#" className="hidden sm:block">
-            <div className='w-[350px] h-[60px] bg-red rounded-[12px]  text-center font-semibold text-[18px] text-white  mt-9 flex justify-center items-center'>
-              Meet the community
-            </div>
-          </a>
-
+          {/* Galería responsive: cards más pequeños <lg, layout desktop intacto */}
+          <motion.div
+            initial={{ x: "-50%", y: "-50%", rotate: 0, opacity: 1 }}
+            animate={
+              isInView
+                ? {
+                    x: galleryPositions[0].x,
+                    y: galleryPositions[0].y,
+                    rotate: galleryPositions[0].rotate,
+                    opacity: 1,
+                  }
+                : {
+                    x: "-50%",
+                    y: "-50%",
+                    rotate: 0,
+                    opacity: 1,
+                  }
+            }
+            transition={{ duration: 1.2, ease: "easeOut", delay: 0.1 }}
+            className="absolute top-[22%] md:top-[18%] lg:top-[15%] left-1/2 w-[300px] h-[212px] sm:w-[360px] sm:h-[254px] md:w-[420px] md:h-[297px] lg:w-[478px] lg:h-[338px] rounded-lg"
+            style={{ transformOrigin: "center center" }}
+          >
+            <Image
+              src={GalleryImage1}
+              alt="Gallery Image 1"
+              width={478}
+              height={338}
+              className="w-full h-full object-cover rounded-[24px] rotate-[-10deg] lg:rotate-[-15deg]"
+            />
+          </motion.div>
+          <motion.div
+            initial={{ x: "-50%", y: "-50%", rotate: 0, opacity: 1 }}
+            animate={
+              isInView
+                ? {
+                    x: galleryPositions[1].x,
+                    y: galleryPositions[1].y,
+                    rotate: galleryPositions[1].rotate,
+                    opacity: 1,
+                  }
+                : {
+                    x: "-50%",
+                    y: "-50%",
+                    rotate: 0,
+                    opacity: 1,
+                  }
+            }
+            transition={{ duration: 1.2, ease: "easeOut", delay: 0.2 }}
+            className="absolute top-[22%] md:top-[18%] lg:top-[15%] left-1/2 w-[300px] h-[212px] sm:w-[360px] sm:h-[254px] md:w-[420px] md:h-[297px] lg:w-[478px] lg:h-[338px] rounded-lg"
+            style={{ transformOrigin: "center center" }}
+          >
+            <Image
+              src={GalleryImage2}
+              alt="Gallery Image 2"
+              width={478}
+              height={338}
+              className="w-full h-full object-cover rounded-[24px] rotate-[-10deg] lg:rotate-[-15deg]"
+            />
+          </motion.div>
+          <motion.div
+            initial={{ x: "-50%", y: "-50%", rotate: 0, opacity: 1 }}
+            animate={
+              isInView
+                ? {
+                    x: galleryPositions[2].x,
+                    y: galleryPositions[2].y,
+                    rotate: galleryPositions[2].rotate,
+                    opacity: 1,
+                  }
+                : {
+                    x: "-50%",
+                    y: "-50%",
+                    rotate: 0,
+                    opacity: 1,
+                  }
+            }
+            transition={{ duration: 1.2, ease: "easeOut", delay: 0.3 }}
+            className="absolute top-[22%] md:top-[18%] lg:top-[15%] left-1/2 w-[300px] h-[212px] sm:w-[360px] sm:h-[254px] md:w-[420px] md:h-[297px] lg:w-[478px] lg:h-[338px] rounded-lg"
+            style={{ transformOrigin: "center center" }}
+          >
+            <Image
+              src={GalleryImage3}
+              alt="Gallery Image 3"
+              width={478}
+              height={338}
+              className="w-full h-full object-cover rounded-[24px] "
+            />
+          </motion.div>
+          <motion.div
+            initial={{ x: "-50%", y: "-50%", rotate: 0, opacity: 1 }}
+            animate={
+              isInView
+                ? {
+                    x: galleryPositions[3].x,
+                    y: galleryPositions[3].y,
+                    rotate: galleryPositions[3].rotate,
+                    opacity: 1,
+                  }
+                : {
+                    x: "-50%",
+                    y: "-50%",
+                    rotate: 0,
+                    opacity: 1,
+                  }
+            }
+            transition={{ duration: 1.2, ease: "easeOut", delay: 0.4 }}
+            className="absolute top-[22%] md:top-[18%] lg:top-[15%] left-1/2 w-[300px] h-[212px] sm:w-[360px] sm:h-[254px] md:w-[420px] md:h-[297px] lg:w-[478px] lg:h-[338px] rounded-lg"
+            style={{ transformOrigin: "center center" }}
+          >
+            <Image
+              src={GalleryImage4}
+              alt="Gallery Image 4"
+              width={478}
+              height={338}
+              className="w-full h-full object-cover rounded-[24px] "
+            />
+          </motion.div>
+          <motion.div
+            initial={{ x: "-50%", y: "-50%", rotate: 0, opacity: 1 }}
+            animate={
+              isInView
+                ? {
+                    x: galleryPositions[4].x,
+                    y: galleryPositions[4].y,
+                    rotate: galleryPositions[4].rotate,
+                    opacity: 1,
+                  }
+                : {
+                    x: "-50%",
+                    y: "-50%",
+                    rotate: 0,
+                    opacity: 1,
+                  }
+            }
+            transition={{ duration: 1.2, ease: "easeOut", delay: 0.5 }}
+            className="absolute top-[22%] md:top-[18%] lg:top-[15%] left-1/2 w-[300px] h-[212px] sm:w-[360px] sm:h-[254px] md:w-[420px] md:h-[297px] lg:w-[478px] lg:h-[338px] rounded-lg"
+            style={{ transformOrigin: "center center" }}
+          >
+            <Image
+              src={GalleryImage5}
+              alt="Gallery Image 5"
+              width={478}
+              height={338}
+              className="w-full h-full object-cover rounded-[24px] "
+            />
+          </motion.div>
+          <div className="flex flex-col items-center justify-center pt-[52vh] lg:pt-0 ">
+            <p className=" text-black text-center text-[24px] max-w-[480px] mx-auto mt-14">
+              At Kali, you live alongside people from different places,
+              backgrounds, and perspectives. That mix is what makes every day
+              feel new.
+            </p>
+            <button
+              type="button"
+              onClick={() => setIsApplyPopupOpen(true)}
+              className="hidden sm:block"
+            >
+              <div className="w-[350px] h-[60px] bg-red rounded-[12px]  text-center font-semibold text-[18px] text-white  mt-9 flex justify-center items-center">
+                Join Kali
+              </div>
+            </button>
+          </div>
         </div>
-
-      </div>
-      <div className='mb-[130px] mt-[-65vh]  md:mt-0'>
-      <h4 className='text-black text-left text-[50px] title pl-5 md:pl-20'>Voices of the <br/> <span className='recoleta text-black'> community</span></h4>
-      <CommunityCarousel />
-      </div>
-      <div className='mb-[-60px] md:mb-[-80px] lg:mb-[-100px]'>
-      <GallerySection />
-      </div>
-    </main>
-    <Footer />
+        <div className="mb-[130px] mt-[-65vh]  md:mt-0">
+          <h4 className="text-black text-left text-[50px] title pl-5 md:pl-20">
+            Voices of the <br />{" "}
+            <span className="recoleta text-black"> community</span>
+          </h4>
+          <CommunityCarousel />
+        </div>
+        <div className="mb-[-60px] md:mb-[-80px] lg:mb-[-100px]">
+          <GallerySection />
+        </div>
+      </main>
+      <Footer />
+      <ApplyToKaliPopup
+        isOpen={isApplyPopupOpen}
+        onClose={() => setIsApplyPopupOpen(false)}
+      />
     </>
   );
 }
