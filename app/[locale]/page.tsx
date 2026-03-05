@@ -183,13 +183,14 @@ export default function HomePage() {
       </div>
 
       <div className="flex flex-col items-center justify-center mt-[80px] lg:mt-0">
-        <h2 className="md:text-[64px] text-[40px] text-black title text-center max-w-[675px]">
-          More than a place to live. <br />
-          <span className="recoleta text-red ">A place to belong.</span>
+        <h2 className="md:text-[64px] text-[40px] text-black title text-center max-w-[1005px]">
+          {t("heroSubtitle1")}
+          <br />
+          <span className="recoleta text-red ">{t("heroSubtitle2")}</span>
         </h2>
+
         <p className="text-black text-center max-w-[280px] md:max-w-[430px] my-6 text-[20px]">
-          Kali is a coliving experience where design meets community, creating
-          experiences that stay with you.
+          {t("heroDescription")}
         </p>
         <PopupButton />
       </div>
@@ -213,11 +214,10 @@ export default function HomePage() {
             />
           </div>
           <h3 className="text-black title text-center text-[24px] mt-4">
-            Real community
+            {t("card1Title")}
           </h3>
           <p className="text-black text-center my-2 text-[16px]">
-            Live with like-minded people who choose to step out of their comfort
-            zone.
+            {t("card1Description")}
           </p>
         </motion.div>
 
@@ -237,11 +237,10 @@ export default function HomePage() {
           </div>
           <div>
             <h3 className="text-black title text-center text-[24px] mt-4">
-              Thoughtfully designed spaces
+              {t("card2Title")}
             </h3>
             <p className="text-black text-center my-2 text-[16px] tracking-[-4%]">
-              Homes that are functional, warm, and ready so you can focus on
-              living.
+              {t("card2Description")}
             </p>
           </div>
         </motion.div>
@@ -261,10 +260,10 @@ export default function HomePage() {
             />
           </div>
           <h3 className="text-black title text-center text-[24px] mt-4">
-            Shared moments
+            {t("card3Title")}
           </h3>
           <p className="text-black text-center my-2 text-[16px]">
-            Dinners, conversations, working together, unexpected laughs.
+            {t("card3Description")}
           </p>
         </motion.div>
 
@@ -283,10 +282,10 @@ export default function HomePage() {
             />
           </div>
           <h3 className="text-black title text-center text-[24px] mt-4">
-            Growth
+            {t("card4Title")}
           </h3>
           <p className="text-black text-center my-2 text-[16px]">
-            Every connection adds something new to your journey.
+            {t("card4Description")}
           </p>
         </motion.div>
       </div>
@@ -313,20 +312,20 @@ export default function HomePage() {
               <div className="flex flex-col lg:flex-row justify-between w-full px-10 md:px-[140px] pointer-events-auto">
                 <div className="lg:w-1/2">
                   <h2 className="md:text-[64px] text-[40px] text-white title max-w-[675px]">
-                    Feel at home
+                    {t("videoTitle1")}
                     <br />{" "}
-                    <span className="recoleta text-white">from day one</span>
+                    <span className="recoleta text-white">
+                      {t("videoTitle2")}
+                    </span>
                   </h2>
                 </div>
                 <div className="lg:w-1/2 max-w-[412px]">
                   <p className="text-white lg:my-2 my-5 text-[20px] leading-[130%]">
-                    Kali is built to turn everyday living into experiences that
-                    stay with you. Because where you live, and who you live
-                    with, shapes who you become.
+                    {t("videoDescription")}
                   </p>
                   <a href="#" className="">
                     <div className="lg:w-[350px] bg-white rounded-[12px] semi-bold text-center font-semibold text-lg px-4 py-2 text-black my-4">
-                      Meet the community
+                      {t("videoCta")}
                     </div>
                   </a>
                 </div>
@@ -350,10 +349,10 @@ export default function HomePage() {
 
       <div className="w-full md:px-20 px-4 bg-brown  md:mt-[-11%]">
         <h2 className="md:text-[64px] text-[45px] text-white title text-center ">
-          How it works
+          {t("howItWorksTitle")}
         </h2>
         <p className="text-white text-center my-2 text-[20px] leading-[130%]">
-          Find your next home in a few steps.
+          {t("howItWorksSubtitle")}
         </p>
         <div className="w-full">
           <div className="flex flex-col flex-wrap xl:flex-nowrap sm:flex-row items-center lg:items-start justify-between gap-7 mt-12 pb-[200px]">
@@ -364,11 +363,9 @@ export default function HomePage() {
             >
               <h3 className="text-white title text-[18px] ">01</h3>
               <h4 className="text-white title text-[24px] font-semibold">
-                Apply
+                {t("step1Title")}
               </h4>
-              <p className="text-white text-[18px] ">
-                Tell us about you and what you&apos;re looking for.
-              </p>
+              <p className="text-white text-[18px] ">{t("step1Description")}</p>
             </div>
 
             {/* Card 2 */}
@@ -378,12 +375,9 @@ export default function HomePage() {
             >
               <h3 className="text-white text-[18px] ">02</h3>
               <h4 className="text-white title text-[24px] font-semibold">
-                Connect
+                {t("step2Title")}
               </h4>
-              <p className="text-white text-[18px] ">
-                We&apos;ll contact you and have a conversation to get to know
-                each other.
-              </p>
+              <p className="text-white text-[18px] ">{t("step2Description")}</p>
             </div>
 
             {/* Card 3 */}
@@ -393,22 +387,19 @@ export default function HomePage() {
             >
               <h3 className="text-white text-[18px] ">03</h3>
               <h4 className="text-white title text-[24px] font-semibold">
-                Match
+                {t("step3Title")}
               </h4>
-              <p className="text-white text-[18px] ">
-                We make sure Kali is the right fit, for you and for the
-                community.
-              </p>
+              <p className="text-white text-[18px] ">{t("step3Description")}</p>
             </div>
 
             {/* Card 4 */}
             <div className="flex flex-col items-start p-6  xl:gap-[21px] sm:w-[46%] xl:w-[315px] h-[180px] sm:h-[200px] lg:h-[180px] xl:h-[226px] rounded-[20px] w-full bg-white">
               <h3 className="text-black text-[18px] ">04</h3>
               <h4 className="text-black title text-[24px] font-semibold">
-                Move in
+                {t("step4Title")}
               </h4>
               <p className="text-black text-[18px] leading-[130%]">
-                Arrive with everything ready. Start living the experience.
+                {t("step4Description")}
               </p>
             </div>
           </div>
@@ -417,7 +408,7 @@ export default function HomePage() {
 
       <div className="w-full md:px-20 px-4 md:py-[200px] py-[120px]">
         <h2 className="md:text-[64px] text-[45px] text-black title text-center ">
-          Kali is for you if...
+          {t("forYouTitle")}
         </h2>
         <div className="w-full flex items-center justify-center">
           <div className="flex flex-col justify-between gap-4 mt-12">
@@ -427,7 +418,7 @@ export default function HomePage() {
             >
               <Image src={ticIcon} alt="tick icon" width={24} height={24} />
               <p className="text-black text-[16px] leading-[130%]">
-                You want to meet new people and feel like a local from day one.
+                {t("forYou1")}
               </p>
             </div>
             <div
@@ -436,8 +427,7 @@ export default function HomePage() {
             >
               <Image src={ticIcon} alt="tick icon" width={24} height={24} />
               <p className="text-black text-[16px] leading-[130%]">
-                You like stepping out of your comfort zone and saying yes to new
-                plans
+                {t("forYou2")}
               </p>
             </div>
             <div
@@ -446,8 +436,7 @@ export default function HomePage() {
             >
               <Image src={ticIcon} alt="tick icon" width={24} height={24} />
               <p className="text-black text-[16px] leading-[130%]">
-                You want a home where someone’s always up for coffee, afterwork
-                drinks, or dinner.
+                {t("forYou3")}
               </p>
             </div>
             <div
@@ -456,8 +445,7 @@ export default function HomePage() {
             >
               <Image src={ticIcon} alt="tick icon" width={24} height={24} />
               <p className="text-black text-[16px] leading-[130%]">
-                You want to move in without the stress — furniture, Wi-Fi,
-                everything sorted.
+                {t("forYou4")}
               </p>
             </div>
             <div
@@ -466,8 +454,7 @@ export default function HomePage() {
             >
               <Image src={ticIcon} alt="tick icon" width={24} height={24} />
               <p className="text-black text-[16px] leading-[130%]">
-                You want more than a room — you want community and real
-                connections.
+                {t("forYou5")}
               </p>
             </div>
             <div
@@ -476,8 +463,7 @@ export default function HomePage() {
             >
               <Image src={ticIcon} alt="tick icon" width={24} height={24} />
               <p className="text-black text-[16px] leading-[130%]">
-                You want to grow around people who inspire you and push you
-                further.
+                {t("forYou6")}
               </p>
             </div>
           </div>
