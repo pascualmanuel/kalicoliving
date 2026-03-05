@@ -381,17 +381,20 @@ export default function CommunityPage() {
               })}
             </div>
             <h3 className="text-white text-center text-[16] md:text-[18] tracking-[-3%] pb-8">
-              Kali community
+              {t("heroLabel")}
             </h3>
-            <h1 className="text-white font-bold text-center text-[50px]  sm:text-[100px] max-w-[270px] sm:max-w-[525px] title  !leading-[90%] sm:!leading-[80px] mb-10 md:mb-0">
-              People that leave <span className="recoleta"> a mark</span>
+            <h1 className="text-white font-bold text-center text-[50px]  sm:text-[100px] max-w-[270px] sm:max-w-[665px] title  !leading-[90%] sm:!leading-[80px] mb-10 md:mb-0">
+              {t("heroTitle1")}&nbsp;
+              <span className="recoleta">
+                {t("heroTitle2")}
+              </span>
             </h1>
             <a
               href="#"
               className="mb-[130px] mt-6 w-full sm:w-auto px-4 sm:px-5"
             >
-              <div className="  sm:w-[128px] bg-white rounded-[12px] semi-bold text-center font-semibold text-lg px-4 py-3 text-black my-2">
-                Join Kali
+              <div className="  sm:w-[148px] bg-white rounded-[12px] semi-bold text-center font-semibold text-lg px-4 py-3 text-black my-2">
+                {t("joinKali")}
               </div>
             </a>
           </div>
@@ -555,9 +558,7 @@ export default function CommunityPage() {
           </motion.div>
           <div className="flex flex-col items-center justify-center lg:pt-0 ">
             <p className=" text-black text-center text-[24px] max-w-[480px] mx-auto mt-14">
-              At Kali, you live alongside people from different places,
-              backgrounds, and perspectives. That mix is what makes every day
-              feel new.
+              {t("galleryDescription")}
             </p>
             <button
               type="button"
@@ -565,15 +566,18 @@ export default function CommunityPage() {
               className="hidden sm:block"
             >
               <div className="w-[350px] h-[60px] bg-red rounded-[12px]  text-center font-semibold text-[18px] text-white  mt-9 flex justify-center items-center">
-                Join Kali
+                {t("joinKali")}
               </div>
             </button>
           </div>
         </div>
         <div className="mb-[130px] mt-[-65vh]  md:mt-0">
           <h4 className="text-black text-left text-[50px] title pl-5 md:pl-20">
-            Voices of the <br />{" "}
-            <span className="recoleta text-black"> community</span>
+            {t("voicesTitle1")}&nbsp;
+            <br />
+            <span className="recoleta text-black">
+              {t("voicesTitle2")}
+            </span>
           </h4>
           <CommunityCarousel />
         </div>

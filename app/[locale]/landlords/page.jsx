@@ -30,8 +30,12 @@ export default function LandlordsPage() {
             className="object-cover object-top brightness-[0.7] z-0"
           />
           <div className="relative z-10 flex flex-col items-center justify-center gap-4 px-4 ">
-            <h1 className='text-white max-w-[850px] title text-center text-[50px] md:text-[80px]'>Potencia el rendimiento de tu propiedad</h1>
-            <h2 className='text-white max-w-[510px] text-center text-[20px] md:text-[32px] leading-[100%]'>Asegura tus ingresos por alquiler. Nosotros nos ocupamos del resto.</h2>
+            <h1 className='text-white max-w-[850px] title text-center text-[50px] md:text-[80px]'>
+              {t('heroTitle')}
+            </h1>
+            <h2 className='text-white max-w-[510px] text-center text-[20px] md:text-[32px] leading-[100%]'>
+              {t('heroSubtitle')}
+            </h2>
           </div>
           <Image
             src={dividerNotFilledSvg}
@@ -44,9 +48,16 @@ export default function LandlordsPage() {
 
         <div className='mt-10 mb-[80px]'>
           <div className='flex sm:flex-row flex-col justify-between max-w-[985px] mx-auto px-10 gap-10 sm:gap-0 ' >
-            <div className="flex flex-col text-center"> <h3 className='text-red text-[60px] font-semibold'>  100%</h3> <p className='text-[20px] font-semibold'>Pagos a tiempo</p>  </div>
-            <div className="flex flex-col text-center">  <h3 className='text-red text-[60px] font-semibold' >100%</h3> <p className='text-[20px] font-semibold'>Taza de ocupación</p> </div>
-            <div className="flex flex-col text-center">  <h3 className='text-red text-[60px] font-semibold' >24/7</h3> <p className='text-[20px] font-semibold'>Soporte disponible</p> </div>
+            <div className="flex flex-col text-center"> <h3 className='text-red text-[60px] font-semibold'>  100%</h3> <p className='text-[20px] font-semibold'>
+              {t('onTimePayments')}
+            </p>
+            </div>
+            <div className="flex flex-col text-center">  <h3 className='text-red text-[60px] font-semibold' >100%</h3> <p className='text-[20px] font-semibold'>
+              {t('occupancyRate')}
+            </p> </div>
+            <div className="flex flex-col text-center">  <h3 className='text-red text-[60px] font-semibold' >24/7</h3> <p className='text-[20px] font-semibold'>
+              {t('availableSupport')}
+            </p> </div>
           </div>
         </div>
 
@@ -94,14 +105,14 @@ export default function LandlordsPage() {
               <div className="bg-[#eb9a89] w-full flex flex-col items-center gap-6 pb-10 pt-4 rounded-b-[16px]">
                 <Image src={PinkDividerSvg} alt="divider" width={1512} height={193} className="   mx-auto absolute top-[-20%] left-0  block sm:hidden" />
                 <h3 className='title text-[45px] font-semibold text-center text-white px-5 sm:px-0 sm:max-w-[505px] mx-auto z-[1000]'>
-                  Tu propiedad <br className='sm:hidden block' /> gestionada de <br className='sm:hidden block' /> principio a fin.
+                  {t('managedTitle')}
                 </h3>
                 <p className='text-white px-8 sm:px-0 sm:max-w-[400px] text-[16px] md:text-[24px] leading-[130%] mx-auto text-center '>
-                  Seleccionamos inquilinos, gestionamos pagos y resolvemos incidencias para que tú no tengas que preocuparte.
+                  {t('managedDescription')}
                 </p>
                 <a href="#contact-landlords">
                   <div className='w-[170px] bg-red rounded-[12px] font-semibold text-center text-lg px-4 py-2 text-white my-2'>
-                    Contactanos
+                    {t('contactUs')}
                   </div>
                 </a>
               </div>
@@ -110,42 +121,41 @@ export default function LandlordsPage() {
           </div>
         </div>
         <div className=' sm:mb-[140px] mb-[60px]'>
-          <h2 className='text-[40px] sm:text-[56px] font-bold px-5 sm:px-[60px] sm:pb-[50px] sm:pt-[120px] pb-[30px] pt-[60px]'>Por qué Kali</h2>
+          <h2 className='text-[40px] sm:text-[56px] font-bold px-5 sm:px-[60px] sm:pb-[50px] sm:pt-[120px] pb-[30px] pt-[60px]'>
+            {t('whyKali')}
+          </h2>
           <LandlordsCarousel />
         </div>
         <Image src={brownDividerSvg} alt="divider" width={1512} height={193} className="w-full sm:mt-[200px] mt-0  mx-auto" />
 
+
         <div className='w-full md:px-20 px-4 bg-brown  md:mt-[-11%]'>
-          <h2 className="md:text-[64px] text-[45px] text-white title text-center ">Cómo funciona</h2>
-          <p className="text-white text-center my-2 text-[20px] leading-[130%]">Un proceso claro, simple y sin complicaciones.</p>
+          <h2 className="md:text-[64px] text-[45px] text-white title text-center ">{t('howItWorksTitle')}</h2>
+          <p className="text-white text-center my-2 text-[20px] leading-[130%]">{t('howItWorksSubtitle')}</p>
           <div className='w-full'>
             <div className='flex flex-col flex-wrap xl:flex-nowrap sm:flex-row items-center lg:items-start justify-between gap-7 mt-12 pb-[200px]'>
-              {/* Card 1 */}
               <div className='flex flex-col items-start p-6 gap-[21px] sm:w-[46%] xl:w-[315px] h-[270px] xl:h-[226px] rounded-[20px]' style={{ background: 'rgba(255, 242, 226, 0.1)' }}>
                 <h3 className="text-white title text-[18px] ">01</h3>
-                <h4 className="text-white title text-[24px] font-semibold">Contacto</h4>
-                <p className="text-white text-[18px] ">Cuéntanos sobre tu propiedad para entender si cumple con nuestros requisitos.</p>
+                <h4 className="text-white title text-[24px] font-semibold">{t('step1Title')}</h4>
+                <p className="text-white text-[18px] ">{t('step1Description')}</p>
               </div>
 
-              {/* Card 2 */}
               <div className='flex flex-col items-start p-6 gap-[21px] sm:w-[46%] xl:w-[315px] h-[270px] xl:h-[226px] rounded-[20px]' style={{ background: 'rgba(255, 242, 226, 0.1)' }}>
                 <h3 className="text-white text-[18px] ">02</h3>
-                <h4 className="text-white title text-[24px] font-semibold">Evaluación</h4>
-                <p className="text-white text-[18px] ">Analizamos su potencial: ubicación, distribución y estado general.</p>
+                <h4 className="text-white title text-[24px] font-semibold">{t('step2Title')}</h4>
+                <p className="text-white text-[18px] ">{t('step2Description')}</p>
               </div>
 
-              {/* Card 3 */}
               <div className='flex flex-col items-start p-6 gap-[21px] sm:w-[46%] xl:w-[315px] h-[270px] xl:h-[226px] rounded-[20px]' style={{ background: 'rgba(255, 242, 226, 0.1)' }}>
                 <h3 className="text-white text-[18px] ">03</h3>
-                <h4 className="text-white title text-[24px] font-semibold">Propuesta</h4>
-                <p className="text-white text-[18px] ">Te presentamos una propuesta: cuánto puedes ganar y qué incluye nuestra gestión.</p>
+                <h4 className="text-white title text-[24px] font-semibold">{t('step3Title')}</h4>
+                <p className="text-white text-[18px] ">{t('step3Description')}</p>
               </div>
 
-              {/* Card 4 */}
               <div className='flex flex-col items-start p-6 gap-[21px] sm:w-[46%] xl:w-[315px] h-[270px] xl:h-[226px] rounded-[20px]' style={{ background: 'rgba(255, 242, 226, 0.1)' }}>
                 <h3 className="text-white text-[18px] ">04</h3>
-                <h4 className="text-white title text-[24px] font-semibold">Gestión</h4>
-                <p className="text-white text-[18px] leading-[130%]">Tu cobras cada mes. Nosotros gestionamos la propiedad y nos encargamos del resto.</p>
+                <h4 className="text-white title text-[24px] font-semibold">{t('step4Title')}</h4>
+                <p className="text-white text-[18px] leading-[130%]">{t('step4Description')}</p>
               </div>
             </div>
           </div>

@@ -4,6 +4,7 @@
 import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
+import { useTranslations } from 'next-intl';
 import { useApplyPopup } from '@/context/ApplyPopupContext';
 import homeCard1 from '../public/assets/images/home/home-card-1.webp';
 import homeCard2 from '../public/assets/images/home/home-card-2.webp';
@@ -13,11 +14,13 @@ import homeCard4 from '../public/assets/images/home/home-card-4.webp';
 interface RoomData {
   image: any;
   location: string;
-  description: string;
-  bulletPoints: string[];
+  descriptionKey: 'Double' | 'Single';
 }
 
+const ROOM_BULLET_KEYS = [1, 2, 3, 4, 5] as const;
+
 export default function RoomsSection() {
+  const t = useTranslations('pages.home');
   const { openApplyPopup } = useApplyPopup();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [progress, setProgress] = useState(0);
@@ -26,59 +29,15 @@ export default function RoomsSection() {
 
   const STORY_DURATION = 8000; // 8 segundos
 
-  // Datos de cada habitación con su imagen e información asociada
   const rooms: RoomData[] = [
-    {
-      image: homeCard1,
-      location: 'Cuzco-Castillejos, Madrid',
-      description: 'Double bed. Fully furnished room. Move-in ready.',
-      bulletPoints: [
-        'Furnished room',
-        'All utilities',
-        'High-speed WiFi',
-        'Weekly cleaning',
-        'Community access',
-      ],
-    },
-    {
-      image: homeCard2,
-      location: 'Chamberí, Madrid',
-      description: 'Single bed. Fully furnished room. Move-in ready.',
-      bulletPoints: [
-        'Furnished room',
-        'All utilities',
-        'High-speed WiFi',
-        'Weekly cleaning',
-        'Community access',
-      ],
-    },
-    {
-      image: homeCard3,
-      location: 'Malasaña, Madrid',
-      description: 'Double bed. Fully furnished room. Move-in ready.',
-      bulletPoints: [
-        'Furnished room',
-        'All utilities',
-        'High-speed WiFi',
-        'Weekly cleaning',
-        'Community access',
-      ],
-    },
-    {
-      image: homeCard4,
-      location: 'Salamanca, Madrid',
-      description: 'Single bed. Fully furnished room. Move-in ready.',
-      bulletPoints: [
-        'Furnished room',
-        'All utilities',
-        'High-speed WiFi',
-        'Weekly cleaning',
-        'Community access2',
-      ],
-    },
+    { image: homeCard1, location: 'Cuzco-Castillejos, Madrid', descriptionKey: 'Double' },
+    { image: homeCard2, location: 'Chamberí, Madrid', descriptionKey: 'Single' },
+    { image: homeCard3, location: 'Malasaña, Madrid', descriptionKey: 'Double' },
+    { image: homeCard4, location: 'Salamanca, Madrid', descriptionKey: 'Single' },
   ];
 
   const currentRoom = rooms[currentImageIndex];
+  const roomDescription = t(`rooms.description${currentRoom.descriptionKey}`);
 
   const nextImage = () => {
     setCurrentImageIndex((prev) => (prev + 1) % rooms.length);
@@ -197,35 +156,37 @@ export default function RoomsSection() {
         {/* Text Overlays */}
         <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/60 to-transparent">
           <h3 className="text-white title text-[32px] mb-2">{currentRoom.location}</h3>
-          <p className="text-white text-[16px] mb-4">{currentRoom.description}</p>
+          <p className="text-white text-[16px] mb-4">{roomDescription}</p>
           <button
             type="button"
             onClick={openApplyPopup}
             className="w-full bg-red text-white rounded-[12px] font-semibold text-lg px-4 py-3 hover:bg-red/90 transition-colors"
           >
-            Apply now
+            {t('rooms.applyNow')}
           </button>
         </div>
       </div>
 
       {/* Right Section - Info (45%) */}
       <div className="lg:w-[45%] bg-white p-6  md:pl-[50px] md:p-12 xl:pl-[120px] lg:pr-6 flex flex-col justify-center">
-        <p className="text-red recoleta sm:text-[18px] text-[16px] mb-4 trcking-[-1%]">Transparent pricing</p>
+        <p className="text-red recoleta sm:text-[18px] text-[16px] mb-4 trcking-[-1%]">{t('rooms.transparentPricing')}</p>
         <h2 className="text-black title md:text-[64px] text-[45px] leading-[100%] mb-4">
-          One price.
+          {t('rooms.onePrice')}
           <br />
-          <span className="recoleta">Everything included.</span>
+          <span className="recoleta">
+            {t('rooms.everythingIncluded')}
+          </span>
         </h2>
         <p className="text-black text-[20px] leading-[130%] max-w-[430px] mb-8">
-          Rent covers your private room, shared spaces, utilities, WiFi, weekly cleaning, and be part of the community.
+          {t('rooms.rentDescription')}
         </p>
 
         {/* Bullet Points */}
         <div className="flex flex-wrap gap-2">
-          {currentRoom.bulletPoints.map((point, index) => (
-            <div key={index} className="flex items-center gap-2">
+          {ROOM_BULLET_KEYS.map((i) => (
+            <div key={i} className="flex items-center gap-2">
               <span className="text-red text-[20px]">•</span>
-              <span className="text-black text-[18px]">{point}</span>
+              <span className="text-black text-[18px]">{t(`rooms.bullet${i}`)}</span>
             </div>
           ))}
         </div>
