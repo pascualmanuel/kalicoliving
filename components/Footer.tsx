@@ -3,11 +3,13 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useApplyPopup } from "@/context/ApplyPopupContext";
 import redDviderSvg2 from "../public/assets/icons/red-divider-2.svg";
 import logoSvg from "../public/assets/logos/logo.svg";
 
 export default function Footer() {
   const pathname = usePathname();
+  const { openApplyPopup } = useApplyPopup();
   const hideCta = pathname?.includes("landlords") || pathname?.includes("blog");
 
   return (
@@ -25,11 +27,13 @@ export default function Footer() {
             <h2 className="lg:text-[64px] text-[45px] text-white title text-center ">
               Ready to live <br /> together?
             </h2>
-            <a href="#" className="mt-8 mb-24">
-              <div className="w-[350px] bg-white rounded-[12px] semi-bold text-center font-semibold text-lg px-4 py-2 text-black  my-2 ">
-                Apply now
-              </div>
-            </a>
+            <button
+              type="button"
+              onClick={openApplyPopup}
+              className="mt-8 mb-24 w-[350px] bg-white rounded-[12px] semi-bold text-center font-semibold text-lg px-4 py-2 text-black my-2 hover:opacity-90 transition-opacity"
+            >
+              Apply now
+            </button>
           </>
         )}
         <footer className="w-full py-[52px] px-[44px] rounded-[20px] bg-[#651514]">
@@ -57,12 +61,13 @@ export default function Footer() {
               >
                 Landlords
               </Link>
-              <Link
-                href="/apply"
-                className="text-white text-[16px] leading-[130%]"
+              <button
+                type="button"
+                onClick={openApplyPopup}
+                className="text-white text-[16px] leading-[130%] hover:opacity-80 transition-opacity text-left"
               >
                 Apply
-              </Link>
+              </button>
             </div>
           </div>
 

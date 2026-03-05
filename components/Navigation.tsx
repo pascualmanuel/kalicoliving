@@ -4,12 +4,14 @@ import { useState, useEffect } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import { Link, usePathname, useRouter } from "@/i18n/routing";
 import Image from "next/image";
+import { useApplyPopup } from "@/context/ApplyPopupContext";
 
 export default function Navigation() {
   const t = useTranslations("nav");
   const locale = useLocale();
   const pathname = usePathname();
   const router = useRouter();
+  const { openApplyPopup } = useApplyPopup();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isNavbarVisible, setIsNavbarVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
@@ -165,12 +167,13 @@ export default function Navigation() {
                 </button>
               </div>
             </div>
-            <Link
-              href="/apply"
-              className=" py-3 w-[150px] text-center bg-red text-white rounded-lg hover:bg-red transition-colors font-semibold"
+            <button
+              type="button"
+              onClick={openApplyPopup}
+              className="py-3 w-[150px] text-center bg-red text-white rounded-lg hover:bg-red transition-colors font-semibold"
             >
               {t("applyNow")}
-            </Link>
+            </button>
           </div>
         </div>
 
@@ -325,13 +328,16 @@ export default function Navigation() {
               </nav>
             </div>
             <div className="flex justify-center px-6">
-              <Link
-                href="/apply"
-                onClick={() => setIsMobileMenuOpen(false)}
+              <button
+                type="button"
+                onClick={() => {
+                  openApplyPopup();
+                  setIsMobileMenuOpen(false);
+                }}
                 className="w-full mb-10 px-6 py-[11px] bg-red text-white rounded-lg hover:bg-red transition-colors font-semibold text-center text-lg"
               >
                 {t("applyNow")}
-              </Link>
+              </button>
             </div>
           </div>
         </div>
