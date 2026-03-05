@@ -4,6 +4,7 @@
 import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
+import { useApplyPopup } from '@/context/ApplyPopupContext';
 import homeCard1 from '../public/assets/images/home/home-card-1.webp';
 import homeCard2 from '../public/assets/images/home/home-card-2.webp';
 import homeCard3 from '../public/assets/images/home/home-card-3.webp';
@@ -17,6 +18,7 @@ interface RoomData {
 }
 
 export default function RoomsSection() {
+  const { openApplyPopup } = useApplyPopup();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [progress, setProgress] = useState(0);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
@@ -196,7 +198,11 @@ export default function RoomsSection() {
         <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/60 to-transparent">
           <h3 className="text-white title text-[32px] mb-2">{currentRoom.location}</h3>
           <p className="text-white text-[16px] mb-4">{currentRoom.description}</p>
-          <button className="w-full bg-red text-white rounded-[12px] font-semibold text-lg px-4 py-3 hover:bg-red/90 transition-colors">
+          <button
+            type="button"
+            onClick={openApplyPopup}
+            className="w-full bg-red text-white rounded-[12px] font-semibold text-lg px-4 py-3 hover:bg-red/90 transition-colors"
+          >
             Apply now
           </button>
         </div>
