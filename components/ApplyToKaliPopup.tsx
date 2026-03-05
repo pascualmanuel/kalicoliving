@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import { AnimatePresence, motion } from "framer-motion";
 
 const STEPS = [1, 2, 3];
 const DURATION_OPTIONS = ["3 meses", "6 meses", "9 meses", "1 año o más"];
@@ -52,18 +53,31 @@ export default function ApplyToKaliPopup({
   const [anythingElse, setAnythingElse] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  if (!isOpen) return null;
+  const overlayTransition = { type: "tween", duration: 0.3, ease: [0.32, 0.72, 0, 1] };
+  const cardTransition = { type: "spring", stiffness: 400, damping: 32 };
 
   return (
-    <div
-      className="fixed inset-0 flex items-center justify-center p-4 z-[999999]"
-      style={{ background: "rgba(0, 0, 0, 0.7)", backdropFilter: "blur(12px)" }}
-      onClick={(e) => e.target === e.currentTarget && onClose()}
-    >
-      <div
-        className="w-full max-w-[670px] rounded-[20px] bg-[#FFF2E2] shadow-xl overflow-hidden "
-        onClick={(e) => e.stopPropagation()}
-      >
+    <AnimatePresence>
+      {isOpen && (
+        <motion.div
+          key="popup-overlay"
+          className="fixed inset-0 flex items-center justify-center p-4 z-[999999]"
+          style={{ background: "rgba(0, 0, 0, 0.7)", backdropFilter: "blur(12px)" }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={overlayTransition}
+          onClick={(e) => e.target === e.currentTarget && onClose()}
+        >
+          <motion.div
+            key="popup-card"
+            className="w-full max-w-[670px] rounded-[20px] bg-[#FFF2E2] shadow-xl overflow-hidden "
+            initial={{ opacity: 0, scale: 0.96 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.96 }}
+            transition={cardTransition}
+            onClick={(e) => e.stopPropagation()}
+          >
         {!isSubmitted && (
           <div className="relative pt-8 pb-4 px-5 md:px-10">
             <button
@@ -375,7 +389,9 @@ export default function ApplyToKaliPopup({
             </form>
           )}
         </div>
-      </div>
-    </div>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 }
