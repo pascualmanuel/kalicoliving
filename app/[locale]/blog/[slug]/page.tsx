@@ -1,0 +1,192 @@
+import { getTranslations } from "next-intl/server";
+import { notFound } from "next/navigation";
+import Image from "next/image";
+import { Link } from "@/i18n/routing";
+import { getBlogPostBySlug, getBlogPosts } from "@/lib/blog";
+import BlogPostTags from "@/components/BlogPostTags";
+
+interface BlogPostPageProps {
+  params: { locale: string; slug: string };
+}
+
+export default async function BlogPostPage({ params }: BlogPostPageProps) {
+  const { locale, slug } = params;
+  const t = await getTranslations("nav");
+  const tBlog = await getTranslations("pages.blog");
+
+  const [post, allPosts] = await Promise.all([
+    getBlogPostBySlug(slug, locale),
+    getBlogPosts(locale),
+  ]);
+  if (!post) notFound();
+
+  const similarPosts = allPosts.filter((p) => p.slug !== slug).slice(0, 3);
+
+  const imageUrl = post.list_image_url || post.cover_url;
+
+  return (
+    <main className="px-4 py-10 md:py-16 md:px-20 mx-auto mt-[100px] ">
+      {/* Breadcrumb */}
+      <nav className="mb-8 md:mb-10" aria-label="Breadcrumb">
+        <ol className="flex items-center gap-2 text-sm text-grey/70">
+          <li>
+            <Link href="/blog" className="hover:underline">
+              {t("blog")}
+            </Link>
+          </li>
+          <li aria-hidden="true">
+            <svg
+              width="5"
+              height="9"
+              viewBox="0 0 5 9"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M3.486 4.088L0 7.504L0.658 8.162L4.746 4.088L0.658 0L0 0.658L3.486 4.088Z"
+                fill="#272727"
+              />
+            </svg>
+          </li>
+          <li
+            className="text-grey font-medium truncate max-w-[200px] md:max-w-none"
+            aria-current="page"
+          >
+            {post.title}
+          </li>
+        </ol>
+      </nav>
+
+      <div className="flex flex-col lg:flex-row gap-8 lg:gap-12">
+        {/* Left column: title + tags (sticky on desktop, hidden as sidebar on mobile) */}
+        <aside className="lg:w-[440px] shrink-0">
+          <div className="lg:sticky lg:top-24">
+            {/* Mobile: title + tags above image */}
+            <div className="lg:hidden mb-6">
+              <h1 className="text-2xl md:text-3xl font-bold text-grey mb-3">
+                {post.title}
+              </h1>
+              <BlogPostTags tags={post.tags} />
+            </div>
+
+            {/* Desktop: sticky brown box with title + tags */}
+            <div className="hidden lg:block rounded-[20px] bg-brown p-6 md:p-8">
+              <h1 className="text-2xl md:text-3xl font-bold text-white leading-tight">
+                {post.title}
+              </h1>
+              <div className="mt-4">
+                <BlogPostTags tags={post.tags} variant="light" />
+              </div>
+            </div>
+          </div>
+        </aside>
+
+        {/* Right column: image + content */}
+        <article className="flex-1 min-w-0">
+          {imageUrl && (
+            <div className="relative w-full aspect-[16/10] md:aspect-video rounded-[20px] overflow-hidden bg-gray-200 mb-8">
+              <Image
+                src={imageUrl}
+                alt=""
+                fill
+                className="object-cover"
+                sizes="(max-width: 1024px) 100vw, calc(100vw - 440px - 6rem)"
+                priority
+              />
+            </div>
+          )}
+
+          {/* Desktop: title is in sidebar, so we don't repeat. Mobile: already shown above */}
+          <div
+            className="prose prose-lg max-w-none text-grey text-[18px] leading-relaxed [&_p]:mb-4 [&_p:last-child]:mb-0"
+            dangerouslySetInnerHTML={{ __html: formatContent(post.content) }}
+          />
+        </article>
+      </div>
+
+      {/* Similar articles */}
+      {similarPosts.length > 0 && (
+        <section className="mt-16 md:mt-20 w-full">
+          <h2 className="text-left text-[35px] md:text-[45px] font-bold text-grey mb-8">
+            {tBlog("similarArticles")}
+          </h2>
+          <div className="flex flex-row flex-wrap gap-6 md:gap-2 items-start justify-between">
+            {similarPosts.map((similar) => (
+              <Link
+                key={similar.id}
+                href={`/blog/${similar.slug}`}
+                className="flex flex-col w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(33%-1rem)] gap-2 group"
+              >
+                {similar.image ? (
+                  <div className="relative w-full aspect-[4/3] max-h-[315px] overflow-hidden rounded-[20px] bg-gray-100">
+                    <Image
+                      src={similar.image}
+                      alt=""
+                      fill
+                      className="object-cover group-hover:scale-105 transition-transform duration-300"
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    />
+                  </div>
+                ) : (
+                  <div className="w-full aspect-[4/3] max-h-[315px] rounded-[20px] bg-gray-200 flex items-center justify-center text-gray-500 text-sm">
+                    No image
+                  </div>
+                )}
+                <p className="text-[14px] text-grey dark:text-gray-400">
+                  {formatDate(similar.publishedAt, locale)}
+                  <span className="mx-2">•</span> {similar.readTimeMinutes} min
+                  read
+                </p>
+                <h3 className="text-[24px] font-bold leading-tight text-grey">
+                  {similar.title}
+                </h3>
+                <p className="text-[16px] text-grey dark:text-gray-400 leading-snug">
+                  {truncate(similar.excerpt, 80)}
+                </p>
+                <span className="text-[18px] text-grey font-semibold group-hover:underline">
+                  {tBlog("readArticle")} →
+                </span>
+              </Link>
+            ))}
+          </div>
+        </section>
+      )}
+    </main>
+  );
+}
+
+function formatDate(dateStr: string, locale: string) {
+  const date = new Date(dateStr);
+  return new Intl.DateTimeFormat(locale === "es" ? "es-ES" : "en-GB", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  }).format(date);
+}
+
+function truncate(str: string | null, maxLength: number) {
+  if (!str) return "";
+  if (str.length <= maxLength) return str;
+  return str.slice(0, maxLength - 3).trim() + "...";
+}
+
+/** Simple formatting: wrap paragraphs in <p> if content is plain text, or pass through HTML. */
+function formatContent(content: string): string {
+  if (!content) return "";
+  if (content.trim().startsWith("<")) return content;
+  return content
+    .split(/\n\n+/)
+    .map((p) => `<p>${escapeHtml(p.replace(/\n/g, " "))}</p>`)
+    .join("");
+}
+
+function escapeHtml(text: string): string {
+  const map: Record<string, string> = {
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#039;",
+  };
+  return text.replace(/[&<>"']/g, (ch) => map[ch] ?? ch);
+}
