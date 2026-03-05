@@ -99,7 +99,7 @@ export default function LandlordsPage() {
                 <p className='text-white px-8 sm:px-0 sm:max-w-[400px] text-[16px] md:text-[24px] leading-[130%] mx-auto text-center '>
                   Seleccionamos inquilinos, gestionamos pagos y resolvemos incidencias para que tú no tengas que preocuparte.
                 </p>
-                <a href="#">
+                <a href="#contact-landlords">
                   <div className='w-[170px] bg-red rounded-[12px] font-semibold text-center text-lg px-4 py-2 text-white my-2'>
                     Contactanos
                   </div>
@@ -155,7 +155,9 @@ export default function LandlordsPage() {
 
         </div>
 
-        <div className='mb-[-10%] z-10 relative  md:px-10 px-5'>
+        <div id="contact-landlords" className=' pb-10'></div>
+
+        <div id="" className='mb-[-10%] z-10 relative  md:px-10 px-5'>
           <LandlordsForm />
         </div>
 
