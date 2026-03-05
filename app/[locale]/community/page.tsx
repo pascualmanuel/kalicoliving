@@ -67,6 +67,7 @@ export default function CommunityPage() {
 
   const [isMobile, setIsMobile] = useState(false);
   const [isBelowLg, setIsBelowLg] = useState(false);
+  const [isTablet, setIsTablet] = useState(false);
   const [isApplyPopupOpen, setIsApplyPopupOpen] = useState(false);
 
   useEffect(() => {
@@ -74,6 +75,7 @@ export default function CommunityPage() {
       const w = window.innerWidth;
       setIsMobile(w < 768);
       setIsBelowLg(w < 1024);
+      setIsTablet(w >= 680 && w < 1024);
     };
     checkBreakpoints();
     window.addEventListener("resize", checkBreakpoints);
@@ -81,7 +83,7 @@ export default function CommunityPage() {
   }, []);
 
   // Posiciones finales para las imágenes cuando se esparcen (en píxeles desde el centro)
-  // Desktop (>= lg): distribución actual
+  // Desktop (>= 1024): distribución actual
   const galleryPositionsDesktop = [
     { x: "-180%", y: -200, rotate: -8 }, // Imagen 1 - Top left
     { x: "80%", y: -230, rotate: 5 }, // Imagen 2 - Top center-right
@@ -90,7 +92,16 @@ export default function CommunityPage() {
     { x: "76%", y: 280, rotate: -3 }, // Imagen 5 - Top right
   ];
 
-  // Compact (< lg): misma idea pero con menos spread y menos offsets para no salirse del viewport
+  // Tablet (680px - 1024px): valores intermedios
+  const galleryPositionsTablet = [
+    { x: "-160%", y: -160, rotate: -7 },
+    { x: "68%", y: -190, rotate: 5 },
+    { x: -160, y: -460, rotate: -5 },
+    { x: "-135%", y: 250, rotate: -22 },
+    { x: "66%", y: 250, rotate: -3 },
+  ];
+
+  // Mobile (< 680px): más compacto para viewport pequeño
   const galleryPositionsCompact = [
     { x: "-135%", y: -110, rotate: -6 },
     { x: "55%", y: -140, rotate: 6 },
@@ -99,9 +110,11 @@ export default function CommunityPage() {
     { x: "55%", y: 210, rotate: -2 },
   ];
 
-  const galleryPositions = isBelowLg
-    ? galleryPositionsCompact
-    : galleryPositionsDesktop;
+  const galleryPositions = !isBelowLg
+    ? galleryPositionsDesktop
+    : isTablet
+      ? galleryPositionsTablet
+      : galleryPositionsCompact;
 
   // Rotaciones base para los isologos (-15° a 15°), luego se rotan 180° adicionales
   // Desktop: 14 isologos
@@ -540,7 +553,7 @@ export default function CommunityPage() {
               className="w-full h-full object-cover rounded-[24px] "
             />
           </motion.div>
-          <div className="flex flex-col items-center justify-center pt-[52vh] lg:pt-0 ">
+          <div className="flex flex-col items-center justify-center lg:pt-0 ">
             <p className=" text-black text-center text-[24px] max-w-[480px] mx-auto mt-14">
               At Kali, you live alongside people from different places,
               backgrounds, and perspectives. That mix is what makes every day

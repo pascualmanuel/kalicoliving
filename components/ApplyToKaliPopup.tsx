@@ -56,7 +56,7 @@ export default function ApplyToKaliPopup({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 z-[999999]"
+      className="fixed inset-0 flex items-center justify-center p-4 z-[999999]"
       style={{ background: "rgba(0, 0, 0, 0.7)", backdropFilter: "blur(12px)" }}
       onClick={(e) => e.target === e.currentTarget && onClose()}
     >
