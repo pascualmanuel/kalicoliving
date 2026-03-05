@@ -2,7 +2,7 @@
 
 import { useTranslations } from "next-intl";
 import Image from "next/image";
-import { motion, useInView, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
 import homeImage from "../../public/assets/images/home/hero-image-kali.webp";
 import dividerSvg from "../../public/assets/icons/divider.svg";
@@ -22,22 +22,7 @@ export default function HomePage() {
   const t = useTranslations("pages.home");
   const cardsRef = useRef(null);
   const videoSectionRef = useRef<HTMLDivElement>(null);
-  const [isMobile, setIsMobile] = useState(false);
 
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
-  }, []);
-
-  const isInView = useInView(cardsRef, {
-    once: true,
-    margin: isMobile ? "-100px" : "-280px",
-    amount: isMobile ? 0.1 : 0.2,
-  });
   const titleRef = useRef<HTMLHeadingElement>(null);
   const [titleLines, setTitleLines] = useState<string[]>([]);
 
@@ -104,23 +89,17 @@ export default function HomePage() {
   const textOpacity = useTransform(scrollYProgress, [0.1, 0.25], [0, 1]);
   const textY = useTransform(scrollYProgress, [0.1, 0.25], [50, 0]);
 
-  const cardVariants = {
-    hidden: {
-      opacity: 0,
-      y: 60,
-      scale: 0.9,
-    },
-    visible: (i: number) => ({
-      opacity: 1,
-      y: 0,
-      scale: 1,
-      transition: {
-        duration: 1.2,
-        delay: i * 0.15,
-        ease: [0.25, 0.46, 0.45, 0.94] as any, // easeOutQuad - suave y premium
-      },
-    }),
-  };
+  // Scroll de la sección de cards: progress 0 = antes de ver la sección (top al borde inferior del viewport), 1 = sección saliendo
+  const cardsScrollProgress = useScroll({
+    target: cardsRef,
+    offset: ["start end", "end start"],
+  }).scrollYProgress;
+
+  // Translate Y en % por card: entrando = escalonado hacia abajo (Card1 arriba), saliendo = al revés (Card4 arriba)
+  const card1Y = useTransform(cardsScrollProgress, [0, 1], [16, -6]);
+  const card2Y = useTransform(cardsScrollProgress, [0, 1], [30, -11]);
+  const card3Y = useTransform(cardsScrollProgress, [0, 1], [44, -15]);
+  const card4Y = useTransform(cardsScrollProgress, [0, 1], [58, -22]);
 
   // Variantes para la animación tipo cortina (sin cambiar opacidad)
   const curtainContainer = {
@@ -222,12 +201,9 @@ export default function HomePage() {
         {/* Card 1 */}
         <motion.div
           className="flex flex-col items-center justify-center"
-          variants={cardVariants}
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
-          custom={0}
+          style={{ y: useTransform(card1Y, (v) => `${v}%`) }}
         >
-          <div className="w-full max-h-[260px] md:max-w-[310px] aspect-square rounded-xl overflow-hidden">
+          <div className="w-full max-h-[360px] md:max-w-[310px] aspect-square rounded-xl overflow-hidden">
             <Image
               src={homeCard1}
               alt="Real community"
@@ -248,12 +224,9 @@ export default function HomePage() {
         {/* Card 2 */}
         <motion.div
           className="flex flex-col items-center justify-center"
-          variants={cardVariants}
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
-          custom={1}
+          style={{ y: useTransform(card2Y, (v) => `${v}%`) }}
         >
-          <div className="w-full max-h-[260px] md:max-w-[310px] aspect-square rounded-xl overflow-hidden">
+          <div className="w-full max-h-[360px] md:max-w-[310px] aspect-square rounded-xl overflow-hidden">
             <Image
               src={homeCard2}
               alt="Card 2"
@@ -276,12 +249,9 @@ export default function HomePage() {
         {/* Card 3 */}
         <motion.div
           className="flex flex-col items-center justify-center"
-          variants={cardVariants}
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
-          custom={2}
+          style={{ y: useTransform(card3Y, (v) => `${v}%`) }}
         >
-          <div className="w-full max-h-[260px] md:max-w-[310px] aspect-square rounded-xl overflow-hidden">
+          <div className="w-full max-h-[360px] md:max-w-[310px] aspect-square rounded-xl overflow-hidden">
             <Image
               src={homeCard3}
               alt="Card 3"
@@ -301,12 +271,9 @@ export default function HomePage() {
         {/* Card 4 */}
         <motion.div
           className="flex flex-col items-center justify-center"
-          variants={cardVariants}
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
-          custom={3}
+          style={{ y: useTransform(card4Y, (v) => `${v}%`) }}
         >
-          <div className="w-full max-h-[260px] md:max-w-[310px] aspect-square rounded-xl overflow-hidden">
+          <div className="w-full max-h-[360px] md:max-w-[310px] aspect-square rounded-xl overflow-hidden">
             <Image
               src={homeCard4}
               alt="Card 4"
@@ -323,7 +290,7 @@ export default function HomePage() {
           </p>
         </motion.div>
       </div>
-      <div ref={videoSectionRef} className="relative h-[150vh]">
+      <div ref={videoSectionRef} className="relative h-[150vh] mt-[100px]">
         {/* Video Fixed Container */}
         <div className="sticky top-[100px] md:top-0 w-full h-[650px] lg:h-screen md:px-20 px-5 ">
           <div className="rounded-[20px] overflow-hidden h-full">

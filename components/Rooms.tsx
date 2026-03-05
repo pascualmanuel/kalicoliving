@@ -23,7 +23,7 @@ export default function RoomsSection() {
   const [progress, setProgress] = useState(0);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const progressIntervalRef = useRef<NodeJS.Timeout | null>(null);
-  
+
   const STORY_DURATION = 8000; // 8 segundos
 
   // Datos de cada habitación con su imagen e información asociada
@@ -134,7 +134,7 @@ export default function RoomsSection() {
           fill
           className="object-cover"
         />
-        
+
         {/* Carousel Indicators - Instagram Style */}
         <div className="absolute top-6 left-6 right-6 flex gap-1 z-10">
           {rooms.map((_, index) => (
@@ -209,7 +209,7 @@ export default function RoomsSection() {
       </div>
 
       {/* Right Section - Info (45%) */}
-      <div className="lg:w-[45%] bg-white sm:p-12 p-6 flex flex-col justify-center">
+      <div className="lg:w-[45%] bg-white p-6  md:pl-[50px] md:p-12 xl:pl-[120px] lg:pr-6 flex flex-col justify-center">
         <p className="text-red recoleta sm:text-[18px] text-[16px] mb-4 trcking-[-1%]">Transparent pricing</p>
         <h2 className="text-black title md:text-[64px] text-[45px] leading-[100%] mb-4">
           One price.
@@ -219,7 +219,7 @@ export default function RoomsSection() {
         <p className="text-black text-[20px] leading-[130%] max-w-[430px] mb-8">
           Rent covers your private room, shared spaces, utilities, WiFi, weekly cleaning, and be part of the community.
         </p>
-        
+
         {/* Bullet Points */}
         <div className="flex flex-wrap gap-2">
           {currentRoom.bulletPoints.map((point, index) => (
