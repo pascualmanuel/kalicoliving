@@ -14,7 +14,15 @@
       "title": "Landlords"
     },
     "blog": {
-      "title": "Blog"
+      "title": "Blog",
+      "categories": {
+        "all": "All",
+        "culture": "Culture",
+        "gastro": "Gastro",
+        "entrepreneur": "Entrepreneur",
+        "plans": "Plans"
+      },
+      "readArticle": "Read article"
     },
     "community": {
       "title": "Community"

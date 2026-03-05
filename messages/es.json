@@ -14,7 +14,15 @@
       "title": "Propietarios"
     },
     "blog": {
-      "title": "Blog"
+      "title": "Blog",
+      "categories": {
+        "all": "Todos",
+        "culture": "Cultura",
+        "gastro": "Gastro",
+        "entrepreneur": "Emprendedor",
+        "plans": "Planes"
+      },
+      "readArticle": "Leer artículo"
     },
     "community": {
       "title": "Comunidad"
