@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Scrollbar, Autoplay } from "swiper/modules";
 
@@ -59,7 +59,7 @@ function Carousel() {
   const baseHeight = 218; // Altura base de referencia
 
   // Function to calculate card width based on number of columns
-  const calculateCardWidth = (containerWidth, columns) => {
+  const calculateCardWidth = (containerWidth: number, columns: number) => {
     const totalGaps = gap * (columns - 1);
     const totalPadding = padding * 2;
     const calculatedWidth =
@@ -68,7 +68,7 @@ function Carousel() {
   };
 
   // Function to update the state based on window width
-  const updateMedia = () => {
+  const updateMedia = useCallback(() => {
     const width = window.innerWidth;
     setIsDesktop(width >= 640);
 
@@ -133,7 +133,7 @@ function Carousel() {
       setCardWidth4Col(325);
       setCardHeight(218);
     }
-  };
+  }, []);
 
   useEffect(() => {
     // Inicializar en el cliente
@@ -145,27 +145,26 @@ function Carousel() {
         window.removeEventListener("resize", updateMedia);
       };
     }
-  }, []);
+  }, [updateMedia]);
 
   // ResizeObserver para detectar cambios en el contenedor cuando esté disponible
   useEffect(() => {
-    if (typeof window !== "undefined" && containerRef.current && isDesktop) {
+    const container = containerRef.current;
+    if (typeof window !== "undefined" && container && isDesktop) {
       const resizeObserver = new ResizeObserver(() => {
         updateMedia();
       });
 
-      resizeObserver.observe(containerRef.current);
+      resizeObserver.observe(container);
 
       // Recalcular inmediatamente cuando el contenedor esté disponible
       updateMedia();
 
       return () => {
-        if (containerRef.current) {
-          resizeObserver.unobserve(containerRef.current);
-        }
+        resizeObserver.unobserve(container);
       };
     }
-  }, [isDesktop]);
+  }, [isDesktop, updateMedia]);
 
   return (
     <>
