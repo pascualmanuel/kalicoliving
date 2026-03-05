@@ -22,7 +22,8 @@
         "entrepreneur": "Entrepreneur",
         "plans": "Plans"
       },
-      "readArticle": "Read article"
+      "readArticle": "Read article",
+      "similarArticles": "Similar articles"
     },
     "community": {
       "title": "Community"
