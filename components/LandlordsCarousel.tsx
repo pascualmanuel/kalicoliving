@@ -29,14 +29,14 @@ function Carousel() {
   const [cardHeight, setCardHeight] = useState(218);
   const [isMediumLayout, setIsMediumLayout] = useState(false); // Entre 1000px y 1280px
   const [isSmallLayout, setIsSmallLayout] = useState(false); // Entre 640px y 1000px
-  const containerRef = useRef(null);
+  const containerRef = useRef<HTMLDivElement | null>(null);
   const gap = 30; // Gap entre cards
   const padding = 60; // Padding horizontal del contenedor (30px cada lado)
   const baseWidth = 325; // Ancho base de referencia (1375px+)
   const baseHeight = 218; // Altura base de referencia
 
   // Function to calculate card width based on number of columns
-  const calculateCardWidth = (containerWidth, columns) => {
+  const calculateCardWidth = (containerWidth: number, columns: number) => {
     const totalGaps = gap * (columns - 1);
     const totalPadding = padding * 2;
     const calculatedWidth =
