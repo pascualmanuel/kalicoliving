@@ -65,7 +65,7 @@ export default function BlogPostList({ posts }: BlogPostListProps) {
               key={key}
               type="button"
               onClick={() => setCategory(key)}
-              className={`px-3 py-1.5 rounded-full text-sm sm:text-base font-medium border transition-colors ${
+              className={`px-3 py-1.5 sm:px-5 sm:py-2 rounded-full text-sm sm:text-base font-medium border transition-colors ${
                 isSelected
                   ? "bg-red text-white font-semibold border-red"
                   : "text-black border-[#d3d3d3] hover:border-gray-400"
@@ -112,8 +112,8 @@ export default function BlogPostList({ posts }: BlogPostListProps) {
               <p className="text-[16px] text-grey dark:text-gray-400 leading-snug">
                 {truncate(post.excerpt, 80)}
               </p>
-              <span className="text-[18px] text-grey font-semibold group-hover:underline">
-                {t("readArticle")} →
+              <span className="text-[18px] text-grey font-semibold ">
+                {t("readArticle")}&nbsp;&nbsp;→
               </span>
             </Link>
           </article>

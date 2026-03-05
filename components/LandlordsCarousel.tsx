@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import { useState, useEffect, useRef, useCallback } from "react";
+import { useTranslations } from "next-intl";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Scrollbar, Autoplay } from "swiper/modules";
 
@@ -8,42 +9,18 @@ import "swiper/css"; // Core Swiper styles
 import "swiper/css/pagination";
 import CheckIcon from "../public/assets/icons/Check.svg";
 import Image from "next/image";
-const data = [
-  {
-    title: "Pago garantizado ",
-    text: "Pagamos la renta siempre entre el 1 y el 5 de cada mes. Sin excepciones.",
-  },
-  {
-    title: "Ingresos estables, sin sorpresas ",
-    text: "No dependes de cancelaciones, cambios de inquilinos ni temporadas bajas. Tu renta es fija y previsible.",
-  },
-  {
-    title: "Contrato a largo plazo ",
-    text: "Trabajamos con contratos entre 7 y 10 años, para que tengas tranquilidad y sepas exactamente qué esperar.",
-  },
-  {
-    title: "Equipo de diseño interno ",
-    text: "Si hace falta, rediseñamos los espacios manteniendo el estilo y la esencia del lugar. Renovamos y amueblamos tu propiedad cuidando cada detalle.",
-  },
-  {
-    title: "Limpieza y mantenimiento ",
-    text: "Nos ocupamos de todo: coordinar la limpieza, el  mantenimiento y si algo se rompe, lo arreglamos.",
-  },
-  {
-    title: "Inquilinos verificados ",
-    text: "Cada residente pasa por un proceso de revisión. Buscamos perfiles profesionales y ordenados.",
-  },
-  {
-    title: "Soporte 24/7 ",
-    text: "Estamos disponibles todos los días, a cualquier hora, ante urgencias o imprevistos. Siempre hay alguien que responde.",
-  },
-  {
-    title: "Cuidamos tu propiedad como si fuera nuestra ",
-    text: "Supervisamos el estado de la propiedad de forma regular y actuamos rápido ante cualquier problema.",
-  },
-];
+
+const CAROUSEL_ITEMS = 8;
 
 function Carousel() {
+  const t = useTranslations("pages.landlords");
+  const data = Array.from({ length: CAROUSEL_ITEMS }, (_, i) => {
+    const n = i + 1;
+    return {
+      title: t(`carousel${n}Title`),
+      text: t(`carousel${n}Text`),
+    };
+  });
   const [isDesktop, setIsDesktop] = useState(false);
   const [cardWidth3Col, setCardWidth3Col] = useState(325); // Ancho para cards de 3 columnas
   const [cardWidth2Col, setCardWidth2Col] = useState(325); // Ancho para cards de 2 columnas (últimas 2 en layout medio)
@@ -52,14 +29,14 @@ function Carousel() {
   const [cardHeight, setCardHeight] = useState(218);
   const [isMediumLayout, setIsMediumLayout] = useState(false); // Entre 1000px y 1280px
   const [isSmallLayout, setIsSmallLayout] = useState(false); // Entre 640px y 1000px
-  const containerRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef(null);
   const gap = 30; // Gap entre cards
   const padding = 60; // Padding horizontal del contenedor (30px cada lado)
   const baseWidth = 325; // Ancho base de referencia (1375px+)
   const baseHeight = 218; // Altura base de referencia
 
   // Function to calculate card width based on number of columns
-  const calculateCardWidth = (containerWidth: number, columns: number) => {
+  const calculateCardWidth = (containerWidth, columns) => {
     const totalGaps = gap * (columns - 1);
     const totalPadding = padding * 2;
     const calculatedWidth =
