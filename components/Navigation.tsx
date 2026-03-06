@@ -93,20 +93,20 @@ export default function Navigation() {
           {/* Logo - Left */}
           <div className="flex-shrink-0">
             <Link href="/" className="block">
-              {/* <Image
+              <Image
                 src="/assets/logos/logo.svg"
                 alt="Kali Coliving"
                 width={121}
                 height={38}
                 priority
-              /> */}
-              <Image
+              />
+              {/* <Image
                 src="/assets/logos/logo-black.svg"
                 alt="Kali Coliving"
                 width={121}
                 height={38}
                 priority
-              />
+              /> */}
             </Link>
           </div>
 
