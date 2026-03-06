@@ -22,10 +22,98 @@ import CommunityCarousel from "../../../components/CommunityCarousel";
 import GallerySection from "../../../components/GallerySection";
 import Footer from "../../../components/Footer";
 import ApplyToKaliPopup from "../../../components/ApplyToKaliPopup";
+type TitleLine = { text: string; startWordIndex: number; endWordIndex: number };
+
 export default function CommunityPage() {
   const t = useTranslations("pages.community");
   const galleryRef = useRef<HTMLDivElement>(null);
+  const titleRef = useRef<HTMLHeadingElement>(null);
+  const [titleLines, setTitleLines] = useState<TitleLine[]>([]);
   const [isInView, setIsInView] = useState(false);
+  const [hasSpread, setHasSpread] = useState(false);
+
+  const title1WordCount = t("heroTitle1").split(" ").filter(Boolean).length;
+
+  // Variantes para la animación tipo cortina (igual que home)
+  const curtainContainer = {
+    hidden: { opacity: 1 },
+    visible: {
+      opacity: 1,
+      transition: { staggerChildren: 0.25 },
+    },
+  };
+  const curtainLine = {
+    hidden: { y: "100%" },
+    visible: {
+      y: 0,
+      transition: { duration: 1, ease: [0.25, 1, 0.5, 1] as const },
+    },
+  };
+
+  const curtainLineLower = {
+    hidden: { y: "calc(100% + 40px)" },
+    visible: {
+      y: 0,
+      transition: { duration: 1, ease: [0.25, 1, 0.5, 1] as const },
+    },
+  };
+
+  // Dividir el título en líneas con rangos de palabras (para aplicar recoleta a heroTitle2)
+  useEffect(() => {
+    const splitTextIntoLines = () => {
+      if (!titleRef.current || titleRef.current.offsetWidth <= 0) return;
+      const fullText = `${t("heroTitle1")} ${t("heroTitle2")}`.trim();
+      const words = fullText.split(" ").filter(Boolean);
+      if (words.length === 0) return;
+
+      const lines: TitleLine[] = [];
+      let currentLine = "";
+      let lineStartIndex = 0;
+      const tempEl = document.createElement("span");
+      tempEl.style.visibility = "hidden";
+      tempEl.style.position = "absolute";
+      tempEl.style.whiteSpace = "nowrap";
+      const computedStyle = window.getComputedStyle(titleRef.current);
+      tempEl.style.fontSize = computedStyle.fontSize;
+      tempEl.style.fontFamily = computedStyle.fontFamily;
+      tempEl.style.fontWeight = computedStyle.fontWeight;
+      tempEl.style.letterSpacing = computedStyle.letterSpacing;
+      document.body.appendChild(tempEl);
+      const maxWidth = titleRef.current.offsetWidth;
+
+      words.forEach((word, index) => {
+        const testLine = currentLine ? `${currentLine} ${word}` : word;
+        tempEl.textContent = testLine;
+        if (tempEl.offsetWidth > maxWidth && currentLine) {
+          lines.push({
+            text: currentLine,
+            startWordIndex: lineStartIndex,
+            endWordIndex: index - 1,
+          });
+          lineStartIndex = index;
+          currentLine = word;
+        } else {
+          currentLine = testLine;
+        }
+        if (index === words.length - 1) {
+          lines.push({
+            text: currentLine,
+            startWordIndex: lineStartIndex,
+            endWordIndex: index,
+          });
+        }
+      });
+      document.body.removeChild(tempEl);
+      setTitleLines(lines);
+    };
+
+    const timer = setTimeout(splitTextIntoLines, 100);
+    window.addEventListener("resize", splitTextIntoLines);
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener("resize", splitTextIntoLines);
+    };
+  }, [t]);
 
   // Detectar cuando el usuario ha scrolleado más del 60-70% dentro de la sección
   useEffect(() => {
@@ -50,6 +138,7 @@ export default function CommunityPage() {
         sectionTop < triggerPoint && sectionTop > -sectionHeight * 0.5;
 
       setIsInView(shouldActivate);
+      if (shouldActivate) setHasSpread(true); // Una vez expandidas, no vuelven al centro
     };
 
     // Ejecutar al montar para verificar estado inicial
@@ -321,7 +410,10 @@ export default function CommunityPage() {
           {/* Imágenes de personas en círculos alrededor del hero (3 izquierda, 3 derecha) */}
 
           {/* Contenido principal */}
-          <div className="relative z-20 flex flex-col items-center justify-end sm:justify-center h-full sm:h-auto w-screen md:w-auto ">
+          <div
+            className="relative z-20 flex flex-col items-center justify-end
+           sm:justify-center h-full sm:h-auto w-screen md:w-auto "
+          >
             <div className="absolute top-0 left-0 w-full h-full pointer-events-none z-[1]">
               {peoplePositions.map((position, index) => {
                 const peopleImages = [
@@ -380,23 +472,91 @@ export default function CommunityPage() {
                 );
               })}
             </div>
-            <h3 className="text-white text-center text-[16] md:text-[18] tracking-[-3%] pb-8">
-              {t("heroLabel")}
-            </h3>
-            <h1 className="text-white font-bold text-center text-[50px]  sm:text-[100px] max-w-[270px] sm:max-w-[665px] title  !leading-[90%] sm:!leading-[80px] mb-10 md:mb-0">
-              {t("heroTitle1")}&nbsp;
-              <span className="recoleta">
-                {t("heroTitle2")}
-              </span>
-            </h1>
-            <a
-              href="#"
-              className="mb-[130px] mt-6 w-full sm:w-auto px-4 sm:px-5"
+            <div className="relative z-10 overflow-hidden h-[36px] pb-8 mb-8">
+              <motion.div
+                className="h-[36px]  flex items-center justify-center w-[240px] 
+                rounded-full overflow-hidden mx-auto"
+                variants={curtainLine}
+                initial="hidden"
+                animate="visible"
+              >
+                <span className="text-[18px] text-white text-center tracking-[-3%]">
+                  {t("heroLabel")}
+                </span>
+              </motion.div>
+            </div>
+            <motion.h1
+              ref={titleRef}
+              className="text-white font-bold text-center text-[50px] sm:text-[100px] max-w-[270px] 
+              sm:max-w-[665px] w-[665px] title !leading-[90%] sm:!leading-[80px] mb-10 md:mb-0 overflow-hidden"
             >
-              <div className="  sm:w-[148px] bg-white rounded-[12px] semi-bold text-center font-semibold text-lg px-4 py-3 text-black my-2">
+              {titleLines.length > 0 ? (
+                <motion.div
+                  variants={curtainContainer}
+                  initial="hidden"
+                  animate="visible"
+                >
+                  {(() => {
+                    const words = `${t("heroTitle1")} ${t("heroTitle2")}`
+                      .trim()
+                      .split(" ")
+                      .filter(Boolean);
+                    return titleLines.map((line, i) => {
+                      const part1End = Math.min(
+                        line.endWordIndex,
+                        title1WordCount - 1,
+                      );
+                      const part2Start = Math.max(
+                        line.startWordIndex,
+                        title1WordCount,
+                      );
+                      const part1Words =
+                        part1End >= line.startWordIndex
+                          ? words.slice(line.startWordIndex, part1End + 1)
+                          : [];
+                      const part2Words =
+                        part2Start <= line.endWordIndex
+                          ? words.slice(part2Start, line.endWordIndex + 1)
+                          : [];
+                      const part1 = part1Words.join(" ");
+                      const part2 = part2Words.join(" ");
+                      return (
+                        <span key={i} className="block overflow-hidden">
+                          <motion.span className="block" variants={curtainLine}>
+                            {part1 && (
+                              <>
+                                {part1}
+                                {part2 && "\u00A0"}
+                              </>
+                            )}
+                            {part2 ? (
+                              <span className="recoleta">{part2}</span>
+                            ) : null}
+                            {!part1 && !part2 ? "\u00A0" : null}
+                          </motion.span>
+                        </span>
+                      );
+                    });
+                  })()}
+                </motion.div>
+              ) : (
+                <span className="block opacity-0">
+                  {t("heroTitle1")} {t("heroTitle2")}
+                </span>
+              )}
+            </motion.h1>
+            <div className="mb-[130px] mt-6 w-full sm:w-auto px-4 sm:px-5 overflow-hidden">
+              <motion.button
+                type="button"
+                onClick={() => setIsApplyPopupOpen(true)}
+                className="sm:w-[148px] bg-white rounded-[12px] semi-bold text-center font-semibold text-lg px-4 py-3 text-black my-2 w-full cursor-pointer"
+                variants={curtainLineLower}
+                initial="hidden"
+                animate="visible"
+              >
                 {t("joinKali")}
-              </div>
-            </a>
+              </motion.button>
+            </div>
           </div>
           <Image
             src={dividerNotFilledSvg}
@@ -414,7 +574,7 @@ export default function CommunityPage() {
           <motion.div
             initial={{ x: "-50%", y: "-50%", rotate: 0, opacity: 1 }}
             animate={
-              isInView
+              hasSpread
                 ? {
                     x: galleryPositions[0].x,
                     y: galleryPositions[0].y,
@@ -428,7 +588,7 @@ export default function CommunityPage() {
                     opacity: 1,
                   }
             }
-            transition={{ duration: 1.2, ease: "easeOut", delay: 0.1 }}
+            transition={{ duration: 0.8, ease: "easeOut", delay: 0.05 }}
             className="absolute top-[22%] md:top-[18%] lg:top-[15%] left-1/2 w-[300px] h-[212px] sm:w-[360px] sm:h-[254px] md:w-[420px] md:h-[297px] lg:w-[478px] lg:h-[338px] rounded-lg"
             style={{ transformOrigin: "center center" }}
           >
@@ -443,7 +603,7 @@ export default function CommunityPage() {
           <motion.div
             initial={{ x: "-50%", y: "-50%", rotate: 0, opacity: 1 }}
             animate={
-              isInView
+              hasSpread
                 ? {
                     x: galleryPositions[1].x,
                     y: galleryPositions[1].y,
@@ -457,7 +617,7 @@ export default function CommunityPage() {
                     opacity: 1,
                   }
             }
-            transition={{ duration: 1.2, ease: "easeOut", delay: 0.2 }}
+            transition={{ duration: 0.8, ease: "easeOut", delay: 0.1 }}
             className="absolute top-[22%] md:top-[18%] lg:top-[15%] left-1/2 w-[300px] h-[212px] sm:w-[360px] sm:h-[254px] md:w-[420px] md:h-[297px] lg:w-[478px] lg:h-[338px] rounded-lg"
             style={{ transformOrigin: "center center" }}
           >
@@ -472,7 +632,7 @@ export default function CommunityPage() {
           <motion.div
             initial={{ x: "-50%", y: "-50%", rotate: 0, opacity: 1 }}
             animate={
-              isInView
+              hasSpread
                 ? {
                     x: galleryPositions[2].x,
                     y: galleryPositions[2].y,
@@ -486,7 +646,7 @@ export default function CommunityPage() {
                     opacity: 1,
                   }
             }
-            transition={{ duration: 1.2, ease: "easeOut", delay: 0.3 }}
+            transition={{ duration: 0.8, ease: "easeOut", delay: 0.15 }}
             className="absolute top-[22%] md:top-[18%] lg:top-[15%] left-1/2 w-[300px] h-[212px] sm:w-[360px] sm:h-[254px] md:w-[420px] md:h-[297px] lg:w-[478px] lg:h-[338px] rounded-lg"
             style={{ transformOrigin: "center center" }}
           >
@@ -501,7 +661,7 @@ export default function CommunityPage() {
           <motion.div
             initial={{ x: "-50%", y: "-50%", rotate: 0, opacity: 1 }}
             animate={
-              isInView
+              hasSpread
                 ? {
                     x: galleryPositions[3].x,
                     y: galleryPositions[3].y,
@@ -515,7 +675,7 @@ export default function CommunityPage() {
                     opacity: 1,
                   }
             }
-            transition={{ duration: 1.2, ease: "easeOut", delay: 0.4 }}
+            transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
             className="absolute top-[22%] md:top-[18%] lg:top-[15%] left-1/2 w-[300px] h-[212px] sm:w-[360px] sm:h-[254px] md:w-[420px] md:h-[297px] lg:w-[478px] lg:h-[338px] rounded-lg"
             style={{ transformOrigin: "center center" }}
           >
@@ -530,7 +690,7 @@ export default function CommunityPage() {
           <motion.div
             initial={{ x: "-50%", y: "-50%", rotate: 0, opacity: 1 }}
             animate={
-              isInView
+              hasSpread
                 ? {
                     x: galleryPositions[4].x,
                     y: galleryPositions[4].y,
@@ -544,7 +704,7 @@ export default function CommunityPage() {
                     opacity: 1,
                   }
             }
-            transition={{ duration: 1.2, ease: "easeOut", delay: 0.5 }}
+            transition={{ duration: 0.8, ease: "easeOut", delay: 0.25 }}
             className="absolute top-[22%] md:top-[18%] lg:top-[15%] left-1/2 w-[300px] h-[212px] sm:w-[360px] sm:h-[254px] md:w-[420px] md:h-[297px] lg:w-[478px] lg:h-[338px] rounded-lg"
             style={{ transformOrigin: "center center" }}
           >
@@ -575,9 +735,7 @@ export default function CommunityPage() {
           <h4 className="text-black text-left text-[50px] title pl-5 md:pl-20">
             {t("voicesTitle1")}&nbsp;
             <br />
-            <span className="recoleta text-black">
-              {t("voicesTitle2")}
-            </span>
+            <span className="recoleta text-black">{t("voicesTitle2")}</span>
           </h4>
           <CommunityCarousel />
         </div>

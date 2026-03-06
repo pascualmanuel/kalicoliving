@@ -63,7 +63,7 @@ export default function LandlordsPage() {
 
 
         <div className='w-full sm:h-auto h-[670px] sm:px-[60px] px-5 '>
-          <div className='w-full h-full sm:h-[900px] relative mx-auto bg-pink rounded-[16px] overflow-hidden'>
+          <div className='w-full h-full sm:h-[700px] relative mx-auto bg-pink rounded-[16px] overflow-hidden'>
 
             {/* Imagen de fondo */}
             <Image
@@ -133,7 +133,7 @@ export default function LandlordsPage() {
           <h2 className="md:text-[64px] text-[45px] text-white title text-center ">{t('howItWorksTitle')}</h2>
           <p className="text-white text-center my-2 text-[20px] leading-[130%]">{t('howItWorksSubtitle')}</p>
           <div className='w-full'>
-            <div className='flex flex-col flex-wrap xl:flex-nowrap sm:flex-row items-center lg:items-start justify-between gap-7 mt-12 pb-[200px]'>
+            <div className='flex flex-col flex-wrap xl:flex-nowrap sm:flex-row items-center lg:items-start justify-between gap-7 mt-12 pb-[100px]'>
               <div className='flex flex-col items-start p-6 gap-[21px] sm:w-[46%] xl:w-[315px] h-[270px] xl:h-[226px] rounded-[20px]' style={{ background: 'rgba(255, 242, 226, 0.1)' }}>
                 <h3 className="text-white title text-[18px] ">01</h3>
                 <h4 className="text-white title text-[24px] font-semibold">{t('step1Title')}</h4>
@@ -160,14 +160,14 @@ export default function LandlordsPage() {
             </div>
           </div>
         </div>
-        <div className='md:mb-[260px] mb-[100px]'>
+        <div className='mb-'>
           <LandlordsReviews />
 
         </div>
 
-        <div id="contact-landlords" className=' pb-10'></div>
+        <div id="contact-landlords" className=' pb-[80px]'></div>
 
-        <div id="" className='mb-[-10%] z-10 relative  md:px-10 px-5'>
+        <div id="" className='mb-[-10%] z-10 relative pt-[20px]  md:px-10 px-5'>
           <LandlordsForm />
         </div>
 

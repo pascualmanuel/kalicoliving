@@ -85,9 +85,13 @@ export default function HomePage() {
     offset: ["start start", "end start"],
   });
 
-  // Controlar la opacidad del texto basado en el scroll
-  const textOpacity = useTransform(scrollYProgress, [0.1, 0.25], [0, 1]);
-  const textY = useTransform(scrollYProgress, [0.1, 0.25], [50, 0]);
+  // Texto entra desde debajo del viewport (80vh) y el scroll lo trae hasta su posición final
+  const textY = useTransform(scrollYProgress, (v) => {
+    if (v >= 0.4) return "0px";
+    const t = v / 0.4;
+    const vh = 80 * (1 - t);
+    return `${vh}vh`;
+  });
 
   // Scroll de la sección de cards: progress 0 = antes de ver la sección (top al borde inferior del viewport), 1 = sección saliendo
   const cardsScrollProgress = useScroll({
@@ -139,7 +143,7 @@ export default function HomePage() {
         <div className="relative z-10 mt-[-50px] overflow-hidden h-[36px]">
           <motion.div
             className="h-[36px] bg-[#FFF2E21A] backdrop-blur-[3.5px]
-            border border-[#FFF2E266] flex items-center justify-center w-[230px] rounded-full overflow-hidden"
+            border border-[#FFF2E266] flex items-center justify-center w-[240px] rounded-full overflow-hidden"
             variants={curtainLine}
             initial="hidden"
             animate="visible"
@@ -289,9 +293,9 @@ export default function HomePage() {
           </p>
         </motion.div>
       </div>
-      <div ref={videoSectionRef} className="relative h-[150vh] mt-[100px]">
+      <div ref={videoSectionRef} className="relative h-[170vh] mt-[100px]">
         {/* Video Fixed Container */}
-        <div className="sticky top-[100px] md:top-0 w-full h-[650px] lg:h-screen md:px-20 px-5 ">
+        <div className="sticky top-[100px] md:top-[8vh] w-full h-[650px] lg:h-[86vh] md:px-20 px-5 overflow-hidden">
           <div className="rounded-[20px] overflow-hidden h-full">
             <video
               src="/assets/videos/home-video.mp4"
@@ -301,13 +305,10 @@ export default function HomePage() {
               playsInline
               className="w-full h-full object-cover"
             />
-            {/* Text Overlay - Aparece con scroll */}
+            {/* Text Overlay - Entra desde abajo, siempre visible, sube hasta posición final */}
             <motion.div
               className="absolute bottom-[0px] md:top-[-150px] left-0 w-full h-full flex items-end md:items-center justify-center pointer-events-none"
-              style={{
-                opacity: textOpacity,
-                y: textY,
-              }}
+              style={{ y: textY }}
             >
               <div className="flex flex-col lg:flex-row justify-between w-full px-10 md:px-[140px] pointer-events-auto">
                 <div className="lg:w-1/2">
@@ -324,7 +325,7 @@ export default function HomePage() {
                     {t("videoDescription")}
                   </p>
                   <a href="#" className="">
-                    <div className="lg:w-[350px] bg-white rounded-[12px] semi-bold text-center font-semibold text-lg px-4 py-2 text-black my-4">
+                    <div className="lg:w-[250px] bg-white rounded-[12px] semi-bold text-center font-semibold text-lg px-4 py-2 text-black my-4">
                       {t("videoCta")}
                     </div>
                   </a>
