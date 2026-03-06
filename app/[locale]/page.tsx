@@ -359,7 +359,7 @@ export default function HomePage() {
           <div className="flex flex-col flex-wrap xl:flex-nowrap sm:flex-row items-center lg:items-start justify-between gap-7 mt-12 pb-[200px]">
             {/* Card 1 */}
             <div
-              className="flex flex-col items-start p-6  xl:gap-[21px] sm:w-[46%] xl:w-[315px] h-[180px] sm:h-[200px] lg:h-[180px] xl:h-[226px] rounded-[20px] w-full"
+              className="flex flex-col items-start p-6  xl:gap-[21px] sm:w-[46%] xl:w-[315px] h-[180px] sm:h-[200px] lg:h-[180px] xl:h-[226px] rounded-[20px] w-full justify-around"
               style={{ background: "rgba(255, 242, 226, 0.1)" }}
             >
               <h3 className="text-white title text-[18px] ">01</h3>
@@ -371,9 +371,9 @@ export default function HomePage() {
 
             {/* Card 2 */}
             <div
-              className="flex flex-col items-start p-6  xl:gap-[21px] sm:w-[46%] xl:w-[315px] h-[180px] sm:h-[200px] lg:h-[180px] xl:h-[226px] rounded-[20px] w-full"
+              className="flex flex-col items-start p-6  xl:gap-[21px] sm:w-[46%] xl:w-[315px] h-[180px] sm:h-[200px] lg:h-[180px] xl:h-[226px] rounded-[20px] w-full justify-around"
               style={{ background: "rgba(255, 242, 226, 0.1)" }}
-            >
+            >   
               <h3 className="text-white text-[18px] ">02</h3>
               <h4 className="text-white title text-[24px] font-semibold">
                 {t("step2Title")}
@@ -383,7 +383,7 @@ export default function HomePage() {
 
             {/* Card 3 */}
             <div
-              className="flex flex-col items-start p-6  xl:gap-[21px] sm:w-[46%] xl:w-[315px] h-[180px] sm:h-[200px] lg:h-[180px] xl:h-[226px] rounded-[20px] w-full"
+              className="flex flex-col items-start p-6  xl:gap-[21px] sm:w-[46%] xl:w-[315px] h-[180px] sm:h-[200px] lg:h-[180px] xl:h-[226px] rounded-[20px] w-full justify-around"
               style={{ background: "rgba(255, 242, 226, 0.1)" }}
             >
               <h3 className="text-white text-[18px] ">03</h3>
@@ -394,7 +394,7 @@ export default function HomePage() {
             </div>
 
             {/* Card 4 */}
-            <div className="flex flex-col items-start p-6  xl:gap-[21px] sm:w-[46%] xl:w-[315px] h-[180px] sm:h-[200px] lg:h-[180px] xl:h-[226px] rounded-[20px] w-full bg-white">
+            <div className="flex flex-col items-start p-6  xl:gap-[21px] sm:w-[46%] xl:w-[315px] h-[180px] sm:h-[200px] lg:h-[180px] xl:h-[226px] rounded-[20px] w-full justify-around bg-white">
               <h3 className="text-black text-[18px] ">04</h3>
               <h4 className="text-black title text-[24px] font-semibold">
                 {t("step4Title")}
