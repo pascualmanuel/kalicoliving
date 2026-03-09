@@ -190,7 +190,7 @@ export default function CommunityPage() {
     { x: "66%", y: 250, rotate: -3 },
   ];
 
-  // Mobile (< 680px): más compacto para viewport pequeño
+  // Mobile (< 680px): más compacto para viewport pequeño (solo usado cuando !isMobile)
   const galleryPositionsCompact = [
     { x: "-135%", y: -110, rotate: -6 },
     { x: "55%", y: -140, rotate: 6 },
@@ -199,11 +199,22 @@ export default function CommunityPage() {
     { x: "55%", y: 210, rotate: -2 },
   ];
 
+  // Mobile (< 768px): spread con más visibilidad de imágenes; CTA centrado al hacer spread
+  const galleryPositionsMobile = [
+    { x: "-145%", y: -70, rotate: -8 }, // arriba izquierda (tapa un poco el texto)
+    { x: "48%", y: -95, rotate: 5 }, // arriba derecha
+    { x: -150, y: -260, rotate: -5 }, // abajo izquierda
+    { x: "-108%", y: 165, rotate: -22 }, // abajo centro-izq
+    { x: "30%", y: 165, rotate: -3 }, // abajo derecha
+  ];
+
   const galleryPositions = !isBelowLg
     ? galleryPositionsDesktop
-    : isTablet
-      ? galleryPositionsTablet
-      : galleryPositionsCompact;
+    : isMobile
+      ? galleryPositionsMobile
+      : isTablet
+        ? galleryPositionsTablet
+        : galleryPositionsCompact;
 
   // Rotaciones base para los isologos (-15° a 15°), luego se rotan 180° adicionales
   // Desktop: 14 isologos
@@ -549,7 +560,7 @@ export default function CommunityPage() {
               <motion.button
                 type="button"
                 onClick={() => setIsApplyPopupOpen(true)}
-                className="sm:w-[148px] bg-white rounded-[12px] semi-bold text-center font-semibold text-lg px-4 py-3 text-black my-2 w-full cursor-pointer"
+                className="sm:w-[148px] bg-white rounded-[12px] semi-bold text-center font-semibold text-lg px-4 py-3 text-black my-2 w-full cursor-pointer hover:bg-white-hover transition-colors"
                 variants={curtainLineLower}
                 initial="hidden"
                 animate="visible"
@@ -570,6 +581,10 @@ export default function CommunityPage() {
           ref={galleryRef}
           className="w-full h-[200vh] md:h-[100vh] relative z-[999]"
         >
+          {/* Mobile (< md): texto arriba del spread con margen 20px */}
+          <p className="mt-5 md:mt-0 md:hidden text-black text-center text-[24px] max-w-[480px] mx-auto px-4 relative z-[1]">
+            {t("galleryDescription")}
+          </p>
           {/* Galería responsive: cards más pequeños <lg, layout desktop intacto */}
           <motion.div
             initial={{ x: "-50%", y: "-50%", rotate: 0, opacity: 1 }}
@@ -716,22 +731,23 @@ export default function CommunityPage() {
               className="w-full h-full object-cover rounded-[24px] "
             />
           </motion.div>
-          <div className="flex flex-col items-center justify-center lg:pt-0 ">
-            <p className=" text-black text-center text-[24px] max-w-[480px] mx-auto mt-14">
+          {/* CTA: en mobile empieza debajo de las imágenes y queda visible centrado al hacer spread */}
+          <div className="flex flex-col items-center justify-center lg:pt-0 pt-[31vh] md:pt-0">
+            <p className="text-black text-center text-[24px] max-w-[480px] mx-auto mt-14 hidden md:block">
               {t("galleryDescription")}
             </p>
             <button
               type="button"
               onClick={() => setIsApplyPopupOpen(true)}
-              className="hidden sm:block"
+              className="block w-full max-w-[140px] md:max-w-none group"
             >
-              <div className="w-[350px] h-[60px] bg-red rounded-[12px]  text-center font-semibold text-[18px] text-white  mt-9 flex justify-center items-center">
+              <div className="w-full max-w-[350px] h-[60px] bg-red rounded-[12px] text-center font-semibold text-[18px] text-white mt-9 flex justify-center items-center mx-auto group-hover:bg-red-hover transition-colors">
                 {t("joinKali")}
               </div>
             </button>
           </div>
         </div>
-        <div className="mb-[130px] mt-[-65vh]  md:mt-0">
+        <div className="mb-[130px] mt-[-100vh]  md:mt-0">
           <h4 className="text-black text-left text-[50px] title pl-5 md:pl-20">
             {t("voicesTitle1")}&nbsp;
             <br />
