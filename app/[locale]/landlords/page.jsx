@@ -110,8 +110,8 @@ export default function LandlordsPage() {
                 <p className='text-white px-8 sm:px-0 sm:max-w-[400px] text-[16px] md:text-[24px] leading-[130%] mx-auto text-center '>
                   {t('managedDescription')}
                 </p>
-                <a href="#contact-landlords">
-                  <div className='w-[170px] bg-red rounded-[12px] font-semibold text-center text-lg px-4 py-2 text-white my-2'>
+                <a href="#contact-landlords" className="group block w-fit">
+                  <div className='w-[170px] bg-red rounded-[12px] font-semibold text-center text-lg px-4 py-2 text-white my-2 group-hover:bg-red-hover transition-colors'>
                     {t('contactUs')}
                   </div>
                 </a>
