@@ -100,7 +100,7 @@ export default function LandlordsPage() {
               </div>
 
               {/* Fondo sólido + contenido */}
-              <div className="bg-[#eb9a89] w-full flex flex-col items-center gap-6 pb-10 pt-4  relative rounded-b-[20px]">
+              <div className="bg-[#eb9a89] w-full flex flex-col items-center gap-6 pb-10 pt-4  relative rounded-b-[20px] mt-[-90px]">
                 <Image src={PinkDividerSvg} alt="divider" width={1512} height={193} className="mx-auto absolute top-[-20%] left-0 block sm:hidden pointer-events-none" />
                 <h3 className='title text-[45px] font-semibold text-center text-white px-5 sm:px-0 sm:max-w-[505px] mx-auto z-10'>
                   {t('managedTitle')}
