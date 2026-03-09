@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import { Link, usePathname, useRouter } from "@/i18n/routing";
 import Image from "next/image";
@@ -76,8 +76,43 @@ export default function Navigation() {
     { href: "/blog", label: t("blog") },
   ];
 
-  const isBlogPage =
-    pathname === "/blog" || pathname?.startsWith("/blog/");
+  const isBlogPage = pathname === "/blog" || pathname?.startsWith("/blog/");
+
+  const activeLinkIndex = navLinks.findIndex(
+    (link) =>
+      pathname === link.href ||
+      (link.href === "/blog" && pathname?.startsWith("/blog")),
+  );
+
+  const linksContainerRef = useRef<HTMLDivElement>(null);
+  const linkRefs = useRef<(HTMLAnchorElement | null)[]>([]);
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const [magneticStyle, setMagneticStyle] = useState<{
+    left: number;
+    top: number;
+    width: number;
+    height: number;
+  } | null>(null);
+
+  const updateMagneticPosition = useCallback((index: number) => {
+    const container = linksContainerRef.current;
+    const link = linkRefs.current[index];
+    if (!container || !link) return;
+    const cr = container.getBoundingClientRect();
+    const lr = link.getBoundingClientRect();
+    setMagneticStyle({
+      left: lr.left - cr.left,
+      top: lr.top - cr.top,
+      width: lr.width,
+      height: lr.height,
+    });
+  }, []);
+
+  useEffect(() => {
+    const index =
+      hoveredIndex ?? (activeLinkIndex >= 0 ? activeLinkIndex : null);
+    if (index !== null) updateMagneticPosition(index);
+  }, [hoveredIndex, activeLinkIndex, updateMagneticPosition]);
 
   return (
     <nav
@@ -99,7 +134,11 @@ export default function Navigation() {
           <div className="flex-shrink-0">
             <Link href="/" className="block">
               <Image
-                src={isBlogPage ? "/assets/logos/logo-black.svg" : "/assets/logos/logo.svg"}
+                src={
+                  isBlogPage
+                    ? "/assets/logos/logo-black.svg"
+                    : "/assets/logos/logo.svg"
+                }
                 alt="Kali Coliving"
                 width={121}
                 height={38}
@@ -108,21 +147,62 @@ export default function Navigation() {
             </Link>
           </div>
 
-          {/* Center Links */}
-          <div className="flex items-center gap-8 ml-[130px]">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={`font-medium transition-colors ${
-                  isBlogPage
-                    ? "text-black hover:text-red"
-                    : "text-white hover:text-red"
-                }`}
-              >
-                {link.label}
-              </Link>
-            ))}
+          {/* Center Links - magnetic hover */}
+          <div
+            ref={linksContainerRef}
+            className="relative flex items-center gap-8 ml-[130px]"
+          >
+            {/* Magnetic sliding background */}
+            {magneticStyle && (
+              <div
+                className="pointer-events-none absolute rounded-[12px] transition-all duration-500 ease-in-out"
+                style={{
+                  left: magneticStyle.left,
+                  top: magneticStyle.top,
+                  width: magneticStyle.width,
+                  height: magneticStyle.height,
+                  background: "rgba(255, 242, 226, 0.05)",
+                }}
+              />
+            )}
+            {navLinks.map((link, i) => {
+              const isActive =
+                pathname === link.href ||
+                (link.href === "/blog" && pathname?.startsWith("/blog"));
+              const isHighlighted =
+                hoveredIndex === i || (hoveredIndex === null && isActive);
+              return (
+                <Link
+                  key={link.href}
+                  ref={(el) => {
+                    linkRefs.current[i] = el;
+                  }}
+                  href={link.href}
+                  onMouseEnter={() => setHoveredIndex(i)}
+                  onMouseLeave={() => setHoveredIndex(null)}
+                  className={`group relative block font-medium rounded-[12px] px-4 pt-4 pb-4 transition-colors duration-300 ${
+                    isBlogPage
+                      ? isHighlighted
+                        ? "text-white"
+                        : "text-black"
+                      : isHighlighted
+                        ? "text-white"
+                        : "text-white"
+                  }`}
+                >
+                  <span className="inline-block h-[1.2em] overflow-hidden align-middle">
+                    <span className="block transition-transform duration-500 ease-out group-hover:[transform:translateY(calc(-1.2em-20px))]">
+                      <span className="block h-[1.2em] leading-[1.2em]">
+                        {link.label}
+                      </span>
+                      <span className="block h-[1.2em] leading-[1.2em] mt-5">
+                        {link.label}
+                      </span>
+                    </span>
+                  </span>
+                </Link>
+              );
+            })}
           </div>
 
           {/* Right Side - Language Switcher & CTA */}
@@ -179,7 +259,7 @@ export default function Navigation() {
             <button
               type="button"
               onClick={openApplyPopup}
-              className="py-3 w-[150px] text-center bg-red text-white rounded-lg hover:bg-red-hover transition-colors font-semibold"
+              className="py-3 w-[150px] text-center bg-red text-white rounded-lg  transition-colors font-semibold"
             >
               {t("applyNow")}
             </button>
@@ -192,7 +272,11 @@ export default function Navigation() {
           <div className="flex-shrink-0 z-[9999]">
             <Link href="/" className="block z-[9999]">
               <Image
-                src={isBlogPage ? "/assets/logos/logo-black.svg" : "/assets/logos/logo.svg"}
+                src={
+                  isBlogPage
+                    ? "/assets/logos/logo-black.svg"
+                    : "/assets/logos/logo.svg"
+                }
                 alt="Kali Coliving"
                 width={121}
                 height={38}

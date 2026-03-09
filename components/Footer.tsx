@@ -1,8 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { Link, usePathname } from "@/i18n/routing";
 import { useApplyPopup } from "@/context/ApplyPopupContext";
 import redDviderSvg2 from "../public/assets/icons/red-divider-2.svg";
 import logoSvg from "../public/assets/logos/logo.svg";
@@ -45,28 +44,48 @@ export default function Footer() {
             <div className="flex flex-col md:flex-row gap-4 md:gap-10">
               <Link
                 href="/blog"
-                className="text-white text-[16px] leading-[130%]"
+                className="group block text-white text-[16px] leading-[130%]"
               >
-                Blog
+                <span className="inline-block h-[1.3em] overflow-hidden align-middle">
+                  <span className="block transition-transform duration-300 ease-out group-hover:[transform:translateY(calc(-1.3em-20px))]">
+                    <span className="block h-[1.3em] leading-[130%]">Blog</span>
+                    <span className="block h-[1.3em] leading-[130%] mt-5">Blog</span>
+                  </span>
+                </span>
               </Link>
               <Link
                 href="/community"
-                className="text-white text-[16px] leading-[130%]"
+                className="group block text-white text-[16px] leading-[130%]"
               >
-                Community
+                <span className="inline-block h-[1.3em] overflow-hidden align-middle">
+                  <span className="block transition-transform duration-300 ease-out group-hover:[transform:translateY(calc(-1.3em-20px))]">
+                    <span className="block h-[1.3em] leading-[130%]">Community</span>
+                    <span className="block h-[1.3em] leading-[130%] mt-5">Community</span>
+                  </span>
+                </span>
               </Link>
               <Link
                 href="/landlords"
-                className="text-white text-[16px] leading-[130%]"
+                className="group block text-white text-[16px] leading-[130%]"
               >
-                Landlords
+                <span className="inline-block h-[1.3em] overflow-hidden align-middle">
+                  <span className="block transition-transform duration-300 ease-out group-hover:[transform:translateY(calc(-1.3em-20px))]">
+                    <span className="block h-[1.3em] leading-[130%]">Landlords</span>
+                    <span className="block h-[1.3em] leading-[130%] mt-5">Landlords</span>
+                  </span>
+                </span>
               </Link>
               <button
                 type="button"
                 onClick={openApplyPopup}
-                className="text-white text-[16px] leading-[130%] hover:opacity-80 transition-opacity text-left"
+                className="group block text-left text-white text-[16px] leading-[130%]"
               >
-                Apply
+                <span className="inline-block h-[1.3em] overflow-hidden align-middle">
+                  <span className="block transition-transform duration-300 ease-out group-hover:[transform:translateY(calc(-1.3em-20px))]">
+                    <span className="block h-[1.3em] leading-[130%]">Apply</span>
+                    <span className="block h-[1.3em] leading-[130%] mt-5">Apply</span>
+                  </span>
+                </span>
               </button>
             </div>
           </div>
