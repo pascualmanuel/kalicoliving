@@ -325,8 +325,8 @@ export default function HomePage() {
                     stay with you. Because where you live, and who you live
                     with, shapes who you become.
                   </p>
-                  <a href="#" className="">
-                    <div className="lg:w-[350px] bg-white rounded-[12px] semi-bold text-center font-semibold text-lg px-4 py-2 text-black my-4">
+                  <a href="#" className="group block w-fit">
+                    <div className="lg:w-[350px] bg-white rounded-[12px] semi-bold text-center font-semibold text-lg px-4 py-2 text-black my-4 group-hover:bg-white-hover transition-colors">
                       Meet the community
                     </div>
                   </a>
