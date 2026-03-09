@@ -100,7 +100,7 @@ const LandlordsForm = () => {
 
         <button
           type="submit"
-          className="w-full h-[60px] rounded-[12px] bg-red text-white text-base font-semibold hover:bg-red/90 transition-colors"
+          className="w-full h-[60px] rounded-[12px] bg-red text-white text-base font-semibold hover:bg-red-hover transition-colors"
         >
           {t("formSubmit")}
         </button>

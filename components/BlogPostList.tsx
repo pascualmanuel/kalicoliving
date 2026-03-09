@@ -67,7 +67,7 @@ export default function BlogPostList({ posts }: BlogPostListProps) {
               onClick={() => setCategory(key)}
               className={`px-3 py-1.5 sm:px-5 sm:py-2 rounded-full text-sm sm:text-base font-medium border transition-colors ${
                 isSelected
-                  ? "bg-red text-white font-semibold border-red"
+                  ? "bg-red text-white font-semibold border-red hover:bg-red-hover"
                   : "text-black border-[#d3d3d3] hover:border-gray-400"
               }`}
             >

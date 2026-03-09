@@ -76,13 +76,18 @@ export default function Navigation() {
     { href: "/blog", label: t("blog") },
   ];
 
+  const isBlogPage =
+    pathname === "/blog" || pathname?.startsWith("/blog/");
+
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-transform duration-300 ease-in-out ${
         isNavbarVisible ? "translate-y-0" : "-translate-y-full"
       }`}
       style={{
-        background: "rgba(39, 39, 39, 0.2)",
+        background: isBlogPage
+          ? "rgba(255, 242, 226, 0.1)"
+          : "rgba(39, 39, 39, 0.2)",
         backdropFilter: "blur(22px)",
         WebkitBackdropFilter: "blur(22px)", // Safari support
       }}
@@ -94,19 +99,12 @@ export default function Navigation() {
           <div className="flex-shrink-0">
             <Link href="/" className="block">
               <Image
-                src="/assets/logos/logo.svg"
+                src={isBlogPage ? "/assets/logos/logo-black.svg" : "/assets/logos/logo.svg"}
                 alt="Kali Coliving"
                 width={121}
                 height={38}
                 priority
               />
-              {/* <Image
-                src="/assets/logos/logo-black.svg"
-                alt="Kali Coliving"
-                width={121}
-                height={38}
-                priority
-              /> */}
             </Link>
           </div>
 
@@ -116,7 +114,11 @@ export default function Navigation() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="text-white hover:text-red transition-colors font-medium"
+                className={`font-medium transition-colors ${
+                  isBlogPage
+                    ? "text-black hover:text-red"
+                    : "text-white hover:text-red"
+                }`}
               >
                 {link.label}
               </Link>
@@ -177,7 +179,7 @@ export default function Navigation() {
             <button
               type="button"
               onClick={openApplyPopup}
-              className="py-3 w-[150px] text-center bg-red text-white rounded-lg hover:bg-red transition-colors font-semibold"
+              className="py-3 w-[150px] text-center bg-red text-white rounded-lg hover:bg-red-hover transition-colors font-semibold"
             >
               {t("applyNow")}
             </button>
@@ -190,7 +192,7 @@ export default function Navigation() {
           <div className="flex-shrink-0 z-[9999]">
             <Link href="/" className="block z-[9999]">
               <Image
-                src="/assets/logos/logo.svg"
+                src={isBlogPage ? "/assets/logos/logo-black.svg" : "/assets/logos/logo.svg"}
                 alt="Kali Coliving"
                 width={121}
                 height={38}
@@ -262,10 +264,16 @@ export default function Navigation() {
               {/* Plus/Minus Icon */}
               <div className="relative w-[22px] h-[22px] flex items-center justify-center">
                 {/* Horizontal line - always visible */}
-                <span className="absolute w-full h-[3px] bg-white transition-all duration-300 ease-in-out" />
+                <span
+                  className={`absolute w-full h-[3px] transition-all duration-300 ease-in-out ${
+                    isBlogPage ? "bg-black" : "bg-white"
+                  }`}
+                />
                 {/* Vertical line - disappears when open */}
                 <span
-                  className={`absolute w-[3px] h-full bg-white transition-all duration-300 ease-in-out ${
+                  className={`absolute w-[3px] h-full transition-all duration-300 ease-in-out ${
+                    isBlogPage ? "bg-black" : "bg-white"
+                  } ${
                     isMobileMenuOpen
                       ? "opacity-0 scale-0"
                       : "opacity-100 scale-100"
@@ -341,7 +349,7 @@ export default function Navigation() {
                   openApplyPopup();
                   setIsMobileMenuOpen(false);
                 }}
-                className="w-full mb-10 px-6 py-[11px] bg-red text-white rounded-lg hover:bg-red transition-colors font-semibold text-center text-lg"
+                className="w-full mb-10 px-6 py-[11px] bg-red text-white rounded-lg hover:bg-red-hover transition-colors font-semibold text-center text-lg"
               >
                 {t("applyNow")}
               </button>

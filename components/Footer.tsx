@@ -30,7 +30,7 @@ export default function Footer() {
             <button
               type="button"
               onClick={openApplyPopup}
-              className="mt-8 mb-24 w-[350px] bg-white rounded-[12px] semi-bold text-center font-semibold text-lg px-4 py-2 text-black my-2 hover:opacity-90 transition-opacity"
+              className="mt-8 mb-24 w-[350px] bg-white rounded-[12px] semi-bold text-center font-semibold text-lg px-4 py-2 text-black my-2 hover:bg-white-hover transition-colors"
             >
               Apply now
             </button>

@@ -9,7 +9,7 @@ export default function PopupButton() {
     <button
       type="button"
       onClick={openApplyPopup}
-      className="bg-red text-white px-4 py-2 rounded-xl w-[350px] h-[50px] text-center font-semibold text-lg"
+      className="bg-red text-white px-4 py-2 rounded-xl w-[350px] h-[50px] text-center font-semibold text-lg hover:bg-red-hover transition-colors"
     >
       {t("applyNow")}
       {/* Empieza tu experiencia */}

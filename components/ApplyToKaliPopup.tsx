@@ -244,7 +244,7 @@ export default function ApplyToKaliPopup({
                     <div className="flex justify-end pt-4">
                       <button
                         type="submit"
-                        className="flex items-center gap-2 px-6 py-3 rounded-xl bg-red text-white font-semibold hover:bg-red/90 transition-colors"
+                        className="flex items-center gap-2 px-6 py-3 rounded-xl bg-red text-white font-semibold hover:bg-red-hover transition-colors"
                       >
                         {t("next")}
                       </button>
@@ -309,7 +309,7 @@ export default function ApplyToKaliPopup({
                     </button>
                     <button
                       type="submit"
-                      className="flex items-center gap-2 px-6 py-3 rounded-xl bg-red text-white font-semibold hover:bg-red/90 transition-colors"
+                      className="flex items-center gap-2 px-6 py-3 rounded-xl bg-red text-white font-semibold hover:bg-red-hover transition-colors"
                     >
                       {t("next")}
                     </button>
@@ -381,7 +381,7 @@ export default function ApplyToKaliPopup({
                     </button>
                     <button
                       type="submit"
-                      className="flex items-center gap-2 px-6 py-3 rounded-xl bg-red text-white font-semibold hover:bg-red/90 transition-colors"
+                      className="flex items-center gap-2 px-6 py-3 rounded-xl bg-red text-white font-semibold hover:bg-red-hover transition-colors"
                     >
                       {t("submit")}
                     </button>
