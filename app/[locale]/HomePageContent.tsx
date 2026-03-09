@@ -15,7 +15,7 @@ import brownDividerSvg from "../../public/assets/icons/brown-divider.svg";
 import ticIcon from "../../public/assets/icons/tic-icon.svg";
 import RoomsSection from "@/components/Rooms";
 import Footer from "@/components/Footer";
-
+import isoLogoWhite from "../../public/assets/logos/isowhite.svg";
 export default function HomePageContent() {
   const t = useTranslations("pages.home");
   const cardsRef = useRef(null);
@@ -154,7 +154,8 @@ export default function HomePageContent() {
 
         <motion.h1
           ref={titleRef}
-          className="relative z-10 text-[50px]  md:text-[100px] text-white leading-[111%]  md:leading-[111px] tracking-[-4%] font-bold text-center md:max-w-[585px] max-w-[340px] overflow-hidden"
+          className="relative z-10 text-[50px]  md:text-[100px] text-white leading-[111%]  md:leading-[111px] tracking-[-4%] font-bold 
+          text-center md:max-w-[585px] max-w-[340px] overflow-hidden"
         >
           {titleLines.length > 0 ? (
             <motion.div
@@ -199,7 +200,7 @@ export default function HomePageContent() {
 
       <div
         ref={cardsRef}
-        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 px-5 md:px-20 py-12  mx-auto"
+        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 px-5 md:px-20 py-12 md:pt-[120px]  mx-auto"
       >
         {/* Card 1 */}
         <motion.div
@@ -274,13 +275,20 @@ export default function HomePageContent() {
           className="flex flex-col items-center justify-center"
           style={{ y: useTransform(card4Y, (v) => `${v}%`) }}
         >
-          <div className="w-full max-h-[360px] md:max-w-[310px] aspect-square rounded-xl overflow-hidden">
+          <div className="relative w-full max-h-[360px] md:max-w-[310px] aspect-square rounded-xl overflow-hidden">
             <Image
               src={homeCard4}
               alt="Card 4"
               width={310}
               height={310}
               className="w-full h-full object-cover"
+            />
+            <Image
+              src={isoLogoWhite}
+              alt="ISO logo"
+              width={70}
+              height={70}
+              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[70px] h-[70px] object-contain"
             />
           </div>
           <h3 className="text-black title text-center text-[24px] mt-4">
