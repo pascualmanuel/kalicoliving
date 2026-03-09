@@ -15,8 +15,14 @@ const config: Config = {
       },
     },
     colors: {
-      white: "#FFF2E2",
-      red: "#9F2322",
+      white: {
+        DEFAULT: "#FFF2E2",
+        hover: "#E4D4C0",
+      },
+      red: {
+        DEFAULT: "#9F2322",
+        hover: "#671716",
+      },
       black: "#272727",
       brown: "#996A53",
       pink: "#EB9A89",
