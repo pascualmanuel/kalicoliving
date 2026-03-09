@@ -182,9 +182,7 @@ export default function Navigation() {
                   onMouseLeave={() => setHoveredIndex(null)}
                   className={`group relative block font-medium rounded-[12px] px-4 pt-4 pb-4 transition-colors duration-300 ${
                     isBlogPage
-                      ? isHighlighted
-                        ? "text-white"
-                        : "text-black"
+                      ? "text-black"
                       : isHighlighted
                         ? "text-white"
                         : "text-white"

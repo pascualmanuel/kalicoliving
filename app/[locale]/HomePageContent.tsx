@@ -3,7 +3,7 @@
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef, useState, useEffect } from "react";
+import { useRef } from "react";
 import homeImage from "../../public/assets/images/home/hero-image-kali.webp";
 import dividerSvg from "../../public/assets/icons/divider.svg";
 import PopupButton from "@/components/PopupButton";
@@ -21,62 +21,20 @@ export default function HomePageContent() {
   const cardsRef = useRef(null);
   const videoSectionRef = useRef<HTMLDivElement>(null);
 
-  const titleRef = useRef<HTMLHeadingElement>(null);
-  const [titleLines, setTitleLines] = useState<string[]>([]);
-
-  // Dividir el título en líneas basándose en el layout real
-  useEffect(() => {
-    const splitTextIntoLines = () => {
-      if (titleRef.current && titleRef.current.offsetWidth > 0) {
-        const text = t("title");
-        const words = text.split(" ");
-        const lines: string[] = [];
-        let currentLine = "";
-
-        // Crear un elemento temporal para medir el ancho
-        const tempEl = document.createElement("span");
-        tempEl.style.visibility = "hidden";
-        tempEl.style.position = "absolute";
-        tempEl.style.whiteSpace = "nowrap";
-        const computedStyle = window.getComputedStyle(titleRef.current);
-        tempEl.style.fontSize = computedStyle.fontSize;
-        tempEl.style.fontFamily = computedStyle.fontFamily;
-        tempEl.style.fontWeight = computedStyle.fontWeight;
-        tempEl.style.letterSpacing = computedStyle.letterSpacing;
-        document.body.appendChild(tempEl);
-
-        const maxWidth = titleRef.current.offsetWidth;
-
-        words.forEach((word, index) => {
-          const testLine = currentLine ? `${currentLine} ${word}` : word;
-          tempEl.textContent = testLine;
-
-          if (tempEl.offsetWidth > maxWidth && currentLine) {
-            lines.push(currentLine);
-            currentLine = word;
-          } else {
-            currentLine = testLine;
-          }
-
-          if (index === words.length - 1) {
-            lines.push(currentLine);
-          }
-        });
-
-        document.body.removeChild(tempEl);
-        setTitleLines(lines);
-      }
-    };
-
-    // Ejecutar después de que el DOM esté listo y el elemento tenga dimensiones
-    const timer = setTimeout(splitTextIntoLines, 100);
-    window.addEventListener("resize", splitTextIntoLines);
-
-    return () => {
-      clearTimeout(timer);
-      window.removeEventListener("resize", splitTextIntoLines);
-    };
-  }, [t]);
+  // Siempre 2 líneas: partir por la coma para no depender del layout/fuentes en primera carga
+  const titleLines = (() => {
+    const text = t("title");
+    const commaIndex = text.indexOf(",");
+    if (commaIndex !== -1) {
+      return [text.slice(0, commaIndex + 1).trim(), text.slice(commaIndex + 1).trim()];
+    }
+    // Fallback si no hay coma: primera palabra / resto
+    const firstSpace = text.indexOf(" ");
+    if (firstSpace !== -1) {
+      return [text.slice(0, firstSpace), text.slice(firstSpace + 1)];
+    }
+    return [text];
+  })();
 
   const { scrollYProgress } = useScroll({
     target: videoSectionRef,
@@ -153,27 +111,22 @@ export default function HomePageContent() {
         </div>
 
         <motion.h1
-          ref={titleRef}
           className="relative z-10 text-[50px]  md:text-[100px] text-white leading-[111%]  md:leading-[111px] tracking-[-4%] font-bold 
           text-center md:max-w-[585px] max-w-[340px] overflow-hidden"
         >
-          {titleLines.length > 0 ? (
-            <motion.div
-              variants={curtainContainer}
-              initial="hidden"
-              animate="visible"
-            >
-              {titleLines.map((line, i) => (
-                <span key={i} className="block overflow-hidden">
-                  <motion.span className="block" variants={curtainLine}>
-                    {line || "\u00A0"}
-                  </motion.span>
-                </span>
-              ))}
-            </motion.div>
-          ) : (
-            <span className="block opacity-0">{t("title")}</span>
-          )}
+          <motion.div
+            variants={curtainContainer}
+            initial="hidden"
+            animate="visible"
+          >
+            {titleLines.map((line, i) => (
+              <span key={i} className="block overflow-hidden">
+                <motion.span className="block" variants={curtainLine}>
+                  {line || "\u00A0"}
+                </motion.span>
+              </span>
+            ))}
+          </motion.div>
         </motion.h1>
 
         <Image
