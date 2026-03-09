@@ -62,36 +62,36 @@ export default function LandlordsPage() {
         </div>
 
 
-        <div className='w-full sm:h-auto h-[670px] sm:px-[60px] px-5 '>
-          <div className='w-full h-full sm:h-[700px] relative mx-auto bg-pink rounded-[16px] overflow-hidden'>
+        {/* Contenedor con efecto: imagen sticky + bloque rosa sube desde abajo */}
+        <div className='w-full sm:px-[60px] px-5 '>
+          <div className='w-full mx-auto rounded-[20px]' >
+            {/* Sticky: solo la imagen (queda fija mientras hacemos scroll) */}
+            <div className='sticky top-10 w-full h-[100vh] min-h-[400px] sm:min-h-[700px] rounded-t-[16px] overflow-hidden bg-pink z-0 rounded-[20px]'>
+              <Image
+                src={groupImage2}
+                alt="group"
+                width={1392}
+                height={657}
+                className='w-full h-full object-cover  object-top'
+              />
+            </div>
 
-            {/* Imagen de fondo */}
-            <Image
-              src={groupImage2}
-              alt="group"
-              width={1392}
-              height={657}
-              className='w-full  object-cover rounded-[16px]  h-[50%] sm:h-[70%]'
-            />
-
-            {/* Overlay con divider + texto */}
-            <div className='absolute bottom-0 left-0 w-full '>
-
-              {/* ✅ SVG inline — preserveAspectRatio="none" es clave */}
+            {/* Bloque rosa: en flujo normal, sube desde abajo y “tapa” la imagen */}
+            <div className='relative w-full '>
+              {/* SVG wave — desktop */}
               <div
-                className="w-[calc(100%+104px)] translate-x-[-52px] mb-[-90px]  sm:block hidden "
-                style={{ background: 'linear-gradient(to bottom, transparent 50%, #eb9a89 50%)' }}>
+                className=" -mt-[90px] sm:block hidden"
+                style={{ background: 'linear-gradient(to bottom, transparent 50%, #eb9a89 50%)' }}
+              >
                 <svg
-                  viewBox="0 0 1888 445"
+                  // viewBox="0 0 1888 445"
+                  viewBox="188.8 0 1510.4 445"
                   xmlns="http://www.w3.org/2000/svg"
                   preserveAspectRatio="none"
                   className="w-full block"
-                  style={{ height: "193px" }}
+                  style={{ height: '190px' }}
                 >
-
-
                   <path
-
                     d="M933.48.03c58.12.76,133.47,14.2,208.96,31.08,77.84,17.4,164.71,40.56,249.29,64.47,175.14,49.5,329.8,98.82,407.93,118.97,63.06,16.27,100.9,80.2,84.51,142.78-16.4,62.59-80.82,100.13-143.88,83.87-78.74-20.32-253.41-75.23-413.21-120.39-82.87-23.42-164.93-45.22-236.52-61.23-73.94-16.53-128.61-24.97-160.2-25.39-29.24-.38-89.94,8.8-175.41,27.86-81.68,18.21-175.48,42.95-265.01,68.15-89.31,25.14-173.25,50.39-234.94,69.39-30.81,9.49-56.01,17.42-73.47,22.94-8.72,2.76-15.52,4.91-20.12,6.38-2.3.73-4.07,1.31-5.25,1.69-.57.18-1.08.33-1.41.43-.15.05-.35.13-.53.18,0,0-.29.09-.53.16-.16.05-.61.18-.9.28-1.03.29-22.43,4.54-43.4,4.87-30.91-2.26-72.08-18.58-95.25-61.2C-3.75,342.4-.13,312,1.27,302.59c1.83-12.31,5.25-21.57,6.91-25.78,1.02-2.57,2.01-4.78,2.83-6.54.42-.89.82-1.74,1.2-2.49l.81-1.6.14-.25.14-.25c15.97-30.53,43.58-51.19,74.65-59.33.36-.11.74-.22,1.13-.34,4.79-1.53,11.82-3.77,20.79-6.61,17.95-5.68,43.74-13.78,75.2-23.47,62.88-19.36,148.78-45.2,240.49-71.01,91.49-25.75,189.95-51.8,277.66-71.36C787.13,14.85,873.01-.76,933.48.03Z"
                     fill="#eb9a89"
                     fillRule="evenodd"
@@ -99,15 +99,13 @@ export default function LandlordsPage() {
                 </svg>
               </div>
 
-
-
-              {/* Fondo sólido que continúa debajo del SVG */}
-              <div className="bg-[#eb9a89] w-full flex flex-col items-center gap-6 pb-10 pt-4 rounded-b-[16px]">
-                <Image src={PinkDividerSvg} alt="divider" width={1512} height={193} className="   mx-auto absolute top-[-20%] left-0  block sm:hidden" />
-                <h3 className='title text-[45px] font-semibold text-center text-white px-5 sm:px-0 sm:max-w-[505px] mx-auto z-[1000]'>
+              {/* Fondo sólido + contenido */}
+              <div className="bg-[#eb9a89] w-full flex flex-col items-center gap-6 pb-10 pt-4  relative rounded-b-[20px]">
+                <Image src={PinkDividerSvg} alt="divider" width={1512} height={193} className="mx-auto absolute top-[-20%] left-0 block sm:hidden pointer-events-none" />
+                <h3 className='title text-[45px] font-semibold text-center text-white px-5 sm:px-0 sm:max-w-[505px] mx-auto z-10'>
                   {t('managedTitle')}
                 </h3>
-                <p className='text-white px-8 sm:px-0 sm:max-w-[400px] text-[16px] md:text-[24px] leading-[130%] mx-auto text-center '>
+                <p className='text-white px-8 sm:px-0 sm:max-w-[400px] text-[16px] md:text-[24px] leading-[130%] mx-auto text-center'>
                   {t('managedDescription')}
                 </p>
                 <a href="#contact-landlords" className="group block w-fit">
@@ -116,7 +114,6 @@ export default function LandlordsPage() {
                   </div>
                 </a>
               </div>
-
             </div>
           </div>
         </div>

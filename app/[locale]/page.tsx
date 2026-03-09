@@ -1,5 +1,10 @@
 import type { Metadata } from "next";
-import { BASE_URL, getOgImageUrl, getMetaDescription, getPageTitle } from "@/lib/metadata";
+import {
+  BASE_URL,
+  getOgImageUrl,
+  getMetaDescription,
+  getPageTitle,
+} from "@/lib/metadata";
 import HomePageContent from "./HomePageContent";
 
 type Locale = "en" | "es";

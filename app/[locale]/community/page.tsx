@@ -579,10 +579,10 @@ export default function CommunityPage() {
         </div>
         <div
           ref={galleryRef}
-          className="w-full h-[200vh] md:h-[100vh] relative z-[999]"
+          className="w-full h-[200vh] md:h-[100vh] relative z-[10]"
         >
           {/* Mobile (< md): texto arriba del spread con margen 20px */}
-          <p className="mt-5 md:mt-0 md:hidden text-black text-center text-[24px] max-w-[480px] mx-auto px-4 relative z-[1]">
+          <p className="mt-5 md:mt-0 md:hidden text-black text-center text-[24px] max-w-[480px] mx-auto px-4 relative z-[-1]">
             {t("galleryDescription")}
           </p>
           {/* Galería responsive: cards más pequeños <lg, layout desktop intacto */}
