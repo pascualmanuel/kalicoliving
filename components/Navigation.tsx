@@ -111,7 +111,11 @@ export default function Navigation() {
   useEffect(() => {
     const index =
       hoveredIndex ?? (activeLinkIndex >= 0 ? activeLinkIndex : null);
-    if (index !== null) updateMagneticPosition(index);
+    if (index !== null) {
+      updateMagneticPosition(index);
+    } else {
+      setMagneticStyle(null);
+    }
   }, [hoveredIndex, activeLinkIndex, updateMagneticPosition]);
 
   return (
@@ -151,6 +155,7 @@ export default function Navigation() {
           <div
             ref={linksContainerRef}
             className="relative flex items-center gap-8 ml-[130px]"
+            onMouseLeave={() => setHoveredIndex(null)}
           >
             {/* Magnetic sliding background */}
             {magneticStyle && (
@@ -179,7 +184,6 @@ export default function Navigation() {
                   }}
                   href={link.href}
                   onMouseEnter={() => setHoveredIndex(i)}
-                  onMouseLeave={() => setHoveredIndex(null)}
                   className={`group relative block font-medium rounded-[12px] px-4 pt-4 pb-4 transition-colors duration-300 ${
                     isBlogPage
                       ? "text-black"
