@@ -4,6 +4,7 @@ import { getMessages } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { routing } from '@/i18n/routing';
 import Navigation from '@/components/Navigation';
+import CookieBanner from '@/components/CookieBanner';
 import { ApplyPopupProvider } from '@/context/ApplyPopupContext';
 
 export function generateStaticParams() {
@@ -33,6 +34,7 @@ export default async function LocaleLayout({
       <ApplyPopupProvider>
         <Navigation />
         {children}
+        <CookieBanner />
       </ApplyPopupProvider>
     </NextIntlClientProvider>
   );
