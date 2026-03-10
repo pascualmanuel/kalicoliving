@@ -7,17 +7,25 @@ import { useTranslations } from "next-intl";
 
 const STEPS = [1, 2, 3];
 const DURATION_KEYS = ["duration1", "duration2", "duration3", "duration4"];
-const WORK_KEYS = ["work1", "work2", "work3", "work4", "work5", "work6", "work7"];
+const WORK_KEYS = [
+  "work1",
+  "work2",
+  "work3",
+  "work4",
+  "work5",
+  "work6",
+  "work7",
+];
 const BRING_KEYS = [
-  "bring1",
-  "bring2",
-  "bring3",
-  "bring4",
-  "bring5",
-  "bring6",
-  "bring7",
-  "bring8",
-  "bring9",
+  "bringNetwork",
+  "bringCreativeMindset",
+  "bringMyOwnProjects",
+  "bringCulturalDiversity",
+  "bringGrowthMindset",
+  "bringCommunityBuilder",
+  "bringInnovativeThinking",
+  "bringWellness",
+  "bringEntrepreneurship",
 ];
 const ABOUT_MAX_LENGTH = 200;
 
@@ -327,9 +335,7 @@ export default function ApplyToKaliPopup({
                   }}
                 >
                   <div>
-                    <label className={labelClassName}>
-                      {t("labelBring")}
-                    </label>
+                    <label className={labelClassName}>{t("labelBring")}</label>
                     <div className="flex flex-wrap gap-3">
                       {BRING_KEYS.map((key) => {
                         const isSelected = bringToKali.includes(key);
@@ -358,19 +364,33 @@ export default function ApplyToKaliPopup({
                   </div>
 
                   <div>
-                    <label htmlFor="apply-anything" className={labelClassName}>
-                      {t("labelAnything")}
-                    </label>
-                    <textarea
-                      id="apply-anything"
-                      name="anythingElse"
-                      placeholder={t("placeholderAnything")}
-                      className={textareaClassName}
-                      value={anythingElse}
-                      onChange={(e) => setAnythingElse(e.target.value)}
-                    />
+                    <label className={labelClassName}>{t("labelOffer")}</label>
+                    <div className="flex flex-wrap gap-3">
+                      {BRING_KEYS.map((key) => {
+                        const isSelected = bringToKali.includes(key);
+                        return (
+                          <button
+                            key={key}
+                            type="button"
+                            onClick={() =>
+                              setBringToKali((prev) =>
+                                isSelected
+                                  ? prev.filter((x) => x !== key)
+                                  : [...prev, key],
+                              )
+                            }
+                            className={`px-5 py-2.5 rounded-full text-base font-medium border transition-colors ${
+                              isSelected
+                                ? "bg-red text-white font-semibold border-red"
+                                : "text-black border-[#d3d3d3] hover:border-gray-400"
+                            }`}
+                          >
+                            {t(key)}
+                          </button>
+                        );
+                      })}
+                    </div>
                   </div>
-
                   <div className="flex items-center justify-between pt-4">
                     <button
                       type="button"

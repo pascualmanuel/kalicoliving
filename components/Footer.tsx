@@ -1,12 +1,14 @@
 "use client";
 
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 import { Link, usePathname } from "@/i18n/routing";
 import { useApplyPopup } from "@/context/ApplyPopupContext";
 import redDviderSvg2 from "../public/assets/icons/red-divider-2.svg";
 import logoSvg from "../public/assets/logos/logo.svg";
 
 export default function Footer() {
+  const t = useTranslations("footer");
   const pathname = usePathname();
   const { openApplyPopup } = useApplyPopup();
   const hideCta = pathname?.includes("landlords") || pathname?.includes("blog");
@@ -23,15 +25,15 @@ export default function Footer() {
       <div className="w-full lg:px-20 px-5 bg-red flex flex-col items-center justify-center pb-10 md:mt-[-11%]">
         {!hideCta && (
           <>
-            <h2 className="lg:text-[64px] text-[45px] text-white title text-center ">
-              Ready to live <br /> together?
+            <h2 className="lg:text-[64px] text-[45px] text-white title text-center max-w-[400px]">
+              {t("ctaTitle")}
             </h2>
             <button
               type="button"
               onClick={openApplyPopup}
               className="mt-8 mb-24 w-[350px] bg-white rounded-[12px] semi-bold text-center font-semibold text-lg px-4 py-2 text-black my-2 hover:bg-white-hover transition-colors"
             >
-              Apply now
+              {t("applyNow")}
             </button>
           </>
         )}
@@ -49,7 +51,9 @@ export default function Footer() {
                 <span className="inline-block h-[1.3em] overflow-hidden align-middle">
                   <span className="block transition-transform duration-300 ease-out group-hover:[transform:translateY(calc(-1.3em-20px))]">
                     <span className="block h-[1.3em] leading-[130%]">Blog</span>
-                    <span className="block h-[1.3em] leading-[130%] mt-5">Blog</span>
+                    <span className="block h-[1.3em] leading-[130%] mt-5">
+                      Blog
+                    </span>
                   </span>
                 </span>
               </Link>
@@ -59,8 +63,12 @@ export default function Footer() {
               >
                 <span className="inline-block h-[1.3em] overflow-hidden align-middle">
                   <span className="block transition-transform duration-300 ease-out group-hover:[transform:translateY(calc(-1.3em-20px))]">
-                    <span className="block h-[1.3em] leading-[130%]">Community</span>
-                    <span className="block h-[1.3em] leading-[130%] mt-5">Community</span>
+                    <span className="block h-[1.3em] leading-[130%]">
+                      Community
+                    </span>
+                    <span className="block h-[1.3em] leading-[130%] mt-5">
+                      Community
+                    </span>
                   </span>
                 </span>
               </Link>
@@ -70,8 +78,12 @@ export default function Footer() {
               >
                 <span className="inline-block h-[1.3em] overflow-hidden align-middle">
                   <span className="block transition-transform duration-300 ease-out group-hover:[transform:translateY(calc(-1.3em-20px))]">
-                    <span className="block h-[1.3em] leading-[130%]">Landlords</span>
-                    <span className="block h-[1.3em] leading-[130%] mt-5">Landlords</span>
+                    <span className="block h-[1.3em] leading-[130%]">
+                      Landlords
+                    </span>
+                    <span className="block h-[1.3em] leading-[130%] mt-5">
+                      Landlords
+                    </span>
                   </span>
                 </span>
               </Link>
@@ -82,8 +94,12 @@ export default function Footer() {
               >
                 <span className="inline-block h-[1.3em] overflow-hidden align-middle">
                   <span className="block transition-transform duration-300 ease-out group-hover:[transform:translateY(calc(-1.3em-20px))]">
-                    <span className="block h-[1.3em] leading-[130%]">Apply</span>
-                    <span className="block h-[1.3em] leading-[130%] mt-5">Apply</span>
+                    <span className="block h-[1.3em] leading-[130%]">
+                      Apply
+                    </span>
+                    <span className="block h-[1.3em] leading-[130%] mt-5">
+                      Apply
+                    </span>
                   </span>
                 </span>
               </button>
@@ -94,17 +110,17 @@ export default function Footer() {
           <div className="flex flex-col md:flex-row justify-between mt-10 gap-4 md:gap-0">
             <div className="flex flex-col md:flex-row gap-2 md:gap-4">
               <Link
+                href="/cookies"
+                className="text-[#A95251] text-[14px] leading-[130%]"
+              >
+                Cookies
+              </Link>
+              {/* <span className='hidden md:inline text-[#A95251] text-[14px]'>|</span> */}
+              <Link
                 href="/privacy-policy"
                 className="text-[#A95251] text-[14px] leading-[130%]"
               >
                 Privacy Policy
-              </Link>
-              {/* <span className='hidden md:inline text-[#A95251] text-[14px]'>|</span> */}
-              <Link
-                href="/terms-of-service"
-                className="text-[#A95251] text-[14px] leading-[130%]"
-              >
-                Terms & conditions
               </Link>
             </div>
             <div className="flex flex-col md:flex-row gap-2 md:gap-4">

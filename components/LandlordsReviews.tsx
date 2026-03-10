@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import Person1 from "../public/assets/images/community/person1.jpg";
@@ -20,6 +21,9 @@ interface PersonData {
 }
 
 const LandlordsReviews = () => {
+  const tLandlords = useTranslations("pages.landlords");
+  const tReviews = useTranslations("pages.landlords.reviews");
+
   const [currentIndex, setCurrentIndex] = useState(0);
   const [cardsPerView, setCardsPerView] = useState(3);
   const [maxTranslate, setMaxTranslate] = useState(0);
@@ -29,38 +33,33 @@ const LandlordsReviews = () => {
   const people: PersonData[] = [
     {
       image: Person1,
-      quote:
-        "Siempre que tengo una pregunta, responden en minutos. Ese nivel de respuesta da una verdadera tranquilidad.",
-      name: "Carles R.",
+      quote: tReviews("quote1"),
+      name: tReviews("name1"),
     },
     {
       image: Person2,
-      quote:
-        "Transformaron completamente mi apartamento. El diseño interior es hermoso y la propiedad se siente más valiosa que nunca.",
-      name: "Marta L.",
+      quote: tReviews("quote2"),
+      name: tReviews("name2"),
     },
     {
       image: Person3,
-      quote:
-        "No he tenido que pensar en mi apartamento en meses. Todo funciona sin problemas y el dinero llega cada mes.",
-      name: "Richard S.",
+      quote: tReviews("quote3"),
+      name: tReviews("name3"),
     },
     {
       image: Person4,
-      quote:
-        "Con Kali, siempre sé cuándo me pagan, el mismo día, cada mes. No hay ningún retraso.",
-      name: "Judith M.",
+      quote: tReviews("quote4"),
+      name: tReviews("name4"),
     },
     {
       image: Person5,
-      quote:
-        "El equipo de Kali es confiable y digno de confianza. Los recomiendo encarecidamente.",
-      name: "Luca A.",
+      quote: tReviews("quote5"),
+      name: tReviews("name5"),
     },
     {
       image: Person6,
-      quote: "The people here changed my whole experience.",
-      name: "Emma Davis",
+      quote: tReviews("quote6"),
+      name: tReviews("name6"),
     },
   ];
 
@@ -110,8 +109,7 @@ const LandlordsReviews = () => {
       <div ref={viewportRef} className="overflow-hidden w-full pl-5 md:pl-20">
         <div className="flex items-center justify-between sm:pb-[50px] sm:pt-[100px] pb-[30px] pt-[60px] mb-6 pr-4">
           <h2 className="text-[35px] sm:text-[40px] md:text-[56px] font-bold max-w-[350px] md:max-w-[550px] leading-[90%]">
-            {/* Qué dicen nuestros propietarios{" "} */}
-            Straight from our landlords
+            {tLandlords("reviewsTitle")}
           </h2>
           <div className="sm:flex gap-2 mt-10 hidden ">
             <button
