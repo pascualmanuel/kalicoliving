@@ -6,6 +6,10 @@
     "community": "Comunidad",
     "applyNow": "Aplicar Ahora"
   },
+  "footer": {
+    "ctaTitle": "Empieza a vivir en Kali.",
+    "applyNow": "Aplicar ahora"
+  },
   "pages": {
     "home": {
       "title": "Live together, grow forever",
@@ -14,11 +18,11 @@
       "heroDescription": "Kali es una experiencia de coliving donde el diseño y la comunidad se fusionan para crear momentos que dejan huella.",
       "card1Title": "Comunidad real",
       "card1Description": "Vive rodeado de personas que, como tú, eligieron salir de su zona de confort y apostar por algo diferente.",
-      "card2Title": "Espacios con alma",
+      "card2Title": "Espacios que inspiran",
       "card2Description": "Hogares diseñados con detalle, cálidos y listos para que solo tengas que preocuparte de vivir.",
       "card3Title": "Momentos compartidos",
       "card3Description": "Cenas, conversaciones, trabajo en común y esas risas que nunca tienen hora prevista.",
-      "card4Title": "Crecimiento real",
+      "card4Title": "Crecimiento",
       "card4Description": "Cada persona que conoces en Kali añade algo nuevo a tu historia.",
       "videoTitle1": "Siente tu hogar",
       "videoTitle2": "desde el primer día",
@@ -37,7 +41,7 @@
       "forYouTitle": "Kali es para ti si...",
       "forYou1": "Quieres conocer gente nueva y sentirte como en casa desde el primer día.",
       "forYou2": "Te gusta salir de tu zona de confort y decir que sí a los planes espontáneos.",
-      "forYou3": "Buscas un hogar donde siempre haya alguien para un café, una caña o una cena improvisada.",
+      "forYou3": "Buscas un hogar donde siempre haya alguien para un café, una cena o una buena conversación.",
       "forYou4": "Quieres mudarte sin el estrés de montar nada — mobiliario, Wi-Fi y todo lo demás ya resuelto.",
       "forYou5": "Quieres algo más que una habitación — quieres comunidad y conexiones de verdad.",
       "forYou6": "Quieres crecer rodeado de personas que te inspiran y te hacen ir más lejos.",
@@ -76,7 +80,7 @@
       "step3Title": "Propuesta",
       "step3Description": "Te presentamos una propuesta: cuánto puedes ganar y qué incluye nuestra gestión.",
       "step4Title": "Gestión",
-      "step4Description": "Tu cobras cada mes. Nosotros gestionamos la propiedad y nos encargamos del resto.",
+      "step4Description": "Recibe tu renta cada mes. Nosotros gestionamos la propiedad y nos encargamos del resto.",
       "carousel1Title": "Pago garantizado ",
       "carousel1Text": "Pagamos la renta siempre entre el 1 y el 5 de cada mes. Sin excepciones.",
       "carousel2Title": "Ingresos estables, sin sorpresas ",
@@ -105,7 +109,22 @@
       "formPlaceholderPhone": "+34 600 000 000",
       "formPlaceholderLocation": "Dirección o zona",
       "formPlaceholderProperty": "Descripción, características, etc.",
-      "formSubmit": "Enviar"
+      "formSubmit": "Enviar",
+      "reviewsTitle": "Qué dicen nuestros propietarios",
+      "reviews": {
+        "quote1": "Siempre que tengo una pregunta, responden en minutos. Ese nivel de respuesta da una verdadera tranquilidad.",
+        "name1": "Carles R.",
+        "quote2": "Transformaron completamente mi apartamento. El diseño interior es hermoso y la propiedad se siente más valiosa que nunca.",
+        "name2": "Marta L.",
+        "quote3": "No he tenido que pensar en mi apartamento en meses. Todo funciona sin problemas y el dinero llega cada mes.",
+        "name3": "Richard S.",
+        "quote4": "Con Kali, siempre sé cuándo me pagan, el mismo día, cada mes. No hay ningún retraso.",
+        "name4": "Judith M.",
+        "quote5": "El equipo de Kali es confiable y digno de confianza. Los recomiendo encarecidamente.",
+        "name5": "Luca A.",
+        "quote6": "Las personas de Kali cambiaron por completo mi experiencia.",
+        "name6": "Emma Davis"
+      }
     },
     "blog": {
       "title": "Blog",
@@ -113,7 +132,7 @@
         "all": "Todos",
         "culture": "Cultura",
         "gastro": "Gastro",
-        "entrepreneur": "Emprendedor",
+        "entrepreneur": "Crecimiento",
         "plans": "Planes"
       },
       "readArticle": "Leer artículo",
@@ -125,7 +144,7 @@
       "heroTitle1": "Personas que dejan",
       "heroTitle2": "huella ",
       "joinKali": "Únete a Kali",
-      "galleryDescription": "En Kali convives con personas de distintos lugares, trayectorias y formas de ver el mundo. Esa mezcla es lo que hace que cada día sea diferente.",
+      "galleryDescription": "En Kali convives con personas de distintos lugares, trayectorias y sectores. Todos comparten una misma ambición: crecer, conectar y llegar más lejos.",
       "voicesTitle1": "Voces de la",
       "voicesTitle2": "comunidad"
     },
@@ -159,18 +178,31 @@
       "work6": "Creativo",
       "work7": "Estudiante",
       "labelBring": "¿Qué aportarías a Kali?",
-      "bring1": "Cocina",
-      "bring2": "Música",
-      "bring3": "Arte",
-      "bring4": "Bienestar",
-      "bring5": "Idiomas",
-      "bring6": "Tecnología",
-      "bring7": "Deporte",
-      "bring8": "Fotografía",
-      "bring9": "Lectura",
+      "labelOffer": "¿Qué esperas encontrar en Kali?",
+      "bringNetwork": "Red / Networking",
+      "bringCreativeMindset": "Mentalidad creativa",
+      "bringMyOwnProjects": "Mis propios proyectos",
+      "bringCulturalDiversity": "Diversidad cultural",
+      "bringGrowthMindset": "Mentalidad de crecimiento",
+      "bringCommunityBuilder": "Constructor de comunidad",
+      "bringInnovativeThinking": "Pensamiento innovador",
+      "bringWellness": "Bienestar",
+      "bringEntrepreneurship": "Emprendimiento",
       "labelAnything": "¿Algo más que quieras compartir?",
       "placeholderAnything": "Opcional: Cualquier otra idea, pregunta o cosa que quieras que sepamos.",
       "submit": "Enviar solicitud"
+    },
+    "privacyPolicy": {
+      "title": "Política de privacidad"
+    },
+    "cookies": {
+      "title": "Cookies"
+    },
+    "cookieBanner": {
+      "message": "Usamos cookies para mejorar tu experiencia y analizar el uso del sitio.",
+      "link": "Política de cookies",
+      "accept": "Aceptar",
+      "reject": "Rechazar"
     }
   }
 }

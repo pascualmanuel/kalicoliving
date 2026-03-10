@@ -6,6 +6,10 @@
     "community": "Community",
     "applyNow": "Apply Now"
   },
+  "footer": {
+    "ctaTitle": "Ready to live together?",
+    "applyNow": "Apply now"
+  },
   "pages": {
     "home": {
       "title": "Live together, grow forever",
@@ -105,7 +109,22 @@
       "formPlaceholderPhone": "+34 600 000 000",
       "formPlaceholderLocation": "Address or area",
       "formPlaceholderProperty": "Description, features, etc.",
-      "formSubmit": "Send"
+      "formSubmit": "Send",
+      "reviewsTitle": "Straight from our landlords",
+      "reviews": {
+        "quote1": "Whenever I have a question, they reply within minutes. That kind of responsiveness gives real peace of mind.",
+        "name1": "Carles R.",
+        "quote2": "They completely transformed my apartment. The interior design is beautiful and the property feels more valuable than ever.",
+        "name2": "Marta L.",
+        "quote3": "I haven't had to think about my apartment in months. Everything runs smoothly and the money arrives every month.",
+        "name3": "Richard S.",
+        "quote4": "With Kali I always know when I'll be paid, the same day every month. There are no delays.",
+        "name4": "Judith M.",
+        "quote5": "The Kali team is reliable and trustworthy. I highly recommend them.",
+        "name5": "Luca A.",
+        "quote6": "Working with Kali has completely changed my experience as a landlord.",
+        "name6": "Emma Davis"
+      }
     },
     "blog": {
       "title": "Blog",
@@ -113,7 +132,7 @@
         "all": "All",
         "culture": "Culture",
         "gastro": "Gastro",
-        "entrepreneur": "Entrepreneur",
+        "entrepreneur": "Growth",
         "plans": "Plans"
       },
       "readArticle": "Read article",
@@ -159,18 +178,31 @@
       "work6": "Creative",
       "work7": "Student",
       "labelBring": "What will you bring to Kali?",
-      "bring1": "Cooking",
-      "bring2": "Music",
-      "bring3": "Art",
-      "bring4": "Wellness",
-      "bring5": "Languages",
-      "bring6": "Tech",
-      "bring7": "Sports",
-      "bring8": "Photography",
-      "bring9": "Reading",
+      "labelOffer": "What do you expect from Kali?",
+      "bringNetwork": "Network",
+      "bringCreativeMindset": "Creative mindset",
+      "bringMyOwnProjects": "My own projects",
+      "bringCulturalDiversity": "Cultural diversity",
+      "bringGrowthMindset": "Growth mindset",
+      "bringCommunityBuilder": "Community builder",
+      "bringInnovativeThinking": "Innovative thinking",
+      "bringWellness": "Wellness",
+      "bringEntrepreneurship": "Entrepreneurship",
       "labelAnything": "Anything else you'd like to share?",
       "placeholderAnything": "Optional: Any other thoughts, questions, or things you want us to know.",
       "submit": "Send Application"
+    },
+    "privacyPolicy": {
+      "title": "Privacy Policy"
+    },
+    "cookies": {
+      "title": "Cookies"
+    },
+    "cookieBanner": {
+      "message": "We use cookies to improve your experience and analyse site usage.",
+      "link": "Cookie policy",
+      "accept": "Accept",
+      "reject": "Reject"
     }
   }
 }
