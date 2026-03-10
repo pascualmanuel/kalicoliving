@@ -105,7 +105,8 @@ export default function HomePageContent() {
             animate="visible"
           >
             <h1 className="text-[18px] text-white text-center tracking-[-3%]">
-              Coliving spaces in Madrid
+              {/* Coliving spaces in Madrid */}
+              Coliving en Madrid
             </h1>
           </motion.div>
         </div>

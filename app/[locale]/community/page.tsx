@@ -13,11 +13,11 @@ import People6 from "../../../public/assets/images/community/person6.jpg";
 import IsoLogo from "../../../public/assets/logos/iso-logo.svg";
 import dividerNotFilledSvg from "../../../public/assets/icons/divider-not-filled.svg";
 // import dividerSvg from '../../../public/assets/icons/divider.svg';
-import GalleryImage1 from "../../../public/assets/images/community/gallery-1.png";
-import GalleryImage2 from "../../../public/assets/images/community/gallery-2.png";
-import GalleryImage3 from "../../../public/assets/images/community/gallery-3.png";
-import GalleryImage4 from "../../../public/assets/images/community/gallery-4.png";
-import GalleryImage5 from "../../../public/assets/images/community/gallery-5.png";
+import GalleryImage1 from "../../../public/assets/images/community/gallery-1.webp";
+import GalleryImage2 from "../../../public/assets/images/community/gallery-2.webp";
+import GalleryImage3 from "../../../public/assets/images/community/gallery-3.webp";
+import GalleryImage4 from "../../../public/assets/images/community/gallery-4.webp";
+import GalleryImage5 from "../../../public/assets/images/community/gallery-5.webp";
 import CommunityCarousel from "../../../components/CommunityCarousel";
 import GallerySection from "../../../components/GallerySection";
 import Footer from "../../../components/Footer";
@@ -747,8 +747,8 @@ export default function CommunityPage() {
             </button>
           </div>
         </div>
-        <div className="mb-[130px] mt-[-100vh]  md:mt-0">
-          <h4 className="text-black text-left text-[50px] title pl-5 md:pl-20">
+        <div className="mb-[130px] mt-[-100vh]  md:mt-0 z-[10] relative">
+          <h4 className="text-black text-left text-[50px] title pl-5 md:pl-20 ">
             {t("voicesTitle1")}&nbsp;
             <br />
             <span className="recoleta text-black">{t("voicesTitle2")}</span>
