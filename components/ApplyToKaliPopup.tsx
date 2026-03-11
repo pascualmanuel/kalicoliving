@@ -16,16 +16,17 @@ const WORK_KEYS = [
   "work6",
   "work7",
 ];
-const BRING_KEYS = [
-  "bringNetwork",
-  "bringCreativeMindset",
-  "bringMyOwnProjects",
-  "bringCulturalDiversity",
-  "bringGrowthMindset",
-  "bringCommunityBuilder",
-  "bringInnovativeThinking",
-  "bringWellness",
-  "bringEntrepreneurship",
+const EXPECT_KEYS = [
+  "expectCommunity",
+  "expectRoomieFriendship",
+  "expectPlans",
+  "expectCareerOpportunities",
+  "expectTrips",
+  "expectNetworking",
+  "expectCleanSpaces",
+  "expectEvents",
+  "expectFlexibility",
+  "expectLocalFromDayOne",
 ];
 const ABOUT_MAX_LENGTH = 200;
 
@@ -51,7 +52,7 @@ export default function ApplyToKaliPopup({
   const [duration, setDuration] = useState<string | null>("duration4");
   const [aboutYourself, setAboutYourself] = useState("");
   const [workStyle, setWorkStyle] = useState<string | null>(null);
-  const [bringToKali, setBringToKali] = useState<string[]>([]);
+  const [expectFromKali, setExpectFromKali] = useState<string[]>([]);
   const [anythingElse, setAnythingElse] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
 
@@ -67,7 +68,7 @@ export default function ApplyToKaliPopup({
       {isOpen && (
         <motion.div
           key="popup-overlay"
-          className="fixed inset-0 flex items-center justify-center p-4 z-[999999]"
+          className="fixed inset-0 flex items-center justify-center p-4 z-[999999] overflow-y-auto"
           style={{
             background: "rgba(0, 0, 0, 0.7)",
             backdropFilter: "blur(12px)",
@@ -80,7 +81,7 @@ export default function ApplyToKaliPopup({
         >
           <motion.div
             key="popup-card"
-            className="w-full max-w-[670px] rounded-[20px] bg-[#FFF2E2] shadow-xl overflow-hidden "
+            className="w-full max-w-[670px] max-h-[90vh] rounded-[20px] bg-[#FFF2E2] shadow-xl overflow-y-auto"
             initial={{ opacity: 0, scale: 0.96 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.96 }}
@@ -335,16 +336,16 @@ export default function ApplyToKaliPopup({
                   }}
                 >
                   <div>
-                    <label className={labelClassName}>{t("labelBring")}</label>
+                    <label className={labelClassName}>{t("labelOffer")}</label>
                     <div className="flex flex-wrap gap-3">
-                      {BRING_KEYS.map((key) => {
-                        const isSelected = bringToKali.includes(key);
+                      {EXPECT_KEYS.map((key) => {
+                        const isSelected = expectFromKali.includes(key);
                         return (
                           <button
                             key={key}
                             type="button"
                             onClick={() =>
-                              setBringToKali((prev) =>
+                              setExpectFromKali((prev) =>
                                 isSelected
                                   ? prev.filter((x) => x !== key)
                                   : [...prev, key],
@@ -364,33 +365,16 @@ export default function ApplyToKaliPopup({
                   </div>
 
                   <div>
-                    <label className={labelClassName}>{t("labelOffer")}</label>
-                    <div className="flex flex-wrap gap-3">
-                      {BRING_KEYS.map((key) => {
-                        const isSelected = bringToKali.includes(key);
-                        return (
-                          <button
-                            key={key}
-                            type="button"
-                            onClick={() =>
-                              setBringToKali((prev) =>
-                                isSelected
-                                  ? prev.filter((x) => x !== key)
-                                  : [...prev, key],
-                              )
-                            }
-                            className={`px-5 py-2.5 rounded-full text-base font-medium border transition-colors ${
-                              isSelected
-                                ? "bg-red text-white font-semibold border-red"
-                                : "text-black border-[#d3d3d3] hover:border-gray-400"
-                            }`}
-                          >
-                            {t(key)}
-                          </button>
-                        );
-                      })}
-                    </div>
+                    <label className={labelClassName}>{t("labelAnything")}</label>
+                    <textarea
+                      className={textareaClassName}
+                      placeholder={t("placeholderAnything")}
+                      value={anythingElse}
+                      onChange={(e) => setAnythingElse(e.target.value)}
+                      rows={4}
+                    />
                   </div>
+
                   <div className="flex items-center justify-between pt-4">
                     <button
                       type="button"

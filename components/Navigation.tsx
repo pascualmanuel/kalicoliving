@@ -5,6 +5,7 @@ import { useTranslations, useLocale } from "next-intl";
 import { Link, usePathname, useRouter } from "@/i18n/routing";
 import Image from "next/image";
 import { useApplyPopup } from "@/context/ApplyPopupContext";
+import { useBlogAlternateLocale } from "@/context/BlogAlternateLocaleContext";
 
 export default function Navigation() {
   const t = useTranslations("nav");
@@ -12,6 +13,7 @@ export default function Navigation() {
   const pathname = usePathname();
   const router = useRouter();
   const { openApplyPopup } = useApplyPopup();
+  const { alternateLink } = useBlogAlternateLocale();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isNavbarVisible, setIsNavbarVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
@@ -50,13 +52,19 @@ export default function Navigation() {
 
   const toggleLocale = () => {
     const newLocale = locale === "es" ? "en" : "es";
-    // Primero actualizar el estado visual para la animación
     setDisplayLocale(newLocale);
-    // Luego cambiar el locale después de que la transición haya comenzado
-    // Usar requestAnimationFrame para asegurar que el navegador procese el cambio visual primero
     requestAnimationFrame(() => {
       setTimeout(() => {
-        router.push(pathname, { locale: newLocale });
+        // On a blog post, use the translation's URL so we don't 404 when slugs differ
+        if (
+          pathname?.startsWith("/blog/") &&
+          alternateLink &&
+          alternateLink.locale === newLocale
+        ) {
+          router.push(alternateLink.pathname, { locale: alternateLink.locale });
+        } else {
+          router.push(pathname, { locale: newLocale });
+        }
       }, 200);
     });
   };
