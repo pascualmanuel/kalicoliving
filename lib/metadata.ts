@@ -18,25 +18,74 @@ export function getOgImageUrl(page: PageKey, locale: "en" | "es"): string {
 /** SEO meta descriptions for Kali Coliving, per page and locale */
 const META_DESCRIPTIONS: Record<PageKey, { en: string; es: string }> = {
   home: {
-    en: "Kali Coliving – Live together, grow forever. Community-focused coliving in Madrid. Designed spaces, real connections, and a place to belong. Apply now.",
-    es: "Kali Coliving – Vive juntos, crece para siempre. Coliving con comunidad en Madrid. Espacios diseñados, conexiones reales y un lugar donde encajar. Aplica ya.",
+    en: "Discover Kali, the coliving that changes how you live. Real community, premium spaces and connections that drive your career forward. Home is waiting.",
+    es: "Descubre Kali, el coliving que transforma tu forma de vivir. Comunidad real, espacios premium y conexiones que impulsan tu carrera. Tu próximo hogar te espera.",
   },
   community: {
-    en: "Meet the Kali community. People who leave a mark. Live with like-minded people in Madrid and grow through shared experiences and real connections.",
-    es: "Conoce la comunidad Kali. Personas que dejan huella. Vive con gente con tus mismos valores en Madrid y crece con experiencias compartidas y conexiones reales.",
+    en: "Meet the Kali community. Young professionals, real networking and an environment designed to grow together. People who leave a mark.",
+    es: "Conoce la comunidad Kali. Jóvenes profesionales, networking real y un entorno diseñado para crecer juntos. Personas que dejan huella.",
   },
   blog: {
-    en: "Kali Coliving blog – Stories, tips and inspiration about coliving, Madrid and community life. Culture, gastronomy, entrepreneurship and local plans.",
-    es: "Blog de Kali Coliving – Historias, consejos e inspiración sobre coliving, Madrid y vida en comunidad. Cultura, gastronomía, emprendimiento y planes locales.",
+    en: "The Kali blog. Culture, food, career growth and plans to make the most of your city. Get inspired and live better every day.",
+    es: "El blog de Kali. Cultura, gastronomía, crecimiento profesional y planes para sacarle el máximo a tu ciudad. Inspírate y vive mejor cada día.",
   },
   landlords: {
-    en: "Rent your property with Kali Coliving. Guaranteed rental income, on-time payments and full management. We handle everything so you don't have to worry.",
-    es: "Alquila tu propiedad con Kali Coliving. Ingresos por alquiler garantizados, pagos a tiempo y gestión integral. Nosotros nos ocupamos de todo para que tú no te preocupes.",
+    en: "Rent your property to Kali and get paid every month, guaranteed. Long-term contracts, full management and zero hassle from day one.",
+    es: "Alquila tu propiedad a Kali y cobra cada mes sin preocupaciones. Contratos a largo plazo, pago garantizado y gestión integral de principio a fin.",
   },
 };
 
 export function getMetaDescription(page: PageKey, locale: "en" | "es"): string {
   return META_DESCRIPTIONS[page][locale];
+}
+
+const BLOG_POST_INTRO_MAX_LENGTH = 155;
+const BLOG_META_SUFFIX = " | Kali Blog";
+
+/**
+ * Truncate text at the nearest word boundary before maxLength; add "…" if truncated.
+ */
+function truncateAtWord(text: string, maxLength: number): string {
+  const trimmed = text.trim();
+  if (trimmed.length <= maxLength) return trimmed;
+  const slice = trimmed.slice(0, maxLength);
+  const lastSpace = slice.lastIndexOf(" ");
+  const end = lastSpace > 0 ? lastSpace : maxLength;
+  return slice.slice(0, end).trim() + "…";
+}
+
+/**
+ * Strip HTML tags and normalize whitespace to get plain text.
+ */
+function stripHtmlToPlainText(html: string): string {
+  if (!html || !html.trim()) return "";
+  return html
+    .replace(/<[^>]+>/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+/**
+ * Build SEO meta description for a blog post.
+ * Format: [Post title] — [First 155 chars of intro at word boundary] | Kali Blog
+ */
+export function getBlogPostMetaDescription(
+  title: string,
+  introPlainText: string
+): string {
+  const intro = introPlainText.trim()
+    ? truncateAtWord(introPlainText.trim(), BLOG_POST_INTRO_MAX_LENGTH)
+    : "";
+  const middle = intro ? ` — ${intro}` : "";
+  return `${title}${middle}${BLOG_META_SUFFIX}`;
+}
+
+/**
+ * Get intro text for meta: use excerpt if present, otherwise first paragraph from content (plain text).
+ */
+export function getBlogPostIntro(excerpt: string | null, content: string): string {
+  if (excerpt && excerpt.trim()) return excerpt.trim();
+  return stripHtmlToPlainText(content);
 }
 
 /** Page titles for SEO (optional override; nav uses translations) */
