@@ -1,9 +1,17 @@
-import createMiddleware from 'next-intl/middleware';
-import { routing } from './i18n/routing';
+import createMiddleware from "next-intl/middleware";
+import { type NextRequest } from "next/server";
+import { routing } from "./i18n/routing";
+import { updateSession } from "@/lib/supabase/middleware";
 
-export default createMiddleware(routing);
+const intlMiddleware = createMiddleware(routing);
+
+export default async function middleware(request: NextRequest) {
+  if (request.nextUrl.pathname.startsWith("/admin")) {
+    return await updateSession(request);
+  }
+  return intlMiddleware(request);
+}
 
 export const config = {
-  // Match only internationalized pathnames
-  matcher: ['/', '/(es|en)/:path*']
+  matcher: ["/", "/(es|en)/:path*", "/admin", "/admin/:path*"],
 };
