@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
-import AdminHeader from "./AdminHeader";
+import AdminHeader from "@/app/admin/(dashboard)/AdminHeader";
 
 export default async function DashboardLayout({
   children,

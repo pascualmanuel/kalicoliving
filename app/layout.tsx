@@ -27,7 +27,6 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  console.log("BASE_URL", BASE_URL);
   return (
     <html lang="en">
       <body className="overflow-x-hidden">
