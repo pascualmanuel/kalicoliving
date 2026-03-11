@@ -13,6 +13,7 @@
   "pages": {
     "home": {
       "title": "Live together, grow forever",
+      "colivingSpaces": "Coliving en España",
       "heroSubtitle1": "Más que compartir un espacio.",
       "heroSubtitle2": "Una comunidad donde crecer.",
       "heroDescription": "Kali es una experiencia de coliving donde el diseño y la comunidad se fusionan para crear momentos que dejan huella.",
@@ -136,7 +137,10 @@
         "plans": "Planes"
       },
       "readArticle": "Leer artículo",
-      "similarArticles": "Artículos similares"
+      "similarArticles": "Artículos similares",
+      "readInEnglish": "Read in English",
+      "readInSpanish": "Leer en español",
+      "createPost": "Crear nuevo blog"
     },
     "community": {
       "title": "Comunidad",
@@ -179,7 +183,7 @@
       "work7": "Estudiante",
       "labelBring": "¿Qué aportarías a Kali?",
       "labelOffer": "¿Qué esperas encontrar en Kali?",
-      "bringNetwork": "Red / Networking",
+      "bringNetwork": "Networking",
       "bringCreativeMindset": "Mentalidad creativa",
       "bringMyOwnProjects": "Mis propios proyectos",
       "bringCulturalDiversity": "Diversidad cultural",
@@ -188,6 +192,16 @@
       "bringInnovativeThinking": "Pensamiento innovador",
       "bringWellness": "Bienestar",
       "bringEntrepreneurship": "Emprendimiento",
+      "expectCommunity": "Comunidad",
+      "expectRoomieFriendship": "Amistades",
+      "expectPlans": "Planes",
+      "expectCareerOpportunities": "Oportunidades laborales",
+      "expectTrips": "Viajes",
+      "expectNetworking": "Networking",
+      "expectCleanSpaces": "Espacios cuidados",
+      "expectEvents": "Eventos",
+      "expectFlexibility": "Flexibilidad",
+      "expectLocalFromDayOne": "Sentirte local",
       "labelAnything": "¿Algo más que quieras compartir?",
       "placeholderAnything": "Opcional: Cualquier otra idea, pregunta o cosa que quieras que sepamos.",
       "submit": "Enviar solicitud"

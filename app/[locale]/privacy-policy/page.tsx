@@ -159,8 +159,7 @@ const content = {
     },
     {
       title: "¿Cuáles son tus derechos?",
-      intro:
-        "De conformidad con el RGPD y la LOPD-GDD, tienes derecho a:",
+      intro: "De conformidad con el RGPD y la LOPD-GDD, tienes derecho a:",
       items: [
         "Acceso: conocer qué datos tuyos tratamos y obtener una copia de ellos.",
         "Rectificación: corregir datos inexactos o incompletos.",
@@ -172,7 +171,7 @@ const content = {
       ],
       paragraphs: [
         "Para ejercer cualquiera de estos derechos, puedes dirigirte a nosotros por escrito a la dirección postal o al email indicados en el apartado 1. Deberás acreditar tu identidad adjuntando una copia de tu DNI o documento equivalente.",
-        'Si consideras que el tratamiento de tus datos vulnera la normativa vigente, tienes derecho a presentar una reclamación ante la Agencia Española de Protección de Datos (AEPD): www.aepd.es.',
+        "Si consideras que el tratamiento de tus datos vulnera la normativa vigente, tienes derecho a presentar una reclamación ante la Agencia Española de Protección de Datos (AEPD): www.aepd.es.",
       ],
     },
     {
@@ -195,7 +194,7 @@ const content = {
       paragraph:
         "Si tienes cualquier pregunta sobre esta Política de Privacidad o sobre el tratamiento de tus datos, puedes contactarnos en:",
       contact: [
-        "Email: lorenzopascual@kalicolivings.com",
+        "Email: lorenzo.pascual@kalicolivings.com",
         "Dirección postal: Calle Espronceda 121 G, 28003, Madrid, España",
         "Sitio web: https://kalicoliving.com",
       ],
@@ -266,7 +265,10 @@ export default async function PrivacyPolicyPage({
                   {"items" in section && section.items && (
                     <ul className="mt-4 space-y-3 text-[#272727]/90 leading-[1.65] md:mt-5 md:space-y-4 md:text-lg md:leading-[1.7]">
                       {section.items.map((item, i) => (
-                        <li key={i} className="relative pl-5 before:absolute before:left-0 before:content-['·'] before:font-bold before:text-[#272727]/50">
+                        <li
+                          key={i}
+                          className="relative pl-5 before:absolute before:left-0 before:content-['·'] before:font-bold before:text-[#272727]/50"
+                        >
                           {item}
                         </li>
                       ))}
@@ -319,37 +321,51 @@ export default async function PrivacyPolicyPage({
 
                   {"list" in section &&
                     section.list &&
-                    section.list.some((x: unknown) => typeof x === "object" && x !== null && "name" in x) && (
-                    <ul className="space-y-4 md:space-y-5">
-                      {section.list.map((item: { name: string; desc: string; url: string | null }, i: number) => (
-                        <li key={i} className="text-[#272727]/90 leading-[1.65] md:text-lg md:leading-[1.7]">
-                          {item.url ? (
-                            <>
-                              <strong className="font-semibold text-[#272727]">
-                                {item.name}:
-                              </strong>{" "}
-                              <a
-                                href={item.url}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="underline decoration-[#272727]/40 underline-offset-2 transition-colors hover:decoration-[#272727]"
-                              >
-                                {item.desc}
-                              </a>
-                            </>
-                          ) : (
-                            <>
-                              <strong className="font-semibold text-[#272727]">
-                                {item.name}:
-                              </strong>{" "}
-                              {item.desc}
-                            </>
-                          )}
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-
+                    section.list.some(
+                      (x: unknown) =>
+                        typeof x === "object" && x !== null && "name" in x,
+                    ) && (
+                      <ul className="space-y-4 md:space-y-5">
+                        {section.list.map(
+                          (
+                            item: {
+                              name: string;
+                              desc: string;
+                              url: string | null;
+                            },
+                            i: number,
+                          ) => (
+                            <li
+                              key={i}
+                              className="text-[#272727]/90 leading-[1.65] md:text-lg md:leading-[1.7]"
+                            >
+                              {item.url ? (
+                                <>
+                                  <strong className="font-semibold text-[#272727]">
+                                    {item.name}:
+                                  </strong>{" "}
+                                  <a
+                                    href={item.url}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="underline decoration-[#272727]/40 underline-offset-2 transition-colors hover:decoration-[#272727]"
+                                  >
+                                    {item.desc}
+                                  </a>
+                                </>
+                              ) : (
+                                <>
+                                  <strong className="font-semibold text-[#272727]">
+                                    {item.name}:
+                                  </strong>{" "}
+                                  {item.desc}
+                                </>
+                              )}
+                            </li>
+                          ),
+                        )}
+                      </ul>
+                    )}
 
                   {"contact" in section && section.contact && (
                     <ul className="mt-4 space-y-1 text-[#272727]/90 leading-[1.65] md:mt-5 md:text-lg md:leading-[1.7]">

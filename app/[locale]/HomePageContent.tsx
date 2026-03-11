@@ -1,6 +1,6 @@
 "use client";
 
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
@@ -17,6 +17,7 @@ import RoomsSection from "@/components/Rooms";
 import Footer from "@/components/Footer";
 import isoLogoWhite from "../../public/assets/logos/isowhite.svg";
 export default function HomePageContent() {
+  const locale = useLocale();
   const t = useTranslations("pages.home");
   const cardsRef = useRef(null);
   const videoSectionRef = useRef<HTMLDivElement>(null);
@@ -99,14 +100,13 @@ export default function HomePageContent() {
         <div className="relative z-10 mt-[-50px] overflow-hidden h-[36px]">
           <motion.div
             className="h-[36px] bg-[#FFF2E21A] backdrop-blur-[3.5px]
-            border border-[#FFF2E266] flex items-center justify-center w-[240px] rounded-full overflow-hidden"
+            border border-[#FFF2E266] flex items-center justify-center  rounded-full overflow-hidden"
             variants={curtainLine}
             initial="hidden"
             animate="visible"
           >
-            <h1 className="text-[18px] text-white text-center tracking-[-3%]">
-              {/* Coliving spaces in Madrid */}
-              Coliving en Madrid
+            <h1 className="text-[18px] text-white text-center tracking-[-3%] px-4">
+              {t("colivingSpaces")}
             </h1>
           </motion.div>
         </div>
@@ -284,7 +284,7 @@ export default function HomePageContent() {
                   <p className="text-white lg:my-2 my-5 text-[20px] leading-[130%]">
                     {t("videoDescription")}
                   </p>
-                  <a href="#" className="group block w-fit">
+                  <a href={`/${locale}/community`} className="group block w-fit">
                     <div className="lg:w-[250px] bg-white rounded-[12px] semi-bold text-center font-semibold text-lg px-4 py-2 text-black my-4 group-hover:bg-white-hover transition-colors">
                       {t("videoCta")}
                     </div>

@@ -6,6 +6,7 @@ import { routing } from '@/i18n/routing';
 import Navigation from '@/components/Navigation';
 import CookieBanner from '@/components/CookieBanner';
 import { ApplyPopupProvider } from '@/context/ApplyPopupContext';
+import { BlogAlternateLocaleProvider } from '@/context/BlogAlternateLocaleContext';
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -32,9 +33,11 @@ export default async function LocaleLayout({
   return (
     <NextIntlClientProvider messages={messages}>
       <ApplyPopupProvider>
-        <Navigation />
-        {children}
-        <CookieBanner />
+        <BlogAlternateLocaleProvider>
+          <Navigation />
+          {children}
+          <CookieBanner />
+        </BlogAlternateLocaleProvider>
       </ApplyPopupProvider>
     </NextIntlClientProvider>
   );

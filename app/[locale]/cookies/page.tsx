@@ -157,7 +157,7 @@ const content = {
       paragraph:
         "Si tienes dudas sobre el uso de cookies o sobre esta política, puedes contactarnos en:",
       contact: [
-        "Email: lorenzopascual@kalicolivings.com",
+        "Email: lorenzo.pascual@kalicolivings.com",
         "Dirección postal: Calle Espronceda 121 G, 28003, Madrid, España",
         "Sitio web: https://kalicoliving.com",
       ],
