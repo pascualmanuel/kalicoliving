@@ -1,12 +1,67 @@
+import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import { Link } from "@/i18n/routing";
-import { getBlogPostBySlug, getBlogPosts } from "@/lib/blog";
+import {
+  getBlogPostBySlug,
+  getBlogPosts,
+  getPublishedTranslationSibling,
+} from "@/lib/blog";
+import {
+  BASE_URL,
+  getBlogPostMetaDescription,
+  getBlogPostIntro,
+  getOgImageUrl,
+} from "@/lib/metadata";
 import BlogPostTags from "@/components/BlogPostTags";
+import { SetBlogAlternateLink } from "@/context/BlogAlternateLocaleContext";
 
 interface BlogPostPageProps {
   params: { locale: string; slug: string };
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { locale: string; slug: string };
+}): Promise<Metadata> {
+  const { locale, slug } = params;
+  const post = await getBlogPostBySlug(slug, locale);
+  if (!post) return { title: "Not Found" };
+
+  const intro = getBlogPostIntro(post.excerpt, post.content);
+  const description = getBlogPostMetaDescription(post.title, intro);
+  const title = post.title;
+  const canonical = `${BASE_URL}/${locale}/blog/${slug}`;
+  const ogImage = getOgImageUrl("blog", locale as "en" | "es");
+
+  return {
+    title,
+    description,
+    alternates: {
+      canonical,
+      languages: {
+        es: `${BASE_URL}/es/blog/${slug}`,
+        en: `${BASE_URL}/en/blog/${slug}`,
+      },
+    },
+    openGraph: {
+      type: "article",
+      locale: locale === "es" ? "es_ES" : "en_US",
+      url: canonical,
+      siteName: "Kali Coliving",
+      title,
+      description,
+      images: [{ url: ogImage, width: 1200, height: 630, alt: title }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [ogImage],
+    },
+  };
 }
 
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
@@ -20,14 +75,21 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   ]);
   if (!post) notFound();
 
+  const translationSibling = post.translation_key
+    ? await getPublishedTranslationSibling(post.translation_key, locale)
+    : null;
+
   const similarPosts = allPosts.filter((p) => p.slug !== slug).slice(0, 3);
 
   const imageUrl = post.list_image_url || post.cover_url;
+  const translationLabel =
+    locale === "es" ? tBlog("readInEnglish") : tBlog("readInSpanish");
 
   return (
     <main className="px-4 py-10 md:py-16 md:px-20 mx-auto mt-[100px] ">
+      <SetBlogAlternateLink sibling={translationSibling} />
       {/* Breadcrumb */}
-      <nav className="mb-8 md:mb-10" aria-label="Breadcrumb">
+      <nav className="mb-4 md:mb-6" aria-label="Breadcrumb">
         <ol className="flex items-center gap-2 text-sm text-grey/70">
           <li>
             <Link href="/blog" className="hover:underline">
@@ -98,7 +160,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
           {/* Desktop: title is in sidebar, so we don't repeat. Mobile: already shown above */}
           <div
-            className="prose prose-lg max-w-none text-grey text-[18px] leading-relaxed [&_p]:mb-4 [&_p:last-child]:mb-0"
+            className="prose prose-lg max-w-none text-grey text-[18px] leading-relaxed [&_p]:mb-4 [&_p:last-child]:mb-0 [&_h2]:font-bold [&_h2]:text-[24px] [&_h3]:font-semibold [&_h3]:text-[18px] [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:my-4 [&_ol]:list-decimal [&_ol]:pl-6 [&_ol]:my-4 [&_li]:mb-1 [&_a]:text-brown [&_a]:underline [&_a]:font-medium [&_a]:cursor-pointer hover:[&_a]:text-brown/80 [&_img]:max-w-full [&_img]:h-auto [&_img]:rounded-[12px] [&_img]:my-4"
             dangerouslySetInnerHTML={{ __html: formatContent(post.content) }}
           />
         </article>

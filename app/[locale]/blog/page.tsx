@@ -1,8 +1,15 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { getTranslations } from "next-intl/server";
+import { createClient } from "@/lib/supabase/server";
 import { getBlogPosts } from "@/lib/blog";
 import BlogPostList from "@/components/BlogPostList";
-import { BASE_URL, getOgImageUrl, getMetaDescription, getPageTitle } from "@/lib/metadata";
+import {
+  BASE_URL,
+  getOgImageUrl,
+  getMetaDescription,
+  getPageTitle,
+} from "@/lib/metadata";
 
 type Locale = "en" | "es";
 
@@ -53,13 +60,36 @@ interface BlogPageProps {
 export default async function BlogPage({ params }: BlogPageProps) {
   const { locale } = params;
   const t = await getTranslations("pages.blog");
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
   const posts = await getBlogPosts(locale);
 
   return (
     <main className="px-4 py-10 md:py-16 md:px-20 mx-auto mt-[100px]">
-      <h1 className="md:text-center text-left text-[45px] md:text-[80px] font-bold mb-8 md:mb-16">
-        {t("title")}
-      </h1>
+      {!user && (
+        <div className="flex flex-col md:flex-row md:items-center md:justify-center gap-4 mb-8 md:mb-16">
+          <h1 className="md:text-center text-left text-[45px] md:text-[80px] font-bold">
+            {t("title")}
+          </h1>
+        </div>
+      )}
+      {user && (
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8 md:mb-16">
+          <>
+            <h1 className="md:text-center text-left text-[45px] md:text-[80px] font-bold">
+              {t("title")}
+            </h1>
+            <Link
+              href="/admin/blog/new"
+              className="shrink-0 inline-flex items-center justify-center px-4 py-2.5 rounded-[12px] bg-brown text-white font-semibold hover:bg-brown/90 transition-colors text-sm md:text-base"
+            >
+              {t("createPost")}
+            </Link>
+          </>
+        </div>
+      )}
       <BlogPostList posts={posts} />
     </main>
   );

@@ -77,7 +77,7 @@ export default function BlogPostList({ posts }: BlogPostListProps) {
         })}
       </div>
 
-      <div className="flex flex-row flex-wrap gap-6 md:gap-2 items-start justify-between">
+      <div className="flex flex-row flex-wrap gap-6 md:gap-2 items-start flex-start">
         {filteredPosts.map((post) => (
           <article
             key={post.id}
