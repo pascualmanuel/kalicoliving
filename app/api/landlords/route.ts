@@ -30,7 +30,7 @@ export async function POST(request: Request) {
     }
 
     const html = `
-      <h1>Nuevo contacto de propietario</h1>
+       <h1 style="color: #9f2322;"> Nuevo contacto de propietario</h1>
       <p><strong>Nombre:</strong> ${nombre}</p>
       <p><strong>Email:</strong> ${email}</p>
       <p><strong>Teléfono:</strong> ${telefono}</p>
@@ -41,7 +41,7 @@ export async function POST(request: Request) {
 
     const { error } = await resend.emails.send({
       from: "Kali Coliving <no-reply@kalicoliving.com>",
-      to: ["delivered@resend.dev"],
+      to: ["manuelnpascual@gmail.com"],
       subject: "Nuevo formulario de propietarios",
       reply_to: email,
       html,
