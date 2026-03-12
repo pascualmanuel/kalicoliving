@@ -26,6 +26,11 @@ const nextConfig = {
         hostname: 'offloadmedia.feverup.com',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'kalicoliving.vercel.app',
+        pathname: '/**',
+      }
     ],
   },
 };
