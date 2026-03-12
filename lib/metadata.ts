@@ -72,7 +72,7 @@ function stripHtmlToPlainText(html: string): string {
  */
 export function getBlogPostMetaDescription(
   title: string,
-  introPlainText: string
+  introPlainText: string,
 ): string {
   const intro = introPlainText.trim()
     ? truncateAtWord(introPlainText.trim(), BLOG_POST_INTRO_MAX_LENGTH)
@@ -84,7 +84,10 @@ export function getBlogPostMetaDescription(
 /**
  * Get intro text for meta: use excerpt if present, otherwise first paragraph from content (plain text).
  */
-export function getBlogPostIntro(excerpt: string | null, content: string): string {
+export function getBlogPostIntro(
+  excerpt: string | null,
+  content: string,
+): string {
   if (excerpt && excerpt.trim()) return excerpt.trim();
   return stripHtmlToPlainText(content);
 }
@@ -93,7 +96,7 @@ export function getBlogPostIntro(excerpt: string | null, content: string): strin
 const PAGE_TITLES: Record<PageKey, { en: string; es: string }> = {
   home: {
     en: "Kali Coliving – Live together, grow forever",
-    es: "Kali Coliving – Vive juntos, crece para siempre",
+    es: "Kali Coliving – Live together, grow forever",
   },
   community: {
     en: "Community – Kali Coliving",
