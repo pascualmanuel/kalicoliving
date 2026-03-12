@@ -10,13 +10,13 @@ const nextConfig = {
         source: '/:path*',
         has: [{ type: 'host', value: 'kalicolivings.com' }],
         destination: 'https://www.kalicoliving.com/:path*',
-        permanent: true,
+        statusCode: 301,
       },
       {
         source: '/:path*',
         has: [{ type: 'host', value: 'www.kalicolivings.com' }],
         destination: 'https://www.kalicoliving.com/:path*',
-        permanent: true,
+        statusCode: 301,
       },
     ];
   },
