@@ -90,7 +90,7 @@ export async function POST(request: Request) {
 
     const { error } = await resend.emails.send({
       from: "Kali Coliving <no-reply@kalicoliving.com>",
-      to: ["manuelnpascual@gmail.com"],
+      to: ["cristina.houlihan@kalicolivings.com"],
       subject: "Nueva solicitud Apply to Kali",
       reply_to: email,
       html,
