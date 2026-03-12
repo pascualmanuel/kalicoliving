@@ -160,10 +160,10 @@ export default function RoomsSection() {
         </button>
 
         <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/60 to-transparent">
-          <h3 className="text-white title text-[32px] mb-2">
+          <h3 className="text-white title text-[32px] mb-4">
             {currentRoom.location}
           </h3>
-          <p className="text-white text-[16px] mb-4">{currentRoom.description}</p>
+          {/* <p className="text-white text-[16px] mb-4">{currentRoom.description}</p> */}
           <button
             type="button"
             onClick={openApplyPopup}
