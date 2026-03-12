@@ -19,10 +19,16 @@ export default function AdminHeader() {
       <div className="max-w-5xl mx-auto px-4 md:px-8 h-14 flex items-center justify-between">
         <div className="flex items-center gap-6">
           <Link
-            href="/es"
+            href="/admin"
             className="text-grey font-semibold hover:text-brown transition-colors"
           >
-            Home
+            Dashboard
+          </Link>
+          <Link
+            href="/es"
+            className="text-grey/70 font-medium hover:text-grey transition-colors text-sm"
+          >
+            Ver website
           </Link>
         </div>
         <button
