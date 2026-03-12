@@ -1,8 +1,8 @@
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
-import AdminHeader from "@/app/admin/(dashboard)/AdminHeader";
+import AdminHeader from "@/app/admin/AdminHeader";
 
-export default async function DashboardLayout({
+export default async function AdminBlogLayout({
   children,
 }: {
   children: React.ReactNode;

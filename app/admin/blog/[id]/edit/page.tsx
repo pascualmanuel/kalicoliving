@@ -4,8 +4,8 @@ import { createClient } from "@/lib/supabase/server";
 import { getAdminClient } from "@/lib/supabase/admin";
 import { getBlogPostById } from "@/lib/blog";
 import type { BlogPostCategory } from "@/lib/blog";
-import NewBlogFormWithPreview from "@/app/admin/(dashboard)/blog/new/NewBlogFormWithPreview";
-import type { NewPostInitialValues } from "@/app/admin/(dashboard)/blog/new/NewBlogFormWithPreview";
+import NewBlogFormWithPreview from "@/app/admin/blog/new/NewBlogFormWithPreview";
+import type { NewPostInitialValues } from "@/app/admin/blog/new/NewBlogFormWithPreview";
 
 async function updatePost(id: string, formData: FormData) {
   "use server";
