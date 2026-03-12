@@ -7,6 +7,36 @@ const nextConfig = {
   async redirects() {
     return [
       {
+        source: '/cocinas',
+        destination: '/es',
+        statusCode: 301,
+      },
+      {
+        source: '/faq',
+        destination: '/es',
+        statusCode: 301,
+      },
+      {
+        source: '/interiores',
+        destination: '/es',
+        statusCode: 301,
+      },
+      {
+        source: '/contacto',
+        destination: '/es',
+        statusCode: 301,
+      },
+      {
+        source: '/sus-fundadores',
+        destination: '/es/community',
+        statusCode: 301,
+      },
+      {
+        source: '/como-funciona',
+        destination: '/es',
+        statusCode: 301,
+      },
+      {
         source: '/:path*',
         has: [{ type: 'host', value: 'kalicolivings.com' }],
         destination: 'https://www.kalicoliving.com/:path*',
