@@ -1,7 +1,10 @@
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
+import { getAdminClient } from "@/lib/supabase/admin";
 import { getAdminBlogPosts, getTranslationGroupMap } from "@/lib/blog";
 import type { AdminBlogPost } from "@/lib/blog";
+import AdminBlogCard from "./AdminBlogCard";
 
 function formatDate(iso: string) {
   return new Date(iso).toLocaleDateString("es-ES", {
@@ -57,6 +60,33 @@ function buildArticleRows(
   return rows;
 }
 
+function getRowImage(row: ArticleRow): string | null {
+  const url =
+    row.es?.list_image_url ||
+    row.es?.cover_url ||
+    row.en?.list_image_url ||
+    row.en?.cover_url;
+  return url ?? null;
+}
+
+function getRowExcerpt(row: ArticleRow): string {
+  return row.es?.excerpt || row.en?.excerpt || "(Sin descripción)";
+}
+
+async function deleteBlogArticle(ids: string[]) {
+  "use server";
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) redirect("/admin/login");
+  const admin = getAdminClient();
+  for (const id of ids) {
+    await admin.from("blog_posts").delete().eq("id", id);
+  }
+  redirect("/admin/blog");
+}
+
 export default async function AdminBlogPage() {
   const supabase = await createClient();
   const [posts, groupMap] = await Promise.all([
@@ -80,123 +110,46 @@ export default async function AdminBlogPage() {
 
       <div className="mb-6">
         <Link
-          href="/"
-          className="text-sm text-grey/70 hover:text-grey inline-flex items-center gap-1"
+          href="/admin"
+          className="text-sm text-grey/70 hover:text-grey inline-flex items-center gap-1 transition-colors"
         >
           <svg
-            className="inline-block"
+            className="inline-block h-4 w-4"
             xmlns="http://www.w3.org/2000/svg"
-            width={16}
-            height={16}
             fill="none"
-            viewBox="0 0 16 16"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
           >
             <path
-              d="M6.707 3.293a1 1 0 0 0-1.414 0l-4 4a1 1 0 0 0 0 1.414l4 4a1 1 0 1 0 1.414-1.414L5.414 9H13a1 1 0 1 0 0-2H5.414l1.293-1.293a1 1 0 0 0 0-1.414Z"
-              fill="currentColor"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M10 19l-7-7m0 0l7-7m-7 7h18"
             />
           </svg>
-          Volver al home
+          Volver al dashboard
         </Link>
       </div>
+
       {rows.length === 0 ? (
         <p className="text-grey/70">Aún no hay entradas. Crea la primera.</p>
       ) : (
-        <ul className=" flex flex-wrap gap-4">
+        <ul className="grid gap-4 md:grid-cols-2">
           {rows.map((row) => {
             const rowKey = row.es?.id ?? row.en?.id ?? "";
             return (
-              <li
+              <AdminBlogCard
                 key={rowKey}
-                className="py-3 px-4 rounded-[12px] border border-grey/10 bg-white hover:border-grey/20 transition-colors max-w-[500px]"
-              >
-                <div className="flex flex-col gap-3">
-                  <div className="flex flex-wrap items-baseline justify-between gap-2">
-                    <span className="font-medium text-grey truncate">
-                      {row.title || "(Sin título)"}
-                    </span>
-                    <span className="text-sm text-grey/60 shrink-0">
-                      {formatDate(row.date)}
-                    </span>
-                  </div>
-                  <div className="flex flex-wrap items-center gap-2">
-                    {/* ES */}
-                    {row.es ? (
-                      <span className="inline-flex items-center gap-2 rounded-full border border-grey/20 bg-grey/5 px-3 py-1.5 text-sm">
-                        <span className="font-medium text-grey">ES</span>
-                        {row.es.published ? (
-                          <span className="text-green-600 text-xs">
-                            Publicado
-                          </span>
-                        ) : (
-                          <span className="text-amber-600 text-xs">
-                            Borrador
-                          </span>
-                        )}
-                        <Link
-                          href={`/admin/blog/${row.es.id}/edit`}
-                          className="text-brown hover:underline font-medium text-sm"
-                        >
-                          Editar
-                        </Link>
-                        <Link
-                          href={`/es/blog/${row.es.slug}`}
-                          className="text-brown hover:underline font-medium text-sm"
-                        >
-                          Ver
-                        </Link>
-                      </span>
-                    ) : (
-                      <span className="inline-flex items-center gap-2 rounded-full border border-dashed border-grey/30 bg-white px-3 py-1.5 text-sm text-grey/70">
-                        <span className="font-medium">ES</span>
-                        <Link
-                          href={`/admin/blog/new?from=${row.en!.id}`}
-                          className="text-brown hover:underline font-medium text-sm"
-                        >
-                          Traducir al español
-                        </Link>
-                      </span>
-                    )}
-                    {/* EN */}
-                    {row.en ? (
-                      <span className="inline-flex items-center gap-2 rounded-full border border-grey/20 bg-grey/5 px-3 py-1.5 text-sm">
-                        <span className="font-medium text-grey">EN</span>
-                        {row.en.published ? (
-                          <span className="text-green-600 text-xs">
-                            Publicado
-                          </span>
-                        ) : (
-                          <span className="text-amber-600 text-xs">
-                            Borrador
-                          </span>
-                        )}
-                        <Link
-                          href={`/admin/blog/${row.en.id}/edit`}
-                          className="text-brown hover:underline font-medium text-sm"
-                        >
-                          Editar
-                        </Link>
-                        <Link
-                          href={`/en/blog/${row.en.slug}`}
-                          className="text-brown hover:underline font-medium text-sm"
-                        >
-                          Ver
-                        </Link>
-                      </span>
-                    ) : (
-                      <span className="inline-flex items-center gap-2 rounded-full border border-dashed border-grey/30 bg-white px-3 py-1.5 text-sm text-grey/70">
-                        <span className="font-medium">EN</span>
-                        <Link
-                          href={`/admin/blog/new?from=${row.es!.id}`}
-                          className="text-brown hover:underline font-medium text-sm"
-                        >
-                          Traducir al inglés
-                        </Link>
-                      </span>
-                    )}
-                  </div>
-                </div>
-              </li>
+                title={row.title || "(Sin título)"}
+                titleEn={row.en?.title || row.title || "—"}
+                date={formatDate(row.date)}
+                imageUrl={getRowImage(row)}
+                excerpt={getRowExcerpt(row)}
+                isPublished={Boolean(row.es?.published || row.en?.published)}
+                es={row.es ? { id: row.es.id, slug: row.es.slug } : null}
+                en={row.en ? { id: row.en.id, slug: row.en.slug } : null}
+                onDelete={deleteBlogArticle}
+              />
             );
           })}
         </ul>

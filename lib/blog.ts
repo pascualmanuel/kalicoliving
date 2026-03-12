@@ -93,6 +93,9 @@ export type AdminBlogPost = {
   published: boolean;
   created_at: string;
   translation_key: string | null;
+  list_image_url: string | null;
+  cover_url: string | null;
+  excerpt: string | null;
 };
 
 /**
@@ -104,7 +107,7 @@ export async function getAdminBlogPosts(
 ): Promise<AdminBlogPost[]> {
   const { data, error } = await supabaseClient
     .from("blog_posts")
-    .select("id, slug, title, locale, published, created_at, translation_key")
+    .select("id, slug, title, locale, published, created_at, translation_key, list_image_url, cover_url, excerpt")
     .order("created_at", { ascending: false });
 
   if (error) {
