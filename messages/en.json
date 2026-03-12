@@ -111,6 +111,11 @@
       "formPlaceholderLocation": "Address or area",
       "formPlaceholderProperty": "Description, features, etc.",
       "formSubmit": "Send",
+      "formSubmitting": "Sending…",
+      "formRequired": "Please fill in all fields.",
+      "formSuccessTitle": "Message sent",
+      "formSuccessMessage": "We've received your message. We'll get back to you soon.",
+      "formError": "Something went wrong while sending the form. Please try again.",
       "reviewsTitle": "Straight from our landlords",
       "reviews": {
         "quote1": "Whenever I have a question, they reply within minutes. That kind of responsiveness gives real peace of mind.",

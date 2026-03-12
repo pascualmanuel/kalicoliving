@@ -111,6 +111,11 @@
       "formPlaceholderLocation": "Dirección o zona",
       "formPlaceholderProperty": "Descripción, características, etc.",
       "formSubmit": "Enviar",
+      "formSubmitting": "Enviando…",
+      "formRequired": "Por favor, rellena todos los campos.",
+      "formSuccessTitle": "Mensaje enviado",
+      "formSuccessMessage": "Hemos recibido tu mensaje. Te contactaremos pronto.",
+      "formError": "Ha ocurrido un problema al enviar el formulario. Inténtalo de nuevo.",
       "reviewsTitle": "Qué dicen nuestros propietarios",
       "reviews": {
         "quote1": "Siempre que tengo una pregunta, responden en minutos. Ese nivel de respuesta da una verdadera tranquilidad.",
