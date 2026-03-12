@@ -57,25 +57,31 @@ export default function BlogPostList({ posts }: BlogPostListProps) {
 
   return (
     <>
-      <div className="flex flex-wrap md:justify-center justify-start gap-2 mb-10">
-        {CATEGORY_KEYS.map((key) => {
-          const isSelected = category === key;
-          return (
-            <button
-              key={key}
-              type="button"
-              onClick={() => setCategory(key)}
-              className={`px-3 py-1.5 sm:px-5 sm:py-2 rounded-full text-sm sm:text-base font-medium border transition-colors ${
-                isSelected
-                  ? "bg-red text-white font-semibold border-red hover:bg-red-hover"
-                  : "text-black border-[#d3d3d3] hover:border-gray-400"
-              }`}
-            >
-              {t(`categories.${key}`)}
-            </button>
-          );
-        })}
-      </div>
+      {posts.length > 1 ? (
+        <div className="flex flex-wrap md:justify-center justify-start gap-2 mb-10">
+          {CATEGORY_KEYS.map((key) => {
+            const isSelected = category === key;
+            return (
+              <button
+                key={key}
+                type="button"
+                onClick={() => setCategory(key)}
+                className={`px-3 py-1.5 sm:px-5 sm:py-2 rounded-full text-sm sm:text-base font-medium border transition-colors ${
+                  isSelected
+                    ? "bg-red text-white font-semibold border-red hover:bg-red-hover"
+                    : "text-black border-[#d3d3d3] hover:border-gray-400"
+                }`}
+              >
+                {t(`categories.${key}`)}
+              </button>
+            );
+          })}
+        </div>
+      ) : (
+        <p className="mb-10 text-red text-[45px] md:text-[80px]  recoleta font-bold text-center">
+          Coming soon.
+        </p>
+      )}
 
       <div className="flex flex-row flex-wrap gap-6 md:gap-2 items-start flex-start">
         {filteredPosts.map((post) => (
@@ -120,7 +126,7 @@ export default function BlogPostList({ posts }: BlogPostListProps) {
         ))}
       </div>
 
-      {filteredPosts.length === 0 && (
+      {filteredPosts.length === 0 && posts.length > 0 && (
         <p className="text-center text-gray-500 py-12">
           No posts in this category yet.
         </p>

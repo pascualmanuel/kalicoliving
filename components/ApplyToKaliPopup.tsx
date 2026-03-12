@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
 const STEPS = [1, 2, 3];
 const DURATION_KEYS = ["duration1", "duration2", "duration3", "duration4"];
@@ -20,7 +20,7 @@ const EXPECT_KEYS = [
   "expectCommunity",
   "expectRoomieFriendship",
   "expectPlans",
-  "expectCareerOpportunities",
+
   "expectTrips",
   "expectNetworking",
   "expectCleanSpaces",
@@ -48,13 +48,24 @@ export default function ApplyToKaliPopup({
   onClose: () => void;
 }) {
   const t = useTranslations("pages.applyPopup");
+  const locale = useLocale();
   const [step, setStep] = useState(1);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [moveDate, setMoveDate] = useState("");
   const [duration, setDuration] = useState<string | null>("duration4");
   const [aboutYourself, setAboutYourself] = useState("");
   const [workStyle, setWorkStyle] = useState<string | null>(null);
   const [expectFromKali, setExpectFromKali] = useState<string[]>([]);
   const [anythingElse, setAnythingElse] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
+  const [validationError, setValidationError] = useState<string | null>(null);
+  const [emptyStep1Fields, setEmptyStep1Fields] = useState<string[]>([]);
+  const [emptyStep2Fields, setEmptyStep2Fields] = useState<string[]>([]);
+  const [emptyStep3Fields, setEmptyStep3Fields] = useState<string[]>([]);
 
   const overlayTransition = {
     type: "tween",
@@ -88,21 +99,21 @@ export default function ApplyToKaliPopup({
             transition={cardTransition}
             onClick={(e) => e.stopPropagation()}
           >
-            {!isSubmitted && (
-              <div className="relative pt-8 pb-4 px-5 md:px-10">
-                <button
-                  type="button"
-                  onClick={onClose}
-                  className="absolute w-8 h-8 flex items-center justify-center rounded-full hover:bg-black/5 text-black top-[20px]  right-[20px] "
-                  aria-label={t("closeAriaLabel")}
-                >
-                  <Image
-                    src="/assets/icons/close.svg"
-                    alt=""
-                    width={17}
-                    height={17}
-                  />
-                </button>
+            <div className="relative pt-8 pb-4 px-5 md:px-10">
+              <button
+                type="button"
+                onClick={onClose}
+                className="absolute w-8 h-8 flex items-center justify-center rounded-full hover:bg-black/5 text-black top-[20px]  right-[20px] "
+                aria-label={t("closeAriaLabel")}
+              >
+                <Image
+                  src="/assets/icons/close.svg"
+                  alt=""
+                  width={17}
+                  height={17}
+                />
+              </button>
+              {!isSubmitted && (
                 <>
                   <h2 className="text-black text-2xl md:text-3xl font-bold text-center">
                     {t("title")}
@@ -147,8 +158,8 @@ export default function ApplyToKaliPopup({
                     })}
                   </div>
                 </>
-              </div>
-            )}
+              )}
+            </div>
 
             {/* Step content / Success - cuando enviado solo esto queda visible */}
             <div className="px-5 md:px-10 pb-8 min-w-0 overflow-hidden">
@@ -175,6 +186,21 @@ export default function ApplyToKaliPopup({
                     className="form-no-autofill-bg flex flex-col gap-6 min-w-0"
                     onSubmit={(e) => {
                       e.preventDefault();
+                      setSubmitError(null);
+                      setValidationError(null);
+                      const missing: string[] = [];
+                      if (!name.trim()) missing.push("name");
+                      if (!email.trim()) missing.push("email");
+                      if (!phone.trim()) missing.push("phone");
+                      if (!moveDate) missing.push("moveDate");
+                      if (!duration) missing.push("duration");
+
+                      if (missing.length > 0) {
+                        setEmptyStep1Fields(missing);
+                        setValidationError(t("requiredError"));
+                        return;
+                      }
+                      setEmptyStep1Fields([]);
                       setStep(2);
                     }}
                   >
@@ -188,7 +214,21 @@ export default function ApplyToKaliPopup({
                           name="name"
                           type="text"
                           placeholder={t("placeholderName")}
-                          className={inputClassName}
+                          className={`${inputClassName} ${
+                            emptyStep1Fields.includes("name")
+                              ? "border-[#9f2322] focus:border-[#9f2322]"
+                              : ""
+                          }`}
+                          value={name}
+                          onChange={(e) => {
+                            setName(e.target.value);
+                            if (validationError) setValidationError(null);
+                            if (e.target.value.trim()) {
+                              setEmptyStep1Fields((prev) =>
+                                prev.filter((f) => f !== "name"),
+                              );
+                            }
+                          }}
                         />
                       </div>
                       <div>
@@ -200,31 +240,87 @@ export default function ApplyToKaliPopup({
                           name="email"
                           type="email"
                           placeholder={t("placeholderEmail")}
-                          className={inputClassName}
+                          className={`${inputClassName} ${
+                            emptyStep1Fields.includes("email")
+                              ? "border-[#9f2322] focus:border-[#9f2322]"
+                              : ""
+                          }`}
+                          value={email}
+                          onChange={(e) => {
+                            setEmail(e.target.value);
+                            if (validationError) setValidationError(null);
+                            if (e.target.value.trim()) {
+                              setEmptyStep1Fields((prev) =>
+                                prev.filter((f) => f !== "email"),
+                              );
+                            }
+                          }}
                         />
                       </div>
                     </div>
 
-                    <div className="min-w-0">
-                      <label htmlFor="apply-date" className={labelClassName}>
-                        {t("labelMoveDate")}
-                      </label>
-                      <div className="relative min-w-0">
-                        <span className="absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none flex items-center">
-                          <Image
-                            src="/assets/icons/date-icon.svg"
-                            alt=""
-                            width={18}
-                            height={18}
-                          />
-                        </span>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div>
+                        <label htmlFor="apply-phone" className={labelClassName}>
+                          {t("labelPhone")}
+                        </label>
                         <input
-                          id="apply-date"
-                          name="moveDate"
-                          type="date"
-                          placeholder={t("placeholderDate")}
-                          className={`${dateInputClassName} pl-12 min-w-0 max-w-full`}
+                          id="apply-phone"
+                          name="phone"
+                          type="tel"
+                          placeholder={t("placeholderPhone")}
+                          className={`${inputClassName} ${
+                            emptyStep1Fields.includes("phone")
+                              ? "border-[#9f2322] focus:border-[#9f2322]"
+                              : ""
+                          }`}
+                          value={phone}
+                          onChange={(e) => {
+                            setPhone(e.target.value);
+                            if (validationError) setValidationError(null);
+                            if (e.target.value.trim()) {
+                              setEmptyStep1Fields((prev) =>
+                                prev.filter((f) => f !== "phone"),
+                              );
+                            }
+                          }}
                         />
+                      </div>
+                      <div className="min-w-0">
+                        <label htmlFor="apply-date" className={labelClassName}>
+                          {t("labelMoveDate")}
+                        </label>
+                        <div className="relative min-w-0">
+                          <span className="absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none flex items-center">
+                            <Image
+                              src="/assets/icons/date-icon.svg"
+                              alt=""
+                              width={18}
+                              height={18}
+                            />
+                          </span>
+                          <input
+                            id="apply-date"
+                            name="moveDate"
+                            type="date"
+                            placeholder={t("placeholderDate")}
+                            className={`${dateInputClassName} pl-12 min-w-0 max-w-full ${
+                              emptyStep1Fields.includes("moveDate")
+                                ? "border-[#9f2322] focus:border-[#9f2322]"
+                                : ""
+                            }`}
+                            value={moveDate}
+                            onChange={(e) => {
+                              setMoveDate(e.target.value);
+                              if (validationError) setValidationError(null);
+                              if (e.target.value) {
+                                setEmptyStep1Fields((prev) =>
+                                  prev.filter((f) => f !== "moveDate"),
+                                );
+                              }
+                            }}
+                          />
+                        </div>
                       </div>
                     </div>
 
@@ -241,7 +337,11 @@ export default function ApplyToKaliPopup({
                             className={`px-5 py-2.5  rounded-full text-base font-medium border transition-colors ${
                               duration === key
                                 ? "bg-red text-white font-semibold border-red"
-                                : " text-black border-[#d3d3d3] hover:border-gray-400"
+                                : ` text-black border-[#d3d3d3] hover:border-gray-400 ${
+                                    emptyStep1Fields.includes("duration")
+                                      ? "border-[#9f2322]"
+                                      : ""
+                                  }`
                             }`}
                           >
                             {t(key)}
@@ -258,15 +358,33 @@ export default function ApplyToKaliPopup({
                         {t("next")}
                       </button>
                     </div>
+
+                    {validationError && (
+                      <p className="mt-3 text-sm text-center text-red-700">
+                        {validationError}
+                      </p>
+                    )}
                   </form>
                 )
               )}
 
-              {step === 2 && (
+              {!isSubmitted && step === 2 && (
                 <form
                   className="form-no-autofill-bg flex flex-col gap-1"
                   onSubmit={(e) => {
                     e.preventDefault();
+                    setSubmitError(null);
+                    setValidationError(null);
+                    const missing: string[] = [];
+                    if (!aboutYourself.trim()) missing.push("about");
+                    if (!workStyle) missing.push("workStyle");
+
+                    if (missing.length > 0) {
+                      setEmptyStep2Fields(missing);
+                      setValidationError(t("requiredError"));
+                      return;
+                    }
+                    setEmptyStep2Fields([]);
                     setStep(3);
                   }}
                 >
@@ -279,9 +397,21 @@ export default function ApplyToKaliPopup({
                       name="about"
                       maxLength={ABOUT_MAX_LENGTH}
                       placeholder={t("placeholderAbout")}
-                      className={textareaClassName}
+                      className={`${textareaClassName} ${
+                        emptyStep2Fields.includes("about")
+                          ? "border-[#9f2322] focus:border-[#9f2322]"
+                          : ""
+                      }`}
                       value={aboutYourself}
-                      onChange={(e) => setAboutYourself(e.target.value)}
+                      onChange={(e) => {
+                        setAboutYourself(e.target.value);
+                        if (validationError) setValidationError(null);
+                        if (e.target.value.trim()) {
+                          setEmptyStep2Fields((prev) =>
+                            prev.filter((f) => f !== "about"),
+                          );
+                        }
+                      }}
                     />
                     <p className="mt-1 text-right text-sm text-black">
                       {aboutYourself.length}/{ABOUT_MAX_LENGTH}
@@ -290,7 +420,7 @@ export default function ApplyToKaliPopup({
 
                   <div>
                     <label className={labelClassName}>{t("labelWork")}</label>
-                    <div className="flex flex-wrap gap-3">
+                    <div className="flex flex-wrap gap-[13px]">
                       {WORK_KEYS.map((key) => (
                         <button
                           key={key}
@@ -299,7 +429,11 @@ export default function ApplyToKaliPopup({
                           className={`px-5 py-2.5 rounded-full text-base font-medium border transition-colors ${
                             workStyle === key
                               ? "bg-red text-white font-semibold border-red"
-                              : "text-black border-[#d3d3d3] hover:border-gray-400"
+                              : `text-black border-[#d3d3d3] hover:border-gray-400 ${
+                                  emptyStep2Fields.includes("workStyle")
+                                    ? "border-[#9f2322]"
+                                    : ""
+                                }`
                           }`}
                         >
                           {t(key)}
@@ -323,16 +457,67 @@ export default function ApplyToKaliPopup({
                       {t("next")}
                     </button>
                   </div>
+
+                  {validationError && (
+                    <p className="mt-3 text-sm text-center text-red-700">
+                      {validationError}
+                    </p>
+                  )}
                 </form>
               )}
 
-              {step === 3 && (
+              {!isSubmitted && step === 3 && (
                 <form
                   className="form-no-autofill-bg flex flex-col gap-6"
-                  onSubmit={(e) => {
+                  onSubmit={async (e) => {
                     e.preventDefault();
-                    // TODO: submit application (e.g. API call)
-                    setIsSubmitted(true);
+                    setSubmitError(null);
+                    setValidationError(null);
+
+                    if (!expectFromKali.length) {
+                      setEmptyStep3Fields(["expect"]);
+                      setValidationError(t("requiredError"));
+                      return;
+                    }
+                    setEmptyStep3Fields([]);
+
+                    try {
+                      setIsSubmitting(true);
+
+                      const expectLabels = expectFromKali.map((key) => t(key));
+                      const durationLabel = duration ? t(duration) : null;
+                      const workStyleLabel = workStyle ? t(workStyle) : null;
+
+                      const res = await fetch("/api/apply", {
+                        method: "POST",
+                        headers: {
+                          "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({
+                          name: name.trim(),
+                          email: email.trim(),
+                          phone: phone.trim() || null,
+                          moveDate: moveDate || null,
+                          durationLabel,
+                          aboutYourself: aboutYourself.trim() || null,
+                          workStyleLabel,
+                          expectFromKaliLabels: expectLabels,
+                          anythingElse: anythingElse.trim() || null,
+                          locale,
+                        }),
+                      });
+
+                      if (!res.ok) {
+                        throw new Error("Request failed");
+                      }
+
+                      setIsSubmitted(true);
+                    } catch (error) {
+                      console.error("Apply to Kali submit error:", error);
+                      setSubmitError(t("submitError"));
+                    } finally {
+                      setIsSubmitting(false);
+                    }
                   }}
                 >
                   <div>
@@ -354,7 +539,11 @@ export default function ApplyToKaliPopup({
                             className={`px-5 py-2.5 rounded-full text-base font-medium border transition-colors ${
                               isSelected
                                 ? "bg-red text-white font-semibold border-red"
-                                : "text-black border-[#d3d3d3] hover:border-gray-400"
+                                : `text-black border-[#d3d3d3] hover:border-gray-400 ${
+                                    emptyStep3Fields.includes("expect")
+                                      ? "border-[#9f2322]"
+                                      : ""
+                                  }`
                             }`}
                           >
                             {t(key)}
@@ -365,7 +554,9 @@ export default function ApplyToKaliPopup({
                   </div>
 
                   <div>
-                    <label className={labelClassName}>{t("labelAnything")}</label>
+                    <label className={labelClassName}>
+                      {t("labelAnything")}
+                    </label>
                     <textarea
                       className={textareaClassName}
                       placeholder={t("placeholderAnything")}
@@ -385,11 +576,31 @@ export default function ApplyToKaliPopup({
                     </button>
                     <button
                       type="submit"
+                      disabled={isSubmitting}
                       className="flex items-center gap-2 px-6 py-3 rounded-xl bg-red text-white font-semibold hover:bg-red-hover transition-colors"
                     >
-                      {t("submit")}
+                      {isSubmitting ? (
+                        <>
+                          <span className="h-4 w-4 border-2 border-white/60 border-t-transparent rounded-full animate-spin" />
+                          <span>{t("submitLoading")}</span>
+                        </>
+                      ) : (
+                        t("submit")
+                      )}
                     </button>
                   </div>
+
+                  {validationError && (
+                    <p className="mt-3 text-sm text-center text-red-700">
+                      {validationError}
+                    </p>
+                  )}
+
+                  {submitError && (
+                    <p className="mt-3 text-sm text-center text-red-700">
+                      {submitError}
+                    </p>
+                  )}
                 </form>
               )}
             </div>
