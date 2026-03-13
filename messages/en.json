@@ -109,7 +109,7 @@
       "formPlaceholderEmail": "you@email.com",
       "formPlaceholderPhone": "+34 600 000 000",
       "formPlaceholderLocation": "Address or area",
-      "formPlaceholderProperty": "Description, features, etc.",
+      "formPlaceholderProperty": "Enter the size (m²), bedrooms, bathrooms and any relevant details so we can fully understand your property.",
       "formSubmit": "Send",
       "formSubmitting": "Sending…",
       "formRequired": "Please fill in all fields.",
