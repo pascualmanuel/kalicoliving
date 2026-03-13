@@ -97,7 +97,7 @@ export default function BlogPostList({ posts }: BlogPostListProps) {
                 <div className="relative w-full aspect-[4/3] max-h-[315px] overflow-hidden rounded-[20px] bg-gray-100">
                   <Image
                     src={post.image}
-                    alt=""
+                    alt={post.title}
                     fill
                     className="object-cover group-hover:scale-105 transition-transform duration-300"
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"

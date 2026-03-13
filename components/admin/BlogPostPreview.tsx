@@ -83,7 +83,7 @@ export default function BlogPostPreview({
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={imageUrl}
-                alt=""
+                alt={displayTitle}
                 className="w-full h-full object-cover"
               />
             </div>

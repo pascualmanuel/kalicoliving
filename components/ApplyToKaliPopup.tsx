@@ -167,7 +167,7 @@ export default function ApplyToKaliPopup({
                 <div className="flex flex-col gap-7 items-center text-center py-12">
                   <Image
                     src="/assets/icons/send.svg"
-                    alt=""
+                    alt="Application sent successfully"
                     width={64}
                     height={64}
                   />

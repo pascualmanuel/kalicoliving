@@ -6,7 +6,8 @@ import { Link, usePathname } from "@/i18n/routing";
 import { useApplyPopup } from "@/context/ApplyPopupContext";
 import redDviderSvg2 from "../public/assets/icons/red-divider-2.svg";
 import logoSvg from "../public/assets/logos/logo.svg";
-
+import linkedinIcon from "../public/assets/icons/linkedin-icon.svg";
+import instagramIcon from "../public/assets/icons/instagram-icon.svg";
 export default function Footer() {
   const t = useTranslations("footer");
   const pathname = usePathname();
@@ -17,7 +18,7 @@ export default function Footer() {
     <>
       <Image
         src={redDviderSvg2}
-        alt="divider"
+        alt=""
         width={1512}
         height={193}
         className="w-full   mx-auto"
@@ -39,9 +40,40 @@ export default function Footer() {
         )}
         <footer className="w-full py-[52px] px-[44px] rounded-[20px] bg-[#651514]">
           {/* Top Section - Logo and Links */}
-          <div className="flex flex-col md:flex-row justify-between border-b border-[#fff2e21c] pb-10 md:items-center gap-6 md:gap-0">
+          <div className="flex flex-col md:flex-row justify-between pb-10 md:items-center gap-6 md:gap-0">
             <div>
               <Image src={logoSvg} alt="logo" width={156} height={100} />
+            </div>
+            <div className="flex gap-4">
+              <Link
+                target="_blank"
+                href="https://www.linkedin.com/company/kali-co-living"
+                className="transition-transform duration-200 hover:scale-110"
+              >
+                <Image
+                  src={linkedinIcon}
+                  alt="linkedin"
+                  width={24}
+                  height={24}
+                />
+              </Link>
+              <Link
+                target="_blank"
+                href="https://www.instagram.com/kali_coliving/"
+                className="transition-transform duration-200 hover:scale-110"
+              >
+                <Image
+                  src={instagramIcon}
+                  alt="instagram"
+                  width={24}
+                  height={24}
+                />
+              </Link>
+            </div>
+          </div>
+          <div className="flex flex-col md:flex-row justify-between border-b border-[#fff2e21c] pb-10 md:items-center gap-6 md:gap-0">
+            <div>
+              {/* <Image src={logoSvg} alt="logo" width={156} height={100} /> */}
             </div>
             <div className="flex flex-col md:flex-row gap-4 md:gap-10">
               <Link

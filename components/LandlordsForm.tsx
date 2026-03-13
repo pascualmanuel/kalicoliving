@@ -85,7 +85,7 @@ const LandlordsForm = () => {
         <div className="mt-4 flex flex-col items-center text-center gap-4 py-10">
           <Image
             src="/assets/icons/send.svg"
-            alt=""
+            alt="Form submitted successfully"
             width={64}
             height={64}
           />

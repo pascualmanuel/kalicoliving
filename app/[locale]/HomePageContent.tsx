@@ -27,7 +27,10 @@ export default function HomePageContent() {
     const text = t("title");
     const commaIndex = text.indexOf(",");
     if (commaIndex !== -1) {
-      return [text.slice(0, commaIndex + 1).trim(), text.slice(commaIndex + 1).trim()];
+      return [
+        text.slice(0, commaIndex + 1).trim(),
+        text.slice(commaIndex + 1).trim(),
+      ];
     }
     // Fallback si no hay coma: primera palabra / resto
     const firstSpace = text.indexOf(" ");
@@ -91,7 +94,7 @@ export default function HomePageContent() {
       <div className="relative h-screen min-h-[670px] md:min-h-[930px]  overflow-hidden flex flex-col items-center justify-center">
         <Image
           src={homeImage}
-          alt="Home background"
+          alt="Kali Coliving coliving spaces in Madrid"
           fill
           priority
           className="object-cover  object-[37%]  md:scale-[1.222] md:origin-top-left md:object-[-65px_-140px]"
@@ -105,13 +108,21 @@ export default function HomePageContent() {
             initial="hidden"
             animate="visible"
           >
-            <h1 className="text-[18px] text-white text-center tracking-[-3%] px-4">
+            <p
+              aria-label="Coliving en España"
+              className="text-[18px] text-white text-center tracking-[-3%] px-4"
+            >
               {t("colivingSpaces")}
-            </h1>
+            </p>
           </motion.div>
         </div>
-
-        <motion.h1
+        {/* Hero title */}
+        {locale === "en" ? (
+          <h1 className="sr-only">Live together, grow forever.</h1>
+        ) : (
+          <h1 className="sr-only">Vive en comunidad, crece sin límites</h1>
+        )}
+        <motion.h4
           className="relative z-10 text-[50px]  md:text-[100px] text-white leading-[111%]  md:leading-[111px] tracking-[-4%] font-bold 
           text-center md:max-w-[585px] max-w-[340px] overflow-hidden"
         >
@@ -128,11 +139,11 @@ export default function HomePageContent() {
               </span>
             ))}
           </motion.div>
-        </motion.h1>
+        </motion.h4>
 
         <Image
           src={dividerSvg}
-          alt="divider"
+          alt=""
           width={1512}
           height={193}
           className="absolute bottom-0 left-0 w-full pointer-events-none"
@@ -186,7 +197,7 @@ export default function HomePageContent() {
           <div className="w-full max-h-[360px] md:max-w-[310px] aspect-square rounded-xl overflow-hidden">
             <Image
               src={homeCard2}
-              alt="Card 2"
+              alt="Thoughtfully designed spaces at Kali Coliving"
               width={310}
               height={310}
               className="w-full h-full object-cover"
@@ -210,7 +221,7 @@ export default function HomePageContent() {
           <div className="w-full max-h-[360px] md:max-w-[310px] aspect-square rounded-xl overflow-hidden">
             <Image
               src={homeCard3}
-              alt="Card 3"
+              alt="Shared moments at Kali Coliving"
               width={310}
               height={310}
               className="w-full h-full object-cover"
@@ -232,7 +243,7 @@ export default function HomePageContent() {
           <div className="relative w-full max-h-[360px] md:max-w-[310px] aspect-square rounded-xl overflow-hidden">
             <Image
               src={homeCard4}
-              alt="Card 4"
+              alt="Growth and connections at Kali Coliving"
               width={310}
               height={310}
               className="w-full h-full object-cover"
@@ -284,7 +295,10 @@ export default function HomePageContent() {
                   <p className="text-white lg:my-2 my-5 text-[20px] leading-[130%]">
                     {t("videoDescription")}
                   </p>
-                  <a href={`/${locale}/community`} className="group block w-fit">
+                  <a
+                    href={`/${locale}/community`}
+                    className="group block w-fit"
+                  >
                     <div className="lg:w-[250px] bg-white rounded-[12px] semi-bold text-center font-semibold text-lg px-4 py-2 text-black my-4 group-hover:bg-white-hover transition-colors">
                       {t("videoCta")}
                     </div>
@@ -302,7 +316,7 @@ export default function HomePageContent() {
 
       <Image
         src={brownDividerSvg}
-        alt="divider"
+        alt=""
         width={1512}
         height={193}
         className="w-full md:mt-[200px] mt-[100px]  mx-auto"

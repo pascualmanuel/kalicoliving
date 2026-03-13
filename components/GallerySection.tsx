@@ -74,7 +74,7 @@ const GallerySection = () => {
                 <div className="relative max-w-[525px] max-h-[718px] sm:w-[525px] sm:h-[718px] w-[300px] h-[400px] rounded-[20px] overflow-hidden border border-[#0000001A]">
                     <Image
                         src={galleryImages[currentImageIndex]}
-                        alt="Gallery"
+                        alt="Kali Coliving community gallery"
                         fill
                         className="object-cover"
                     />
