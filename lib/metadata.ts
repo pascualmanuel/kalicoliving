@@ -1,14 +1,22 @@
 /** Set NEXT_PUBLIC_BASE_URL in Vercel (e.g. https://www.kalicolivings.com) for OG and canonical URLs. */
 export const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL ?? "";
 
-export type PageKey = "home" | "community" | "blog" | "landlords";
+export type PageKey =
+  | "home"
+  | "community"
+  | "blog"
+  | "landlords"
+  | "cookies"
+  | "privacy";
 
-/** OG image filenames in public/assets/og (es: *-es.png, en: *-og.png). Community uses comuniad-og.png (existing filename). */
+/** OG image filenames in public/assets/og (es: *-es.png, en: *-og.png). Community uses comuniad-og.png (existing filename). Legal pages use home as default. */
 const OG_IMAGE_MAP: Record<PageKey, { en: string; es: string }> = {
   home: { en: "home-og.png", es: "home-es.png" },
   community: { en: "comuniad-og.png", es: "comunidad-es.png" },
   blog: { en: "blog-og.png", es: "blog-es.png" },
   landlords: { en: "landlords-og.png", es: "landlords-es.png" },
+  cookies: { en: "home-og.png", es: "home-es.png" },
+  privacy: { en: "home-og.png", es: "home-es.png" },
 };
 
 export function getOgImageUrl(page: PageKey, locale: "en" | "es"): string {
@@ -33,6 +41,14 @@ const META_DESCRIPTIONS: Record<PageKey, { en: string; es: string }> = {
   landlords: {
     en: "Rent your property to Kali and get paid every month, guaranteed. Long-term contracts, full management and zero hassle from day one.",
     es: "Alquila tu propiedad a Kali y cobra cada mes sin preocupaciones. Contratos a largo plazo, pago garantizado y gestión integral de principio a fin.",
+  },
+  cookies: {
+    en: "Learn how Kali Coliving uses cookies to improve your experience. Manage your preferences and find out what data we collect.",
+    es: "Descubre cómo Kali Coliving utiliza cookies para mejorar tu experiencia. Gestiona tus preferencias y conoce qué datos recogemos.",
+  },
+  privacy: {
+    en: "Read Kali Coliving's Privacy Policy. Learn how we collect, use and protect your personal data in compliance with GDPR.",
+    es: "Lee la Política de Privacidad de Kali Coliving. Descubre cómo recogemos, usamos y protegemos tus datos personales según el RGPD.",
   },
 };
 
@@ -106,6 +122,14 @@ const PAGE_TITLES: Record<PageKey, { en: string; es: string }> = {
   landlords: {
     en: "Landlords – Kali Coliving",
     es: "Propietarios – Kali Coliving",
+  },
+  cookies: {
+    en: "Cookie Policy – Kali Coliving",
+    es: "Política de Cookies – Kali Coliving",
+  },
+  privacy: {
+    en: "Privacy Policy – Kali Coliving",
+    es: "Política de Privacidad – Kali Coliving",
   },
 };
 

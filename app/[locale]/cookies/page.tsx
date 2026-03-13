@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/routing";
+import { BASE_URL, getMetaDescription, getOgImageUrl } from "@/lib/metadata";
 import Footer from "@/components/Footer";
 
 export async function generateMetadata({
@@ -9,11 +10,38 @@ export async function generateMetadata({
   params: { locale: string };
 }): Promise<Metadata> {
   const { locale } = params;
+  const lang = locale as "en" | "es";
   const t = await getTranslations({ locale, namespace: "pages.cookies" });
   const title = `${t("title")} – Kali Coliving`;
+  const description = getMetaDescription("cookies", lang);
+  const canonical = `${BASE_URL}/${locale}/cookies`;
+  const ogImage = getOgImageUrl("cookies", lang);
 
   return {
     title,
+    description,
+    alternates: {
+      canonical,
+      languages: {
+        es: `${BASE_URL}/es/cookies`,
+        en: `${BASE_URL}/en/cookies`,
+      },
+    },
+    openGraph: {
+      type: "website",
+      locale: lang === "es" ? "es_ES" : "en_US",
+      url: canonical,
+      siteName: "Kali Coliving",
+      title,
+      description,
+      images: [{ url: ogImage, width: 1200, height: 630, alt: title }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [ogImage],
+    },
   };
 }
 
@@ -61,7 +89,7 @@ const content = {
         {
           title: "Cookies publicitarias o de marketing",
           items: [
-            "Permiten mostrar anuncios relevantes en plataformas como Google o Meta (Facebook/Instagram) y medir la eficacia de las campañas. Solo se utilizan con tu consentimiento.",
+            "Permiten mostrar anuncios relevantes y medir la eficacia de campañas. Solo se utilizarían con tu consentimiento. En la actualidad no utilizamos cookies publicitarias en este sitio.",
           ],
         },
       ],
@@ -86,20 +114,6 @@ const content = {
             { name: "_gid", purpose: "Distinguir usuarios.", duration: "24 horas", type: "Terceros (Google LLC)" },
           ],
         },
-        {
-          name: "Cookies publicitarias (Meta Pixel)",
-          cookies: [
-            { name: "_fbp", purpose: "Publicidad y medición en Facebook/Instagram.", duration: "3 meses", type: "Terceros (Meta Platforms)" },
-            { name: "_fbc", purpose: "Atribución de conversiones desde anuncios de Facebook.", duration: "3 meses", type: "Terceros (Meta Platforms)" },
-          ],
-        },
-        {
-          name: "Cookies publicitarias (Google Ads)",
-          cookies: [
-            { name: "_gcl_au", purpose: "Almacenar información de campañas de Google Ads.", duration: "3 meses", type: "Terceros (Google LLC)" },
-            { name: "IDE", purpose: "Mostrar anuncios y medir rendimiento en la Red de Display de Google.", duration: "13 meses", type: "Terceros (Google LLC)" },
-          ],
-        },
       ],
       outro:
         "Los datos obtenidos mediante estas cookies pueden compartirse con los proveedores indicados según sus propias políticas. Para más detalle sobre el tratamiento de datos personales, consulta nuestra Política de Privacidad.",
@@ -114,27 +128,12 @@ const content = {
           desc: "Análisis de tráfico y comportamiento en el sitio. Más información en policies.google.com/privacy.",
           url: "https://policies.google.com/privacy",
         },
-        {
-          name: "Meta Pixel (Meta Platforms Ireland Ltd.)",
-          desc: "Seguimiento de conversiones y publicidad en Facebook e Instagram. Más información en es-es.facebook.com/privacy/policy.",
-          url: "https://es-es.facebook.com/privacy/policy",
-        },
-        {
-          name: "Google Ads (Google LLC)",
-          desc: "Gestión y seguimiento de campañas publicitarias. Más información en policies.google.com/privacy.",
-          url: "https://policies.google.com/privacy",
-        },
-        {
-          name: "HubSpot / Mailchimp",
-          desc: "Gestión de contactos y comunicaciones (formularios, newsletters). Consulta la política de privacidad del proveedor correspondiente.",
-          url: null,
-        },
       ],
     },
     {
       title: "Consentimiento y gestión de cookies",
       paragraphs: [
-        "Las cookies no esenciales (analíticas y publicitarias) solo se instalan con tu consentimiento. En la actualidad no disponemos de un banner de cookies en el sitio; mientras tanto, puedes gestionar o revocar el consentimiento mediante la configuración de tu navegador.",
+        "Las cookies no esenciales (analíticas) solo se instalan con tu consentimiento. En la actualidad no disponemos de un banner de cookies en el sitio; mientras tanto, puedes gestionar o revocar el consentimiento mediante la configuración de tu navegador.",
         "Puedes permitir, bloquear o eliminar las cookies desde las opciones de privacidad o seguridad de tu navegador. Cada navegador tiene instrucciones propias (Chrome, Firefox, Safari, Edge, etc.). Si bloqueas las cookies, es posible que algunas partes del sitio no funcionen correctamente.",
         "Para más información sobre cómo gestionar cookies en tu navegador, puedes visitar aboutcookies.org o la sección de ayuda de tu navegador.",
       ],

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/routing";
+import { BASE_URL, getMetaDescription, getOgImageUrl } from "@/lib/metadata";
 import Footer from "@/components/Footer";
 
 export async function generateMetadata({
@@ -9,11 +10,38 @@ export async function generateMetadata({
   params: { locale: string };
 }): Promise<Metadata> {
   const { locale } = params;
+  const lang = locale as "en" | "es";
   const t = await getTranslations({ locale, namespace: "pages.privacyPolicy" });
   const title = `${t("title")} – Kali Coliving`;
+  const description = getMetaDescription("privacy", lang);
+  const canonical = `${BASE_URL}/${locale}/privacy-policy`;
+  const ogImage = getOgImageUrl("privacy", lang);
 
   return {
     title,
+    description,
+    alternates: {
+      canonical,
+      languages: {
+        es: `${BASE_URL}/es/privacy-policy`,
+        en: `${BASE_URL}/en/privacy-policy`,
+      },
+    },
+    openGraph: {
+      type: "website",
+      locale: lang === "es" ? "es_ES" : "en_US",
+      url: canonical,
+      siteName: "Kali Coliving",
+      title,
+      description,
+      images: [{ url: ogImage, width: 1200, height: 630, alt: title }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [ogImage],
+    },
   };
 }
 

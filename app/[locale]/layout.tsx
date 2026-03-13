@@ -3,6 +3,7 @@ import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { routing } from '@/i18n/routing';
+import SetHtmlLang from '@/components/SetHtmlLang';
 import Navigation from '@/components/Navigation';
 import CookieBanner from '@/components/CookieBanner';
 import { ApplyPopupProvider } from '@/context/ApplyPopupContext';
@@ -32,6 +33,7 @@ export default async function LocaleLayout({
 
   return (
     <NextIntlClientProvider messages={messages}>
+      <SetHtmlLang locale={locale} />
       <ApplyPopupProvider>
         <BlogAlternateLocaleProvider>
           <Navigation />
