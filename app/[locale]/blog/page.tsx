@@ -10,6 +10,7 @@ import {
   getMetaDescription,
   getPageTitle,
 } from "@/lib/metadata";
+import JsonLd from "@/components/seo/JsonLd";
 
 type Locale = "en" | "es";
 
@@ -66,8 +67,29 @@ export default async function BlogPage({ params }: BlogPageProps) {
   } = await supabase.auth.getUser();
   const posts = await getBlogPosts(locale);
 
+  const blogSchema = {
+    "@context": "https://schema.org",
+    "@type": "Blog",
+    name: "Kali Blog",
+    url: BASE_URL ? `${BASE_URL}/${locale}/blog` : undefined,
+    description: getMetaDescription("blog", locale as Locale),
+  };
+
+  const itemListSchema = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    itemListElement: posts.map((post, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      url: BASE_URL ? `${BASE_URL}/${locale}/blog/${post.slug}` : undefined,
+      name: post.title,
+    })),
+  };
+
   return (
     <main className="px-4 py-10 md:py-16 md:px-20 mx-auto mt-[100px]">
+      <JsonLd data={blogSchema} />
+      <JsonLd data={itemListSchema} />
       {!user && (
         <div className="flex flex-col md:flex-row md:items-center md:justify-center gap-4 mb-8 md:mb-16">
           <h1 className="md:text-center text-left text-[45px] md:text-[80px] font-bold">

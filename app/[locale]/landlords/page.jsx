@@ -1,5 +1,7 @@
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 import Image from 'next/image';
+import { BASE_URL, getMetaDescription } from '@/lib/metadata';
+import JsonLd from '@/components/seo/JsonLd';
 import dividerNotFilledSvg from '../../../public/assets/icons/divider-not-filled-2.svg';
 import dividerSvg from '../../../public/assets/icons/divider-not-filled.svg';
 import LandlordsCarousel from '../../../components/LandlordsCarousel';
@@ -15,16 +17,33 @@ import LandlordsForm from '../../../components/LandlordsForm.tsx';
 import Footer from '../../../components/Footer';
 export default function LandlordsPage() {
   const t = useTranslations('pages.landlords');
+  const locale = useLocale();
+
+  const realEstateAgentSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'RealEstateAgent',
+    name: 'Kali Coliving',
+    url: BASE_URL || undefined,
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: 'Calle Espronceda 121 G',
+      addressLocality: 'Madrid',
+      addressCountry: 'ES',
+    },
+    areaServed: ['Madrid', 'Barcelona'],
+    description: getMetaDescription('landlords', locale),
+  };
 
   return (
     <>
+      <JsonLd data={realEstateAgentSchema} />
       <main>
         <div className="relative h-[740px]  sm:h-screen min-h-[670px] bg-red md:min-h-[780px] overflow-hidden flex flex-col items-center justify-center">
 
 
           <Image
             src={landlordsHeroImage}
-            alt="Home background"
+            alt="Kali Coliving property management"
             fill
             priority
             className="object-cover object-top brightness-[0.7] z-0"
@@ -39,7 +58,7 @@ export default function LandlordsPage() {
           </div>
           <Image
             src={dividerNotFilledSvg}
-            alt="divider"
+            alt=""
             width={1512}
             height={193}
             className="absolute bottom-0 left-1/2 w-[130vw] max-w-none -translate-x-1/2 pointer-events-none rotate-180"
@@ -69,7 +88,7 @@ export default function LandlordsPage() {
             <div className='sticky top-10 w-full h-[100vh] min-h-[400px] sm:min-h-[700px] rounded-t-[16px] overflow-hidden bg-pink z-0 rounded-[20px]'>
               <Image
                 src={groupImage2}
-                alt="group"
+                alt="Kali Coliving property management"
                 width={1392}
                 height={657}
                 className='w-full h-full object-cover  object-top'
@@ -101,7 +120,7 @@ export default function LandlordsPage() {
 
               {/* Fondo sólido + contenido */}
               <div className="bg-[#eb9a89] w-full flex flex-col items-center gap-6 pb-10 pt-4  relative rounded-b-[20px] mt-[-90px]">
-                <Image src={PinkDividerSvg} alt="divider" width={1512} height={193} className="mx-auto absolute top-[-20%] left-0 block sm:hidden pointer-events-none" />
+                <Image src={PinkDividerSvg} alt="" width={1512} height={193} className="mx-auto absolute top-[-20%] left-0 block sm:hidden pointer-events-none" />
                 <h3 className='title text-[45px] font-semibold text-center text-white px-5 sm:px-0 sm:max-w-[505px] mx-auto z-10'>
                   {t('managedTitle')}
                 </h3>
@@ -123,7 +142,7 @@ export default function LandlordsPage() {
           </h2>
           <LandlordsCarousel />
         </div>
-        <Image src={brownDividerSvg} alt="divider" width={1512} height={193} className="w-full sm:mt-[200px] mt-0  mx-auto" />
+        <Image src={brownDividerSvg} alt="" width={1512} height={193} className="w-full sm:mt-[200px] mt-0  mx-auto" />
 
 
         <div className='w-full md:px-20 px-4 bg-brown  md:mt-[-11%]'>

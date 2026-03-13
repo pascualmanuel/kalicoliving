@@ -5,6 +5,7 @@ import {
   getMetaDescription,
   getPageTitle,
 } from "@/lib/metadata";
+import JsonLd from "@/components/seo/JsonLd";
 import HomePageContent from "./HomePageContent";
 
 type Locale = "en" | "es";
@@ -50,5 +51,26 @@ export async function generateMetadata({
 }
 
 export default function HomePage() {
-  return <HomePageContent />;
+  const organizationSchema = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: "Kali Coliving",
+    url: BASE_URL || undefined,
+    // sameAs: add Instagram, LinkedIn etc. when URLs are available
+  };
+
+  const websiteSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: "Kali Coliving",
+    url: BASE_URL || undefined,
+  };
+
+  return (
+    <>
+      <JsonLd data={organizationSchema} />
+      <JsonLd data={websiteSchema} />
+      <HomePageContent />
+    </>
+  );
 }

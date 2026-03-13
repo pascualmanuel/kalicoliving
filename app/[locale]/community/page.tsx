@@ -1,7 +1,9 @@
 "use client";
 
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import Image from "next/image";
+import { BASE_URL, getMetaDescription } from "@/lib/metadata";
+import JsonLd from "@/components/seo/JsonLd";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
 import People from "../../../public/assets/images/community/person1.jpg";
@@ -26,6 +28,7 @@ type TitleLine = { text: string; startWordIndex: number; endWordIndex: number };
 
 export default function CommunityPage() {
   const t = useTranslations("pages.community");
+  const locale = useLocale();
   const galleryRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const [titleLines, setTitleLines] = useState<TitleLine[]>([]);
@@ -350,8 +353,17 @@ export default function CommunityPage() {
     ? peoplePositionsMobile
     : peoplePositionsDesktop;
 
+  const communitySchema = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: "Kali Coliving",
+    url: BASE_URL || undefined,
+    description: getMetaDescription("community", locale as "en" | "es"),
+  };
+
   return (
     <>
+      <JsonLd data={communitySchema} />
       <main>
         <div className="relative h-[740px] sm:h-[calc(100vh+200px)] min-h-[670px] bg-red md:min-h-[900px] overflow-hidden flex flex-col items-center justify-center">
           {/* Isologos rotados 180° + rotación adicional, distribuidos por fuera */}
@@ -474,7 +486,7 @@ export default function CommunityPage() {
                   >
                     <Image
                       src={peopleImages[index]}
-                      alt=""
+                      alt="Kali Coliving community member"
                       width={position.size}
                       height={position.size}
                       className="rounded-full object-cover w-full h-full"
@@ -571,7 +583,7 @@ export default function CommunityPage() {
           </div>
           <Image
             src={dividerNotFilledSvg}
-            alt="divider"
+            alt=""
             width={1512}
             height={193}
             className="absolute bottom-0 left-0 w-full pointer-events-none rotate-180"
@@ -748,11 +760,11 @@ export default function CommunityPage() {
           </div>
         </div>
         <div className="mb-[130px] mt-[-100vh]  md:mt-0 z-[10] relative">
-          <h4 className="text-black text-left text-[50px] title pl-5 md:pl-20 ">
+          <p className="text-black text-left text-[50px] title pl-5 md:pl-20 ">
             {t("voicesTitle1")}&nbsp;
             <br />
             <span className="recoleta text-black">{t("voicesTitle2")}</span>
-          </h4>
+          </p>
           <CommunityCarousel />
         </div>
         <div className="mb-[-60px] md:mb-[-80px] lg:mb-[-100px]">

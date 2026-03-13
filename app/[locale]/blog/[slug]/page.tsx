@@ -14,6 +14,7 @@ import {
   getBlogPostIntro,
   getOgImageUrl,
 } from "@/lib/metadata";
+import JsonLd from "@/components/seo/JsonLd";
 import BlogPostTags from "@/components/BlogPostTags";
 import { SetBlogAlternateLink } from "@/context/BlogAlternateLocaleContext";
 
@@ -85,8 +86,33 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const translationLabel =
     locale === "es" ? tBlog("readInEnglish") : tBlog("readInSpanish");
 
+  const metaDescription = getBlogPostMetaDescription(
+    post.title,
+    getBlogPostIntro(post.excerpt, post.content),
+  );
+  const canonicalUrl = `${BASE_URL}/${locale}/blog/${slug}`;
+  const blogPostingSchema = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: post.title,
+    ...(imageUrl ? { image: imageUrl } : {}),
+    datePublished: post.created_at,
+    dateModified: post.updated_at || post.created_at,
+    author: {
+      "@type": "Organization",
+      name: "Kali Coliving",
+    },
+    publisher: {
+      "@type": "Organization",
+      name: "Kali Coliving",
+    },
+    url: canonicalUrl || undefined,
+    description: metaDescription,
+  };
+
   return (
     <main className="px-4 py-10 md:py-16 md:px-20 mx-auto mt-[100px] ">
+      <JsonLd data={blogPostingSchema} />
       <SetBlogAlternateLink sibling={translationSibling} />
       {/* Breadcrumb */}
       <nav className="mb-4 md:mb-6" aria-label="Breadcrumb">
@@ -133,9 +159,9 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
             {/* Desktop: sticky brown box with title + tags */}
             <div className="hidden lg:block rounded-[20px] bg-brown p-6 md:p-8">
-              <h1 className="text-2xl md:text-3xl font-bold text-white leading-tight">
+              <p className="text-2xl md:text-3xl font-bold text-white leading-tight">
                 {post.title}
-              </h1>
+              </p>
               <div className="mt-4">
                 <BlogPostTags tags={post.tags} variant="light" />
               </div>
@@ -149,7 +175,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             <div className="relative w-full aspect-[16/10] md:aspect-video rounded-[20px] overflow-hidden bg-gray-200 mb-8">
               <Image
                 src={imageUrl}
-                alt=""
+                alt={post.title}
                 fill
                 className="object-cover"
                 sizes="(max-width: 1024px) 100vw, calc(100vw - 440px - 6rem)"
@@ -183,7 +209,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                   <div className="relative w-full aspect-[4/3] max-h-[315px] overflow-hidden rounded-[20px] bg-gray-100">
                     <Image
                       src={similar.image}
-                      alt=""
+                      alt={similar.title}
                       fill
                       className="object-cover group-hover:scale-105 transition-transform duration-300"
                       sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
