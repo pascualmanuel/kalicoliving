@@ -170,6 +170,8 @@
       "placeholderName": "Luke Gordon",
       "labelEmail": "Email address",
       "placeholderEmail": "you@email.com",
+      "labelPhone": "Phone number",
+      "placeholderPhone": "+34 600 000 000",
       "labelMoveDate": "When are you looking to move?",
       "placeholderDate": "Pick a date",
       "labelDuration": "For how long are you planning to stay?",

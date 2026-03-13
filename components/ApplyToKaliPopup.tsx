@@ -92,7 +92,7 @@ export default function ApplyToKaliPopup({
         >
           <motion.div
             key="popup-card"
-            className="w-full max-w-[670px] max-h-[90vh] rounded-[20px] bg-[#FFF2E2] shadow-xl overflow-y-auto"
+            className="w-full max-w-[700px] max-h-[90vh] rounded-[20px] bg-[#FFF2E2] shadow-xl overflow-y-auto"
             initial={{ opacity: 0, scale: 0.96 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.96 }}
