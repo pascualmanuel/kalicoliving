@@ -19,6 +19,7 @@ export default function RoomsSection() {
   const [progress, setProgress] = useState(0);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const progressIntervalRef = useRef<NodeJS.Timeout | null>(null);
+  const preloadedUrlsRef = useRef<Set<string>>(new Set());
 
   useEffect(() => {
     let cancelled = false;
@@ -35,6 +36,21 @@ export default function RoomsSection() {
       cancelled = true;
     };
   }, [locale]);
+
+  useEffect(() => {
+    // Preload room images to avoid a "blank/late load" when users click fast
+    for (const room of rooms) {
+      const url = room.image_url;
+      if (!url) continue;
+      if (preloadedUrlsRef.current.has(url)) continue;
+
+      preloadedUrlsRef.current.add(url);
+      const img = new window.Image();
+      img.decoding = "async";
+      img.loading = "eager";
+      img.src = url;
+    }
+  }, [rooms]);
 
   const currentRoom = rooms[currentImageIndex];
 
@@ -87,6 +103,7 @@ export default function RoomsSection() {
             alt={currentRoom.location}
             fill
             className="object-cover"
+            priority
           />
         ) : (
           <div
