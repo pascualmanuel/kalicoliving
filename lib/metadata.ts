@@ -1,5 +1,8 @@
-/** Set NEXT_PUBLIC_BASE_URL in Vercel (e.g. https://www.kalicolivings.com) for OG and canonical URLs. */
-export const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL ?? "";
+/** Set NEXT_PUBLIC_BASE_URL in Vercel (e.g. https://kalicoliving.com) for OG and canonical URLs. */
+export const BASE_URL = (process.env.NEXT_PUBLIC_BASE_URL ?? "").replace(
+  /\/+$/,
+  "",
+);
 
 export type PageKey =
   | "home"
