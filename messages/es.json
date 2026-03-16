@@ -1,4 +1,9 @@
 {
+  "NotFoundPage": {
+    "title": "Página no encontrada",
+    "description": "La página que buscas no existe o ha sido movida.",
+    "backHome": "Volver al inicio"
+  },
   "nav": {
     "home": "Inicio",
     "landlords": "Propietarios",
