@@ -6,7 +6,6 @@ import "lenis/dist/lenis.css";
 import SmoothScrollProvider from "@/components/SmoothScrollProvider";
 import { BASE_URL } from "@/lib/metadata";
 
-const GA_MEASUREMENT_ID = "G-8181TXVVRV";
 const GTM_ID = "GTM-NTH5NXPW";
 
 export const metadata: Metadata = {
@@ -52,18 +51,6 @@ export default function RootLayout({
             j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
             })(window,document,'script','dataLayer','${GTM_ID}');
-          `}
-        </Script>
-        <Script
-          src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
-          strategy="afterInteractive"
-        />
-        <Script id="google-tag" strategy="afterInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', '${GA_MEASUREMENT_ID}');
           `}
         </Script>
         <SmoothScrollProvider>{children}</SmoothScrollProvider>
