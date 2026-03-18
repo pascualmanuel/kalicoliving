@@ -184,6 +184,7 @@ export default function RoomsSection() {
           <button
             type="button"
             onClick={openApplyPopup}
+            data-gtm="solicita-plaza-rooms"
             className="w-full bg-red text-white rounded-[12px] font-semibold text-lg px-4 py-3 hover:bg-red-hover transition-colors"
           >
             {t("rooms.applyNow")}

@@ -14,6 +14,12 @@ export default function Navigation() {
   const router = useRouter();
   const { openApplyPopup } = useApplyPopup();
   const { alternateLink } = useBlogAlternateLocale();
+  const applyNowGtm =
+    pathname?.includes("community")
+      ? "solicita-plaza-community"
+      : pathname?.includes("landlords")
+        ? "solicita-plaza-landlords"
+        : "solicita-plaza-header";
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isNavbarVisible, setIsNavbarVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
@@ -269,6 +275,7 @@ export default function Navigation() {
             <button
               type="button"
               onClick={openApplyPopup}
+              data-gtm={applyNowGtm}
               className="py-3 w-[150px] text-center bg-red text-white rounded-lg  transition-colors font-semibold"
             >
               {t("applyNow")}
@@ -443,6 +450,7 @@ export default function Navigation() {
                   openApplyPopup();
                   setIsMobileMenuOpen(false);
                 }}
+                data-gtm={applyNowGtm}
                 className="w-full mb-10 px-6 py-[11px] bg-red text-white rounded-lg hover:bg-red-hover transition-colors font-semibold text-center text-lg"
               >
                 {t("applyNow")}

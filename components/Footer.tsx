@@ -13,6 +13,9 @@ export default function Footer() {
   const pathname = usePathname();
   const { openApplyPopup } = useApplyPopup();
   const hideCta = pathname?.includes("landlords") || pathname?.includes("blog");
+  const applyNowGtm = pathname?.includes("community")
+    ? "solicita-plaza-community"
+    : "solicita-plaza-footer";
 
   return (
     <>
@@ -32,6 +35,7 @@ export default function Footer() {
             <button
               type="button"
               onClick={openApplyPopup}
+              data-gtm={applyNowGtm}
               className="mt-8 mb-24 w-[350px] bg-white rounded-[12px] semi-bold text-center font-semibold text-lg px-4 py-2 text-black my-2 hover:bg-white-hover transition-colors"
             >
               {t("applyNow")}
