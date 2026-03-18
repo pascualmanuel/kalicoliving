@@ -21,6 +21,7 @@
       "colivingSpaces": "Coliving en España",
       "heroSubtitle1": "Más que compartir un espacio.",
       "heroSubtitle2": "Una comunidad donde crecer.",
+      "applyNow": "Aplicar ahora",
       "heroDescription": "Kali es una experiencia de coliving donde el diseño y la comunidad se fusionan para crear momentos que dejan huella.",
       "card1Title": "Comunidad real",
       "card1Description": "Vive rodeado de personas que, como tú, eligieron salir de su zona de confort y apostar por algo diferente.",
@@ -160,7 +161,8 @@
       "joinKali": "Únete a Kali",
       "galleryDescription": "En Kali convives con personas de distintos lugares, trayectorias y sectores. Todos comparten una misma ambición: crecer, conectar y llegar más lejos.",
       "voicesTitle1": "Voces de la",
-      "voicesTitle2": "comunidad"
+      "voicesTitle2": "comunidad",
+      "instagramCta": "Síguenos en Instagram"
     },
     "applyPopup": {
       "title": "Aplicar a Kali",

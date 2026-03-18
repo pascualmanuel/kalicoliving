@@ -21,6 +21,7 @@
       "colivingSpaces": "Coliving spaces in Spain",
       "heroSubtitle1": "More than a place to live.",
       "heroSubtitle2": "A place to belong.",
+      "applyNow": "Apply now",
       "heroDescription": "Kali is a coliving experience where design meets community, creating experiences that stay with you.",
       "card1Title": "Real community",
       "card1Description": "Live with like-minded people who choose to step out of their comfort zone.",
@@ -160,7 +161,8 @@
       "joinKali": "Join Kali",
       "galleryDescription": "At Kali, you live alongside people from different places, backgrounds, and perspectives. That mix is what makes every day feel new.",
       "voicesTitle1": "Voices of the",
-      "voicesTitle2": "community"
+      "voicesTitle2": "community",
+      "instagramCta": "See Kali on Instagram"
     },
     "applyPopup": {
       "title": "Apply to Kali",
