@@ -24,6 +24,7 @@ import CommunityCarousel from "../../../components/CommunityCarousel";
 import GallerySection from "../../../components/GallerySection";
 import Footer from "../../../components/Footer";
 import ApplyToKaliPopup from "../../../components/ApplyToKaliPopup";
+import instagramIcon from "../../../public/assets/icons/instagram.svg";
 type TitleLine = { text: string; startWordIndex: number; endWordIndex: number };
 
 export default function CommunityPage() {
@@ -759,13 +760,42 @@ export default function CommunityPage() {
             </button>
           </div>
         </div>
-        <div className="mb-[130px] mt-[-100vh]  md:mt-[0] z-[10] relative">
+        <div className="mb-[100px] mt-[-100vh]  md:mt-[0] z-[10] relative">
           <p className="text-black text-left text-[50px] title pl-5 md:pl-20 ">
             {t("voicesTitle1")}&nbsp;
             <br />
             <span className="recoleta text-black">{t("voicesTitle2")}</span>
           </p>
           <CommunityCarousel />
+
+          <div className="flex justify-center mt-10 mb-2 px-4">
+            <a
+              href="https://www.instagram.com/kali_coliving/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Instagram"
+              onClick={() => {
+                if (typeof window !== "undefined") {
+                  (window as any).dataLayer = (window as any).dataLayer || [];
+                  (window as any).dataLayer.push({
+                    event: "instagram_cta_click",
+                  });
+                }
+              }}
+              className="block w-full max-w-[320px]"
+            >
+              <div className="w-full bg-red  rounded-[12px] semi-bold text-center font-semibold text-lg px-4 py-3 text-white mt-6 flex items-center justify-center gap-3 hover:bg-red-hover transition-colors">
+                <Image
+                  src={instagramIcon}
+                  alt="Instagram"
+                  width={22}
+                  height={22}
+                  className="w-[22px] h-[22px]"
+                />
+                <span>{t("instagramCta")}</span>
+              </div>
+            </a>
+          </div>
         </div>
         <div className="mb-[-60px] md:mb-[-80px] lg:mb-[-100px]">
           <GallerySection />

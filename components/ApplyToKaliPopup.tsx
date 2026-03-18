@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 import { useLocale, useTranslations } from "next-intl";
@@ -66,6 +66,14 @@ export default function ApplyToKaliPopup({
   const [emptyStep1Fields, setEmptyStep1Fields] = useState<string[]>([]);
   const [emptyStep2Fields, setEmptyStep2Fields] = useState<string[]>([]);
   const [emptyStep3Fields, setEmptyStep3Fields] = useState<string[]>([]);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    if (typeof window !== "undefined") {
+      (window as any).dataLayer = (window as any).dataLayer || [];
+      (window as any).dataLayer.push({ event: "apply_popup_open" });
+    }
+  }, [isOpen]);
 
   const overlayTransition = {
     type: "tween",
@@ -201,6 +209,13 @@ export default function ApplyToKaliPopup({
                         return;
                       }
                       setEmptyStep1Fields([]);
+                      if (typeof window !== "undefined") {
+                        (window as any).dataLayer = (window as any).dataLayer || [];
+                        (window as any).dataLayer.push({
+                          event: "apply_step_complete",
+                          step: 1,
+                        });
+                      }
                       setStep(2);
                     }}
                   >
@@ -385,6 +400,13 @@ export default function ApplyToKaliPopup({
                       return;
                     }
                     setEmptyStep2Fields([]);
+                    if (typeof window !== "undefined") {
+                      (window as any).dataLayer = (window as any).dataLayer || [];
+                      (window as any).dataLayer.push({
+                        event: "apply_step_complete",
+                        step: 2,
+                      });
+                    }
                     setStep(3);
                   }}
                 >
@@ -509,6 +531,13 @@ export default function ApplyToKaliPopup({
 
                       if (!res.ok) {
                         throw new Error("Request failed");
+                      }
+
+                      if (typeof window !== "undefined") {
+                        (window as any).dataLayer = (window as any).dataLayer || [];
+                        (window as any).dataLayer.push({
+                          event: "form_submit_resident",
+                        });
                       }
 
                       setIsSubmitted(true);

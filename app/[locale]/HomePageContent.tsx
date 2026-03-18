@@ -6,7 +6,6 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import homeImage from "../../public/assets/images/home/hero-image-kali.webp";
 import dividerSvg from "../../public/assets/icons/divider.svg";
-import PopupButton from "@/components/PopupButton";
 import homeCard1 from "../../public/assets/images/home/home-card-1.webp";
 import homeCard2 from "../../public/assets/images/home/home-card-2.webp";
 import homeCard3 from "../../public/assets/images/home/home-card-3.webp";
@@ -16,12 +15,13 @@ import ticIcon from "../../public/assets/icons/tic-icon.svg";
 import RoomsSection from "@/components/Rooms";
 import Footer from "@/components/Footer";
 import isoLogoWhite from "../../public/assets/logos/isowhite.svg";
+import { useApplyPopup } from "@/context/ApplyPopupContext";
 export default function HomePageContent() {
   const locale = useLocale();
   const t = useTranslations("pages.home");
   const cardsRef = useRef(null);
   const videoSectionRef = useRef<HTMLDivElement>(null);
-
+  const { openApplyPopup } = useApplyPopup();
   // Siempre 2 líneas: partir por la coma para no depender del layout/fuentes en primera carga
   const titleLines = (() => {
     const text = t("title");
@@ -160,7 +160,22 @@ export default function HomePageContent() {
         <p className="text-black text-center max-w-[280px] md:max-w-[430px] my-6 text-[20px]">
           {t("heroDescription")}
         </p>
-        <PopupButton />
+        <button
+          type="button"
+          onClick={() => {
+            if (typeof window !== "undefined") {
+              (window as any).dataLayer = (window as any).dataLayer || [];
+              (window as any).dataLayer.push({
+                event: "apply_now_click",
+                button_location: "hero",
+              });
+            }
+            openApplyPopup();
+          }}
+          className="bg-red text-white px-4 py-2 rounded-xl w-[350px] h-[50px] text-center font-semibold text-lg hover:bg-red-hover transition-colors"
+        >
+          {t("applyNow")}
+        </button>
       </div>
 
       <div

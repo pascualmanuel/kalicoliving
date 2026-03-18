@@ -34,8 +34,16 @@ export default function Footer() {
             </h2>
             <button
               type="button"
-              onClick={openApplyPopup}
-              data-gtm={applyNowGtm}
+              onClick={() => {
+                if (typeof window !== "undefined") {
+                  (window as any).dataLayer = (window as any).dataLayer || [];
+                  (window as any).dataLayer.push({
+                    event: "apply_now_click",
+                    button_location: "footer",
+                  });
+                }
+                openApplyPopup();
+              }}
               className="mt-8 mb-24 w-[350px] bg-white rounded-[12px] semi-bold text-center font-semibold text-lg px-4 py-2 text-black my-2 hover:bg-white-hover transition-colors"
             >
               {t("applyNow")}
