@@ -53,6 +53,11 @@ const LandlordsForm = () => {
         throw new Error("Request failed");
       }
 
+      if (typeof window !== "undefined") {
+        (window as any).dataLayer = (window as any).dataLayer || [];
+        (window as any).dataLayer.push({ event: "form_submit_landlord" });
+      }
+
       setSuccess(t("formSuccessMessage"));
       setError(null);
       setEmptyFields([]);

@@ -75,7 +75,8 @@ export default function RoomsSection() {
       currentProgress += (50 / STORY_DURATION) * 100;
       if (currentProgress >= 100) {
         setProgress(100);
-        if (progressIntervalRef.current) clearInterval(progressIntervalRef.current);
+        if (progressIntervalRef.current)
+          clearInterval(progressIntervalRef.current);
       } else {
         setProgress(currentProgress);
       }
@@ -88,7 +89,8 @@ export default function RoomsSection() {
 
     return () => {
       if (intervalRef.current) clearTimeout(intervalRef.current);
-      if (progressIntervalRef.current) clearInterval(progressIntervalRef.current);
+      if (progressIntervalRef.current)
+        clearInterval(progressIntervalRef.current);
     };
   }, [currentImageIndex, rooms.length]);
 
@@ -183,8 +185,16 @@ export default function RoomsSection() {
           {/* <p className="text-white text-[16px] mb-4">{currentRoom.description}</p> */}
           <button
             type="button"
-            onClick={openApplyPopup}
-            data-gtm="solicita-plaza-rooms"
+            onClick={() => {
+              if (typeof window !== "undefined") {
+                (window as any).dataLayer = (window as any).dataLayer || [];
+                (window as any).dataLayer.push({
+                  event: "apply_now_click",
+                  button_location: "community",
+                });
+              }
+              openApplyPopup();
+            }}
             className="w-full bg-red text-white rounded-[12px] font-semibold text-lg px-4 py-3 hover:bg-red-hover transition-colors"
           >
             {t("rooms.applyNow")}
