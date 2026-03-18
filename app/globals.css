@@ -7,11 +7,11 @@
     scroll-behavior: smooth;
   }
   body {
-    font-family: 'Fellix', sans-serif;
+    font-family: "Fellix", sans-serif;
     color: #272727;
-    background-color: #FFF2E2;
+    background-color: #fff2e2;
   }
-  p{
+  p {
     font-weight: 400;
     line-height: 130%;
     letter-spacing: -0.04em;
@@ -20,24 +20,24 @@
 
 /* Fellix Font Family */
 @font-face {
-  font-family: 'Fellix';
-  src: url('/assets/fonts/Fellix-Regular.woff2') format('woff2');
+  font-family: "Fellix";
+  src: url("/assets/fonts/Fellix-Regular.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'Fellix';
-  src: url('/assets/fonts/Fellix-SemiBold.woff2') format('woff2');
+  font-family: "Fellix";
+  src: url("/assets/fonts/Fellix-SemiBold.woff2") format("woff2");
   font-weight: 600;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'Fellix';
-  src: url('/assets/fonts/Fellix-Bold.woff2') format('woff2');
+  font-family: "Fellix";
+  src: url("/assets/fonts/Fellix-Bold.woff2") format("woff2");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -45,58 +45,92 @@
 
 /* Recoleta Font Family */
 @font-face {
-  font-family: 'Recoleta';
-  src: url('/assets/fonts/Recoleta-Regular.woff2') format('woff2');
+  font-family: "Recoleta";
+  src: url("/assets/fonts/Recoleta-Regular.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'Recoleta';
-  src: url('/assets/fonts/Recoleta-Light.woff2') format('woff2');
+  font-family: "Recoleta";
+  src: url("/assets/fonts/Recoleta-Light.woff2") format("woff2");
   font-weight: 300;
   font-style: normal;
   font-display: swap;
 }
 
-
-.recoleta{
-  font-family: 'Recoleta', serif;
+.recoleta {
+  font-family: "Recoleta", serif;
   font-weight: 400;
 }
 
-.title{
-font-weight: 700;
-line-height: 100%;
-letter-spacing: -4%;
+.title {
+  font-weight: 700;
+  line-height: 100%;
+  letter-spacing: -4%;
 }
 
-
-
-.blab{
-  border: 1px solid  #FFF2E266;
+.blab {
+  border: 1px solid #fff2e266;
 }
 
+/*
+  El truco: flex + justify-content: center
+  → las filas completas se estiran normalmente
+  → la última fila con menos ítems queda centrada sola
+*/
+.why-kali-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
+}
+
+/* ── Mobile: 2 por fila ── */
+.why-kali-item {
+  width: calc(50% - 8px);
+}
+
+/* ── Tablet ~900px: 3 por fila (3+3+2 centrado) ── */
+@media (min-width: 900px) {
+  .why-kali-item {
+    width: calc(33.333% - 11px);
+  }
+}
+
+/* ── Entre 900px y 1300px: los 2 últimos a ~media fila ── */
+@media (min-width: 900px) and (max-width: 1299.98px) {
+  .why-kali-item:nth-last-child(-n + 2) {
+    width: 49%;
+  }
+}
+
+/* ── Desktop ~1300px: 4 por fila (2 filas de 4) ── */
+@media (min-width: 1300px) {
+  .why-kali-item {
+    width: calc(25% - 12px);
+  }
+}
+
+/* ── Estilos del card (los tuyos, sin tocar) ── */
 .carousel-box-desk {
-
-  background-color: #F4E8D9;
+  background-color: #f4e8d9;
   border-radius: 16px;
   display: flex;
   flex-direction: column;
-
+  align-items: center;
+  justify-content: space-around;
   padding: 16px;
   box-sizing: border-box;
   transition: margin 0.3s ease;
-  /* margin: 0 0 8px 0; */
-  display: flex;
-  justify-content: space-around;
+  min-height: 220px;
 }
 
 .carousel-box {
   width: 336px !important;
   height: 144px !important;
-  background-color: #F4E8D9;
+  background-color: #f4e8d9;
   border-radius: 8px;
   display: flex;
   flex-direction: column;

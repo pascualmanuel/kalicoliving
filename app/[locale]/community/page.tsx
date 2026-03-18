@@ -591,7 +591,7 @@ export default function CommunityPage() {
         </div>
         <div
           ref={galleryRef}
-          className="w-full h-[200vh] md:h-[100vh] relative z-[10]"
+          className="w-full h-[200vh] md:h-[100vh] md:min-h-[800px] relative z-[10]"
         >
           {/* Mobile (< md): texto arriba del spread con margen 20px */}
           <p className="mt-5 md:mt-0 md:hidden text-black text-center text-[24px] max-w-[480px] mx-auto px-4 relative z-[-1]">
@@ -759,7 +759,7 @@ export default function CommunityPage() {
             </button>
           </div>
         </div>
-        <div className="mb-[130px] mt-[-100vh]  md:mt-0 z-[10] relative">
+        <div className="mb-[130px] mt-[-100vh]  md:mt-[0] z-[10] relative">
           <p className="text-black text-left text-[50px] title pl-5 md:pl-20 ">
             {t("voicesTitle1")}&nbsp;
             <br />
