@@ -11,6 +11,7 @@ import Person5 from "../public/assets/images/community/person5.jpg";
 import Person6 from "../public/assets/images/community/person6.jpg";
 import NavigationIcon from "../public/assets/icons/navigation.svg";
 import QuoiteIcon from "../public/assets/icons/quote.svg";
+import { useLocale } from "next-intl";
 
 interface PersonData {
   image: any;
@@ -20,6 +21,7 @@ interface PersonData {
 }
 
 const CommunityCarousel = () => {
+  const locale = useLocale() as "es" | "en";
   const [currentIndex, setCurrentIndex] = useState(0);
   const [cardsPerView, setCardsPerView] = useState(3);
   const [maxTranslate, setMaxTranslate] = useState(0);
@@ -29,39 +31,69 @@ const CommunityCarousel = () => {
   const people: PersonData[] = [
     {
       image: Person1,
-      quote: "The people here changed my whole experience.",
-      name: "John Doe",
-      role: "Designer from Costa Rica",
+      quote:
+        locale === "es"
+          ? "Llegué a Madrid sin conocer a nadie. En menos de una semana ya tenía una comunidad. Kali no es solo donde vivo, es donde crecí."
+          : "I arrived in Madrid knowing no one. Within a week I had a community. Kali isn't just where I live — it's where I grew.",
+      name: "Dell Snyder",
+      role: "UX Designer, NYC, USA",
     },
     {
       image: Person2,
-      quote: "The people here changed my whole experience.",
-      name: "Jane Smith",
-      role: "Developer from Spain",
+      quote:
+        locale === "es"
+          ? "Pensé que sería otro piso compartido. No tiene nada que ver. Aquí he conocido a personas que me han cambiado la forma de ver mi carrera."
+          : "I thought it would be just another shared flat. It's nothing like that. I've met people here who completely changed how I see my career.",
+      name: "Álvaro Martín",
+      role: "Frontend Developer, Valencia, España",
     },
     {
       image: Person3,
-      quote: "The people here changed my whole experience.",
-      name: "Mike Johnson",
-      role: "Entrepreneur from USA",
+      quote:
+        locale === "es"
+          ? "Lo que más me sorprendió fue la calidad de las personas. Cada conversación en la cocina acaba siendo una fuente de inspiración."
+          : "What surprised me most was the quality of the people. Every kitchen conversation ends up being a source of inspiration.",
+      name: "Maya Thompson",
+      role:
+        locale === "es"
+          ? "Emprendedora, Austin, USA"
+          : "Entrepreneur, Austin, USA",
     },
     {
       image: Person4,
-      quote: "The people here changed my whole experience.",
-      name: "Sarah Williams",
-      role: "Artist from France",
+      quote:
+        locale === "es"
+          ? "Kali me dio algo que ningún alquiler tradicional puede darte: sentirte local desde el primer día."
+          : "Kali gave me something no traditional rental can: feeling like a local from day one.",
+      name: "Louis Bernard",
+      role:
+        locale === "es"
+          ? "Periodista, Lyon, Francia"
+          : "Journalist, Lyon, France",
     },
     {
       image: Person5,
-      quote: "The people here changed my whole experience.",
-      name: "David Brown",
-      role: "Writer from UK",
+      quote:
+        locale === "es"
+          ? "Vine por el piso. Me quedé por la comunidad. Nunca pensé que un coliving pudiera impactar tanto en mi vida profesional."
+          : "I came for the flat. I stayed for the community. I never thought a coliving could have such an impact on my professional life.",
+      name: "Hannah Clarke",
+      role:
+        locale === "es"
+          ? "Ingeniera de software, Leeds, Inglaterra"
+          : "Software engineer, Leeds, England",
     },
     {
       image: Person6,
-      quote: "The people here changed my whole experience.",
-      name: "Emma Davis",
-      role: "Photographer from Italy",
+      quote:
+        locale === "es"
+          ? "Cada persona que he conocido en Kali ha añadido algo a mi historia. Es difícil explicarlo hasta que lo vives."
+          : "Every person I've met at Kali has added something to my story. It's hard to explain until you live it.",
+      name: "Marco Bianchi",
+      role:
+        locale === "es"
+          ? "Fotógrafo, Florencia, Italia"
+          : "Photographer, Florence, Italy",
     },
   ];
 
