@@ -140,7 +140,7 @@ const LandlordsReviews = () => {
           ref={carouselRef}
           className="flex gap-6 cursor-grab active:cursor-grabbing"
           drag="x"
-          dragConstraints={{ left: -maxTranslate, right: 0 }}
+          dragConstraints={{ left: -maxTranslate - 80, right: 0 }}
           dragElastic={0.1}
           animate={{ x: translateX }}
           transition={{ duration: 0.5, ease: "easeInOut" }}
