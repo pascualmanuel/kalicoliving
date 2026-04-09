@@ -210,7 +210,8 @@ export default function ApplyToKaliPopup({
                       }
                       setEmptyStep1Fields([]);
                       if (typeof window !== "undefined") {
-                        (window as any).dataLayer = (window as any).dataLayer || [];
+                        (window as any).dataLayer =
+                          (window as any).dataLayer || [];
                         (window as any).dataLayer.push({
                           event: "apply_step_complete",
                           step: 1,
@@ -401,7 +402,8 @@ export default function ApplyToKaliPopup({
                     }
                     setEmptyStep2Fields([]);
                     if (typeof window !== "undefined") {
-                      (window as any).dataLayer = (window as any).dataLayer || [];
+                      (window as any).dataLayer =
+                        (window as any).dataLayer || [];
                       (window as any).dataLayer.push({
                         event: "apply_step_complete",
                         step: 2,
@@ -510,6 +512,15 @@ export default function ApplyToKaliPopup({
                       const durationLabel = duration ? t(duration) : null;
                       const workStyleLabel = workStyle ? t(workStyle) : null;
 
+                      if (typeof window !== "undefined") {
+                        (window as any).dataLayer =
+                          (window as any).dataLayer || [];
+                        (window as any).dataLayer.push({
+                          event: "apply_step_complete",
+                          step: 3,
+                        });
+                      }
+
                       const res = await fetch("/api/apply", {
                         method: "POST",
                         headers: {
@@ -534,7 +545,8 @@ export default function ApplyToKaliPopup({
                       }
 
                       if (typeof window !== "undefined") {
-                        (window as any).dataLayer = (window as any).dataLayer || [];
+                        (window as any).dataLayer =
+                          (window as any).dataLayer || [];
                         (window as any).dataLayer.push({
                           event: "form_submit_resident",
                         });
