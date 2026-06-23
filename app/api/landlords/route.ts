@@ -41,7 +41,7 @@ export async function POST(request: Request) {
 
     const { error } = await resend.emails.send({
       from: "Kali Coliving <no-reply@kalicoliving.com>",
-      to: ["cristina.houlihan@kalicolivings.com"],
+      to: ["sol.llamazares@kalicolivings.com"],
       subject: "Nuevo formulario de propietarios",
       reply_to: email,
       html,
