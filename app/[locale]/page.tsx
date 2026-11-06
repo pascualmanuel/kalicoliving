@@ -56,6 +56,7 @@ export default function HomePage() {
     "@context": "https://schema.org",
     "@type": "Organization",
     name: "Kali Coliving",
+    alternateName: "Kali Co-Living",
     url: BASE_URL || undefined,
     logo: `${BASE_URL}/assets/logos/logo-black.svg`,
     sameAs: [
@@ -68,6 +69,7 @@ export default function HomePage() {
     "@context": "https://schema.org",
     "@type": "WebSite",
     name: "Kali Coliving",
+    alternateName: "Kali Co-Living",
     url: BASE_URL || undefined,
   };
 
