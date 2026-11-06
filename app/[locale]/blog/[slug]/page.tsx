@@ -35,17 +35,31 @@ export async function generateMetadata({
   const description = getBlogPostMetaDescription(post.title, intro);
   const title = post.title;
   const canonical = `${BASE_URL}/${locale}/blog/${slug}`;
-  const ogImage = getOgImageUrl("blog", locale as "en" | "es");
+  const postImage = post.cover_url || post.list_image_url;
+  const ogImage = postImage || getOgImageUrl("blog", locale as "en" | "es");
+
+  // Translations can have a different slug, so hreflang only points to a real sibling.
+  const sibling = post.translation_key
+    ? await getPublishedTranslationSibling(post.translation_key, locale)
+    : null;
+  const siblingUrl = sibling
+    ? `${BASE_URL}/${sibling.locale}/blog/${sibling.slug}`
+    : null;
 
   return {
     title,
     description,
     alternates: {
       canonical,
-      languages: {
-        es: `${BASE_URL}/es/blog/${slug}`,
-        en: `${BASE_URL}/en/blog/${slug}`,
-      },
+      ...(siblingUrl
+        ? {
+            languages: {
+              [locale]: canonical,
+              [sibling!.locale]: siblingUrl,
+              "x-default": locale === "es" ? canonical : siblingUrl,
+            },
+          }
+        : {}),
     },
     openGraph: {
       type: "article",
@@ -54,7 +68,11 @@ export async function generateMetadata({
       siteName: "Kali Coliving",
       title,
       description,
-      images: [{ url: ogImage, width: 1200, height: 630, alt: title }],
+      images: [
+        postImage
+          ? { url: ogImage, alt: title }
+          : { url: ogImage, width: 1200, height: 630, alt: title },
+      ],
     },
     twitter: {
       card: "summary_large_image",

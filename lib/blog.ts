@@ -28,6 +28,7 @@ export interface BlogPostListing {
   excerpt: string | null;
   image: string | null;
   publishedAt: string;
+  updatedAt: string;
   readTimeMinutes: number;
   tags: string[];
 }
@@ -42,6 +43,7 @@ function rowToListing(row: BlogPostRow): BlogPostListing {
     excerpt: row.excerpt,
     image: row.list_image_url || row.cover_url,
     publishedAt: row.created_at,
+    updatedAt: row.updated_at || row.created_at,
     readTimeMinutes: row.reading_time ?? 5,
     tags: row.tags ?? [],
   };
@@ -54,7 +56,7 @@ function rowToListing(row: BlogPostRow): BlogPostListing {
 export async function getBlogPosts(locale: string): Promise<BlogPostListing[]> {
   const { data, error } = await supabase
     .from('blog_posts')
-    .select('id, slug, title, excerpt, cover_url, list_image_url, tags, created_at, reading_time')
+    .select('id, slug, title, excerpt, cover_url, list_image_url, tags, created_at, updated_at, reading_time')
     .eq('published', true)
     .eq('locale', locale)
     .order('created_at', { ascending: false });
@@ -76,7 +78,7 @@ export async function getBlogPosts(locale: string): Promise<BlogPostListing[]> {
       tags: row.tags as string[] | null,
       published: true,
       created_at: row.created_at as string,
-      updated_at: '',
+      updated_at: row.updated_at as string,
       author: null,
       reading_time: row.reading_time as number | null,
       locale: '',

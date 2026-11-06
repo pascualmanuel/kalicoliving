@@ -23,6 +23,7 @@ export async function generateMetadata({
       languages: {
         es: `${BASE_URL}/es/landlords`,
         en: `${BASE_URL}/en/landlords`,
+        "x-default": `${BASE_URL}/es/landlords`,
       },
     },
     openGraph: {

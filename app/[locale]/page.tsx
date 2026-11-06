@@ -30,6 +30,7 @@ export async function generateMetadata({
       languages: {
         es: `${BASE_URL}/es`,
         en: `${BASE_URL}/en`,
+        "x-default": `${BASE_URL}/es`,
       },
     },
     openGraph: {
@@ -56,7 +57,11 @@ export default function HomePage() {
     "@type": "Organization",
     name: "Kali Coliving",
     url: BASE_URL || undefined,
-    // sameAs: add Instagram, LinkedIn etc. when URLs are available
+    logo: `${BASE_URL}/assets/logos/logo-black.svg`,
+    sameAs: [
+      "https://www.instagram.com/kali_coliving/",
+      "https://www.linkedin.com/company/kali-co-living",
+    ],
   };
 
   const websiteSchema = {

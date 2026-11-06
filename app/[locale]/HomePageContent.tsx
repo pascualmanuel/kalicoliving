@@ -122,8 +122,10 @@ export default function HomePageContent() {
         ) : (
           <h1 className="sr-only">Vive en comunidad, crece sin límites</h1>
         )}
-        <motion.h4
-          className="relative z-10 text-[50px]  md:text-[100px] text-white leading-[111%]  md:leading-[111px] tracking-[-4%] font-bold 
+        {/* Visual tagline: the sr-only h1 above is the page's heading */}
+        <motion.div
+          aria-hidden="true"
+          className="relative z-10 text-[50px]  md:text-[100px] text-white leading-[111%]  md:leading-[111px] tracking-[-4%] font-bold
           text-center md:max-w-[585px] max-w-[340px] overflow-hidden"
         >
           <motion.div
@@ -139,7 +141,7 @@ export default function HomePageContent() {
               </span>
             ))}
           </motion.div>
-        </motion.h4>
+        </motion.div>
 
         <Image
           src={dividerSvg}

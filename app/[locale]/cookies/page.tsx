@@ -25,6 +25,7 @@ export async function generateMetadata({
       languages: {
         es: `${BASE_URL}/es/cookies`,
         en: `${BASE_URL}/en/cookies`,
+        "x-default": `${BASE_URL}/es/cookies`,
       },
     },
     openGraph: {

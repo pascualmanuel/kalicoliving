@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import React from "react";
 import Script from "next/script";
+import { getLocale } from "next-intl/server";
 import "./globals.css";
 import "lenis/dist/lenis.css";
 import SmoothScrollProvider from "@/components/SmoothScrollProvider";
@@ -25,13 +26,15 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const locale = await getLocale();
+
   return (
-    <html lang="en">
+    <html lang={locale}>
       <body className="overflow-x-hidden">
         {/* Google Tag Manager (noscript) */}
         <noscript>

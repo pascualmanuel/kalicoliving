@@ -81,9 +81,9 @@ const LandlordsForm = () => {
           <p className="text-black text-[20px]  text-center mb-2">
             {t("formHeading")}
           </p>
-          <h1 className="text-black md:text-[50px] text-[35px] title text-center">
+          <h2 className="text-black md:text-[50px] text-[35px] title text-center">
             {t("formTitle")}
-          </h1>
+          </h2>
         </>
       )}
       {success ? (

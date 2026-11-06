@@ -86,18 +86,17 @@ function stripHtmlToPlainText(html: string): string {
 }
 
 /**
- * Build SEO meta description for a blog post.
- * Format: [Post title] — [First 155 chars of intro at word boundary] | Kali Blog
+ * Build SEO meta description for a blog post: the intro cut at a word boundary
+ * so it fits in search results, or the title when the post has no intro.
  */
 export function getBlogPostMetaDescription(
   title: string,
   introPlainText: string,
 ): string {
-  const intro = introPlainText.trim()
-    ? truncateAtWord(introPlainText.trim(), BLOG_POST_INTRO_MAX_LENGTH)
-    : "";
-  const middle = intro ? ` — ${intro}` : "";
-  return `${title}${middle}${BLOG_META_SUFFIX}`;
+  const intro = introPlainText.trim();
+  return intro
+    ? truncateAtWord(intro, BLOG_POST_INTRO_MAX_LENGTH)
+    : `${title}${BLOG_META_SUFFIX}`;
 }
 
 /**
@@ -114,8 +113,8 @@ export function getBlogPostIntro(
 /** Page titles for SEO (optional override; nav uses translations) */
 const PAGE_TITLES: Record<PageKey, { en: string; es: string }> = {
   home: {
-    en: "Kali Coliving – Live together, grow forever",
-    es: "Kali Coliving – Live together, grow forever",
+    en: "Coliving in Spain: live as a community – Kali Coliving",
+    es: "Coliving en España: vive en comunidad – Kali Coliving",
   },
   community: {
     en: "Community – Kali Coliving",
